@@ -18,10 +18,11 @@
             {{-- Desktop Nav --}}
             <nav class="hidden lg:flex items-center gap-1">
                 @php
+                    $currentUrl = request()->url();
                     $navItems = [
-                        ['label' => 'Beranda', 'route' => 'home'],
-                        ['label' => 'Warta Jemaat', 'route' => '#'],
-                        ['label' => 'Jadwal Ibadah', 'route' => '#'],
+                        ['label' => 'Beranda', 'route' => route('home')],
+                        ['label' => 'Warta Jemaat', 'route' => route('client.announcements')],
+                        ['label' => 'Jadwal Ibadah', 'route' => route('client.schedule-worship')],
                         ['label' => 'Tentang Gereja', 'route' => '#'],
                         ['label' => 'Kegiatan Gereja', 'route' => '#'],
                         ['label' => 'Struktur Organisasi', 'route' => '#'],
@@ -30,7 +31,7 @@
                 @foreach($navItems as $item)
                     <a href="{{ $item['route'] }}"
                        class="px-3 py-2 text-[13.5px] font-medium rounded-md transition-colors
-                              {{ $item['route'] === route('home') ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' }}">
+                              {{ $item['route'] !== '#' && $currentUrl === $item['route'] ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' }}">
                         {{ $item['label'] }}
                     </a>
                 @endforeach
@@ -74,7 +75,7 @@
             @foreach($navItems as $item)
                 <a href="{{ $item['route'] }}"
                    class="block px-3 py-2.5 text-[14px] font-medium rounded-lg
-                          {{ $item['route'] === route('home') ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:bg-slate-50' }}">
+                          {{ $item['route'] !== '#' && $currentUrl === $item['route'] ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:bg-slate-50' }}">
                     {{ $item['label'] }}
                 </a>
             @endforeach

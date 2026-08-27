@@ -10,6 +10,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ClientController::class, 'index'])->name('home');
+Route::get('/warta-jemaat', [ClientController::class, 'announcements'])->name('client.announcements');
+Route::get('/jadwal-ibadah', [ClientController::class, 'scheduleWorship'])->name('client.schedule-worship');
+Route::get('/jadwal-ibadah/{id}', [ClientController::class, 'scheduleWorshipDetail'])->name('client.schedule-worship.detail');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

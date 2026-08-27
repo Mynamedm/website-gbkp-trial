@@ -12,7 +12,7 @@
             <div>
                 <h4 class="text-white font-semibold text-[13px] uppercase tracking-wider mb-4">Navigasi</h4>
                 <ul class="space-y-2.5">
-                    @foreach(['Beranda' => '#', 'Profil Gereja' => '#', 'Jadwal Ibadah' => '#', 'Warta Jemaat' => '#'] as $label => $url)
+                    @foreach(['Beranda' => route('home'), 'Profil Gereja' => '#', 'Jadwal Ibadah' => '#', 'Warta Jemaat' => route('client.announcements')] as $label => $url)
                         <li>
                             <a href="{{ $url }}" class="text-[13.5px] text-slate-400 hover:text-white transition-colors">{{ $label }}</a>
                         </li>
