@@ -1,7 +1,7 @@
 @extends('layouts.admin.app', ['title' => 'Jadwal Ibadah'])
 
 @section('content')
-<div x-data="{ modal: null, editingId: null, search: '{{ request('search') }}', perPage: '{{ request('per_page', 10) }}', debounceTimer: null }"
+<div x-data="{ modal: null, editingId: null, search: '{{ request('search') }}', perPage: '{{ request('per_page', 10) }}', debounceTimer: null, formType: 'umum' }"
      @edit-schedule.window="editingId = $event.detail; modal = 'edit'"
      @delete-schedule.window="
          Swal.fire({
@@ -33,7 +33,7 @@
     <div class="bg-white rounded-2xl shadow-sm border border-slate-200">
         <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
             <h2 class="text-sm font-semibold text-slate-700">Daftar Jadwal Ibadah</h2>
-            <button @click="modal = 'create'" class="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white text-[13px] font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+            <button @click="formType = 'umum'; modal = 'create'" class="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white text-[13px] font-semibold rounded-lg hover:bg-blue-700 transition-colors">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
                 Tambah Jadwal
             </button>
@@ -89,17 +89,24 @@
                                 <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Host / Nyonya Rumah</label>
                                 <input type="text" name="host" placeholder="Nd. Ari Ginting" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
                             </div>
-                            <div>
-                                <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Kategori</label>
-                                <select name="category" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                                    <option value="Ibadah Minggu">Ibadah Minggu</option>
-                                    <option value="Ibadah Kaum Ibu">Ibadah Kaum Ibu</option>
-                                    <option value="Ibadah Kaum Bapa">Ibadah Kaum Bapa</option>
-                                    <option value="Persekutuan Pemuda">Persekutuan Pemuda</option>
-                                    <option value="Persekutuan Anak">Persekutuan Anak</option>
-                                    <option value="Doa Pagi">Doa Pagi</option>
-                                </select>
-                            </div>
+            <div>
+                <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Tipe <span class="text-red-500">*</span></label>
+                <select name="type" x-model="formType" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    <option value="umum">Ibadah Umum</option>
+                    <option value="kategorial">Ibadah Kategorial</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Kategori</label>
+                <select name="category" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    <option value="Ibadah Minggu">Ibadah Minggu</option>
+                    <option value="Ibadah Kaum Ibu">Ibadah Kaum Ibu</option>
+                    <option value="Ibadah Kaum Bapa">Ibadah Kaum Bapa</option>
+                    <option value="Persekutuan Pemuda">Persekutuan Pemuda</option>
+                    <option value="Persekutuan Anak">Persekutuan Anak</option>
+                    <option value="Doa Pagi">Doa Pagi</option>
+                </select>
+            </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Tanggal <span class="text-red-500">*</span></label>
@@ -169,17 +176,24 @@
                                 <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Host / Nyonya Rumah</label>
                                 <input type="text" name="host" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
                             </div>
-                            <div>
-                                <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Kategori</label>
-                                <select name="category" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                                    <option value="Ibadah Minggu">Ibadah Minggu</option>
-                                    <option value="Ibadah Kaum Ibu">Ibadah Kaum Ibu</option>
-                                    <option value="Ibadah Kaum Bapa">Ibadah Kaum Bapa</option>
-                                    <option value="Persekutuan Pemuda">Persekutuan Pemuda</option>
-                                    <option value="Persekutuan Anak">Persekutuan Anak</option>
-                                    <option value="Doa Pagi">Doa Pagi</option>
-                                </select>
-                            </div>
+            <div>
+                <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Tipe <span class="text-red-500">*</span></label>
+                <select name="type" x-model="formType" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    <option value="umum">Ibadah Umum</option>
+                    <option value="kategorial">Ibadah Kategorial</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Kategori</label>
+                <select name="category" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    <option value="Ibadah Minggu">Ibadah Minggu</option>
+                    <option value="Ibadah Kaum Ibu">Ibadah Kaum Ibu</option>
+                    <option value="Ibadah Kaum Bapa">Ibadah Kaum Bapa</option>
+                    <option value="Persekutuan Pemuda">Persekutuan Pemuda</option>
+                    <option value="Persekutuan Anak">Persekutuan Anak</option>
+                    <option value="Doa Pagi">Doa Pagi</option>
+                </select>
+            </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Tanggal <span class="text-red-500">*</span></label>
@@ -287,6 +301,8 @@ function openEdit(id) {
         const form = document.getElementById('edit-schedule-form');
         form.action = `/admin/schedules/${id}`;
         form.querySelector('[name="title"]').value = data.title;
+        form.querySelector('[name="type"]').value = data.type || 'umum';
+        Alpine.$data(document.querySelector('[x-data]')).formType = data.type || 'umum';
         form.querySelector('[name="sector"]').value = data.sector || '';
         form.querySelector('[name="location"]').value = data.location || '';
         form.querySelector('[name="host"]').value = data.host || '';

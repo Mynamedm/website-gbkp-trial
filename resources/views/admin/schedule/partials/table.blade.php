@@ -1,20 +1,20 @@
 <div class="overflow-x-auto">
-    <table class="w-full text-sm">
+    <table class="w-full text-sm min-w-[800px]">
         <thead>
             <tr class="border-b border-slate-100">
-                <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Jadwal</th>
+                <th class="sticky left-0 z-20 bg-white text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider border-r border-slate-100/60">Jadwal</th>
                 <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Sektor</th>
                 <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Kategori</th>
                 <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Tanggal & Waktu</th>
                 <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Lokasi</th>
                 <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Status</th>
-                <th class="text-right px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Aksi</th>
+                <th class="sticky right-0 z-20 bg-white text-right px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider border-l border-slate-100/60">Aksi</th>
             </tr>
         </thead>
         <tbody class="divide-y divide-slate-50">
             @forelse($schedules as $schedule)
-                <tr class="hover:bg-slate-50/50">
-                    <td class="px-6 py-3.5">
+                <tr class="group hover:bg-slate-50/50">
+                    <td class="sticky left-0 z-10 bg-white group-hover:bg-slate-50 border-r border-slate-100/60 px-6 py-3.5">
                         <div>
                             <p class="font-semibold text-slate-700 text-[13.5px]">{{ $schedule->title }}</p>
                             <p class="text-slate-400 text-[12px] mt-0.5">{{ $schedule->host ?? '-' }}</p>
@@ -42,7 +42,7 @@
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11.5px] font-medium bg-slate-100 text-slate-500">Inactive</span>
                         @endif
                     </td>
-                    <td class="px-6 py-3.5 text-right">
+                    <td class="sticky right-0 z-10 bg-white group-hover:bg-slate-50 border-l border-slate-100/60 px-6 py-3.5 text-right">
                         <div class="flex items-center justify-end gap-1" x-data>
                             <button x-on:click="$dispatch('edit-schedule', {{ $schedule->id }})" class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>

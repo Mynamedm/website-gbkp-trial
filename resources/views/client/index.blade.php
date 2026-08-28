@@ -94,7 +94,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-end justify-between mb-8">
                 <h2 class="font-display text-slate-800 text-xl sm:text-2xl font-bold">Jadwal Ibadah Terdekat</h2>
-                <a href="#" class="text-blue-600 text-[12.5px] font-semibold hover:underline hidden sm:inline-flex items-center gap-1">
+                <a href="{{ route('client.schedule-worship') }}" class="text-blue-600 text-[12.5px] font-semibold hover:underline hidden sm:inline-flex items-center gap-1">
                     Lihat Semua Jadwal
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
@@ -103,32 +103,27 @@
             </div>
 
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                @php
-                    $jadwal = [
-                        ['nama' => 'Minggu Advent I', 'tanggal' => '27 September 2026', 'waktu' => '08:00 WIB', 'jenis' => 'Ibadah Minggu'],
-                        ['nama' => 'Minggu Advent II', 'tanggal' => '04 September 2026', 'waktu' => '08:00 WIB', 'jenis' => 'Ibadah Minggu'],
-                        ['nama' => 'Minggu Advent III', 'tanggal' => '27 September 2026', 'waktu' => '08:00 WIB', 'jenis' => 'Ibadah Minggu'],
-                    ];
-                @endphp
-                @foreach($jadwal as $item)
-                    <div class="group bg-gradient-to-br from-slate-700 to-slate-800 rounded-2xl p-6 flex items-start gap-4 hover:from-slate-600 hover:to-slate-700 transition-all cursor-pointer">
+                @forelse($schedules as $item)
+                    <a href="{{ route('client.schedule-worship') }}" class="group bg-gradient-to-br from-slate-700 to-slate-800 rounded-2xl p-6 flex items-start gap-4 hover:from-slate-600 hover:to-slate-700 transition-all">
                         <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
                             <svg class="w-6 h-6 text-white/70" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-white font-bold text-[15px] mb-1">{{ $item['nama'] }}</h3>
-                            <p class="text-white/50 text-[12.5px]">{{ $item['tanggal'] }}</p>
-                            <p class="text-white/70 text-[12.5px] mt-0.5">{{ $item['jenis'] }}</p>
-                            <p class="text-white/40 text-[12px] mt-1">{{ $item['waktu'] }}</p>
+                            <h3 class="text-white font-bold text-[15px] mb-1">{{ $item->title }}</h3>
+                            <p class="text-white/50 text-[12.5px]">{{ $item->date->locale('id')->translatedFormat('j F Y') }}</p>
+                            <p class="text-white/70 text-[12.5px] mt-0.5">{{ $item->category ?? 'Ibadah' }}</p>
+                            <p class="text-white/40 text-[12px] mt-1">{{ $item->time ?? '-' }}</p>
                         </div>
-                    </div>
-                @endforeach
+                    </a>
+                @empty
+                    <p class="col-span-full text-slate-400 text-sm">Belum ada jadwal ibadah.</p>
+                @endforelse
             </div>
 
             <div class="mt-5 text-center sm:hidden">
-                <a href="#" class="text-blue-600 text-[12.5px] font-semibold hover:underline">Lihat Semua Jadwal &rarr;</a>
+                <a href="{{ route('client.schedule-worship') }}" class="text-blue-600 text-[12.5px] font-semibold hover:underline">Lihat Semua Jadwal &rarr;</a>
             </div>
         </div>
     </section>
@@ -138,7 +133,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-end justify-between mb-8">
                 <h2 class="font-display text-slate-800 text-xl sm:text-2xl font-bold">Warta Jemaat</h2>
-                <a href="#" class="text-blue-600 text-[12.5px] font-semibold hover:underline hidden sm:inline-flex items-center gap-1">
+                <a href="{{ route('client.announcements') }}" class="text-blue-600 text-[12.5px] font-semibold hover:underline hidden sm:inline-flex items-center gap-1">
                     Lihat Semua Warta
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
@@ -147,25 +142,22 @@
             </div>
 
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                @php
-                    $warta = [
-                        ['judul' => 'Warta Jemaat', 'sub' => 'Minggu Advent', 'tanggal' => '27 September 2026', 'warna' => 'from-sky-100 to-sky-50'],
-                        ['judul' => 'Warta Jemaat', 'sub' => 'Minggu Biasa', 'tanggal' => '20 September 2026', 'warna' => 'from-amber-50 to-orange-50'],
-                        ['judul' => 'Warta Jemaat', 'sub' => 'Minggu Biasa', 'tanggal' => '13 September 2026', 'warna' => 'from-emerald-50 to-green-50'],
-                    ];
-                @endphp
-                @foreach($warta as $item)
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
-                        <div class="bg-gradient-to-br {{ $item['warna'] }} h-36 flex items-center justify-center relative">
-                            <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Foto Warta</span>
+                @forelse($announcements as $item)
+                    <a href="{{ route('client.announcements') }}" class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
+                        <div class="bg-gradient-to-br from-sky-100 to-sky-50 h-36 flex items-center justify-center relative overflow-hidden">
+                            @if($item->image)
+                                <img src="{{ asset('storage/'.$item->image) }}" alt="{{ $item->title }}" class="w-full h-full object-cover">
+                            @else
+                                <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Foto Warta</span>
+                            @endif
                             <span class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm text-[11px] font-medium text-slate-600 px-2.5 py-1 rounded-md">
-                                {{ $item['tanggal'] }}
+                                {{ $item->date->locale('id')->translatedFormat('j F Y') }}
                             </span>
                         </div>
                         <div class="p-4 flex items-center justify-between">
                             <div>
-                                <h3 class="font-bold text-slate-800 text-[14.5px]">{{ $item['judul'] }}</h3>
-                                <p class="text-slate-500 text-[12.5px] mt-0.5">{{ $item['sub'] }}</p>
+                                <h3 class="font-bold text-slate-800 text-[14.5px]">{{ $item->title }}</h3>
+                                <p class="text-slate-500 text-[12.5px] mt-0.5">{{ $item->theme }}</p>
                             </div>
                             <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors shrink-0">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -173,12 +165,14 @@
                                 </svg>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    </a>
+                @empty
+                    <p class="col-span-full text-slate-400 text-sm">Belum ada warta jemaat.</p>
+                @endforelse
             </div>
 
             <div class="mt-5 text-center sm:hidden">
-                <a href="#" class="text-blue-600 text-[12.5px] font-semibold hover:underline">Lihat Semua Warta &rarr;</a>
+                <a href="{{ route('client.announcements') }}" class="text-blue-600 text-[12.5px] font-semibold hover:underline">Lihat Semua Warta &rarr;</a>
             </div>
         </div>
     </section>
@@ -188,7 +182,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-end justify-between mb-8">
                 <h2 class="font-display text-slate-800 text-xl sm:text-2xl font-bold">Kegiatan Gereja</h2>
-                <a href="#" class="text-blue-600 text-[12.5px] font-semibold hover:underline hidden sm:inline-flex items-center gap-1">
+                <a href="{{ route('client.events') }}" class="text-blue-600 text-[12.5px] font-semibold hover:underline hidden sm:inline-flex items-center gap-1">
                     Lihat Semua Kegiatan
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
@@ -197,31 +191,30 @@
             </div>
 
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                @php
-                    $kegiatan = [
-                        ['judul' => 'Ibadah & Persekutuan', 'desc' => 'Kegiatan jemaat GBKP Bandar Lampung', 'tanggal' => '27 September 2026', 'warna' => 'from-sky-100 to-sky-50'],
-                        ['judul' => 'Kegiatan PERMATA', 'desc' => 'Persekutuan dan pelayanan pemuda', 'tanggal' => '05 Oktober 2026', 'warna' => 'from-amber-50 to-orange-50'],
-                        ['judul' => 'Pelayanan Gereja', 'desc' => 'Kegiatan pelayanan dan kebersamaan jemaat', 'tanggal' => '12 Oktober 2026', 'warna' => 'from-emerald-50 to-green-50'],
-                    ];
-                @endphp
-                @foreach($kegiatan as $item)
-                    <div class="bg-white rounded-2xl overflow-hidden border border-slate-100 hover:border-slate-200 hover:shadow-md transition-all group cursor-pointer">
-                        <div class="bg-gradient-to-br {{ $item['warna'] }} h-36 flex items-center justify-center relative">
-                            <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Foto Kegiatan</span>
+                @forelse($events as $item)
+                    <a href="{{ route('client.events') }}" class="bg-white rounded-2xl overflow-hidden border border-slate-100 hover:border-slate-200 hover:shadow-md transition-all group">
+                        <div class="bg-gradient-to-br from-slate-100 to-slate-50 h-36 flex items-center justify-center relative overflow-hidden">
+                            @if($item->image)
+                                <img src="{{ asset('storage/'.$item->image) }}" alt="{{ $item->title }}" class="w-full h-full object-cover">
+                            @else
+                                <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Foto Kegiatan</span>
+                            @endif
                             <span class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm text-[11px] font-medium text-slate-600 px-2.5 py-1 rounded-md">
-                                {{ $item['tanggal'] }}
+                                {{ $item->date->locale('id')->translatedFormat('j F Y') }}
                             </span>
                         </div>
                         <div class="p-4">
-                            <h3 class="font-bold text-slate-800 text-[14.5px]">{{ $item['judul'] }}</h3>
-                            <p class="text-slate-500 text-[12.5px] mt-1 leading-relaxed">{{ $item['desc'] }}</p>
+                            <h3 class="font-bold text-slate-800 text-[14.5px]">{{ $item->title }}</h3>
+                            <p class="text-slate-500 text-[12.5px] mt-1 leading-relaxed line-clamp-2">{{ \Illuminate\Support\Str::limit(strip_tags($item->description), 80) }}</p>
                         </div>
-                    </div>
-                @endforeach
+                    </a>
+                @empty
+                    <p class="col-span-full text-slate-400 text-sm">Belum ada kegiatan gereja.</p>
+                @endforelse
             </div>
 
             <div class="mt-5 text-center sm:hidden">
-                <a href="#" class="text-blue-600 text-[12.5px] font-semibold hover:underline">Lihat Semua Kegiatan &rarr;</a>
+                <a href="{{ route('client.events') }}" class="text-blue-600 text-[12.5px] font-semibold hover:underline">Lihat Semua Kegiatan &rarr;</a>
             </div>
         </div>
     </section>

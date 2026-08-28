@@ -6,7 +6,7 @@
     <section class="bg-gradient-to-r from-slate-800 to-slate-700 py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center gap-2 text-[13px] text-slate-400">
-                <a href="{{ route('home') }}" class="hover:text-white transition-colors">Beranda</a>
+                <a href="{{ route('client.home') }}" class="hover:text-white transition-colors">Beranda</a>
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
                 </svg>

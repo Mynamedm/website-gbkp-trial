@@ -11,25 +11,38 @@ class AdminCategoryController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = (int) $request->input('per_page', 10);
         $search = $request->input('search', '');
         $type = $request->input('type', '');
 
-        $categories = Category::query()
-            ->when($search, function ($q, $search) {
-                $q->where('name', 'like', "%{$search}%");
-            })
-            ->when($type, function ($q, $type) {
-                $q->where('type', $type);
-            })
-            ->latest()
-            ->paginate($perPage);
-
         if ($request->ajax()) {
+            $categories = Category::query()
+                ->when($search, function ($q, $search) {
+                    $q->where('name', 'like', "%{$search}%");
+                })
+                ->when($type, function ($q, $type) {
+                    $q->where('type', $type);
+                })
+                ->latest()
+                ->get();
+
             return view('admin.category.partials.table', compact('categories'));
         }
 
-        return view('admin.category.index', compact('categories'));
+        $eventCategories = Category::where('type', 'event')
+            ->when($search, function ($q, $search) {
+                $q->where('name', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->get();
+
+        $scheduleCategories = Category::where('type', 'schedule')
+            ->when($search, function ($q, $search) {
+                $q->where('name', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->get();
+
+        return view('admin.category.index', compact('eventCategories', 'scheduleCategories'));
     }
 
     public function store(Request $request)

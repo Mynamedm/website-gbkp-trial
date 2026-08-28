@@ -3,12 +3,34 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Announcement;
+use App\Models\Category;
+use App\Models\Event;
+use App\Models\Schedule;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ClientController extends Controller
 {
     public function index()
     {
-        return view('client.index');
+        $schedules = Schedule::where('status', 'active')
+            ->whereDate('date', '>=', now()->toDateString())
+            ->orderBy('date')
+            ->take(6)
+            ->get();
+
+        $announcements = Announcement::where('status', 'active')
+            ->orderByDesc('date')
+            ->take(3)
+            ->get();
+
+        $events = Event::where('status', 'active')
+            ->orderByDesc('date')
+            ->take(3)
+            ->get();
+
+        return view('client.index', compact('schedules', 'announcements', 'events'));
     }
 
     public function announcements()
@@ -61,6 +83,103 @@ class ClientController extends Controller
         }
 
         return view('client.about-kategorial.detail', compact('kategorial', 'slug'));
+    }
+
+    public function events()
+    {
+        $currentYear = date('Y');
+        $years = collect(range($currentYear, $currentYear - 3));
+        $categories = Category::where('type', 'event')->get();
+
+        $categoryColors = $categories->pluck('color', 'name')->toArray();
+
+        $query = Event::where('status', 'published');
+
+        if (request('year')) {
+            $query->whereYear('date', request('year'));
+        }
+        if (request('category')) {
+            $query->where('category', request('category'));
+        }
+        if (request('search')) {
+            $search = strtolower(request('search'));
+            $query->where(function ($q) use ($search) {
+                $q->whereRaw('LOWER(title) like ?', ['%' . $search . '%'])
+                  ->orWhereRaw('LOWER(description) like ?', ['%' . $search . '%']);
+            });
+        }
+
+        $events = $query->latest('date')->paginate(9)->withQueryString();
+
+        $categoryColors = Category::where('type', 'event')->pluck('color', 'name')->toArray();
+
+        return view('client.event.index', compact('events', 'years', 'categories', 'categoryColors'));
+    }
+
+    public function eventSearch(Request $request)
+    {
+        $query = $request->get('q', '');
+        
+        if (strlen($query) < 2) {
+            return response()->json([]);
+        }
+
+        $events = Event::where('status', 'published')
+            ->where(function ($q) use ($query) {
+                $q->whereRaw('LOWER(title) like ?', ['%' . strtolower($query) . '%'])
+                  ->orWhereRaw('LOWER(description) like ?', ['%' . strtolower($query) . '%']);
+            })
+            ->latest('date')
+            ->take(8)
+            ->get(['id', 'title', 'slug', 'description', 'date', 'category', 'location']);
+
+        $results = $events->map(function ($event) {
+            return [
+                'id' => $event->id,
+                'title' => $event->title,
+                'slug' => $event->slug,
+                'description' => Str::limit($event->description, 80),
+                'date' => $event->date->translatedFormat('d M Y'),
+                'category' => $event->category,
+                'location' => $event->location,
+                'url' => route('client.events.detail', $event->slug),
+            ];
+        });
+
+        return response()->json($results);
+    }
+
+    public function eventDetail($slug)
+    {
+        $event = Event::where('slug', $slug)->where('status', 'published')->firstOrFail();
+
+        $relatedEvents = Event::where('status', 'published')
+            ->where('id', '!=', $event->id)
+            ->latest('date')
+            ->take(3)
+            ->get();
+
+        $categoryColors = Category::where('type', 'event')->pluck('color', 'name')->toArray();
+
+        return view('client.event.detail', compact('event', 'relatedEvents', 'categoryColors'));
+    }
+
+    public function eventArchive($year)
+    {
+        $events = Event::where('status', 'published')
+            ->whereYear('date', $year)
+            ->latest('date')
+            ->paginate(9);
+
+        $archiveYears = Event::where('status', 'published')
+            ->selectRaw('EXTRACT(YEAR FROM date) as year, COUNT(*) as count')
+            ->groupByRaw('EXTRACT(YEAR FROM date)')
+            ->orderByDesc('year')
+            ->get();
+
+        $categoryColors = Category::where('type', 'event')->pluck('color', 'name')->toArray();
+
+        return view('client.event.archive', compact('events', 'year', 'archiveYears', 'categoryColors'));
     }
 
     private function getKategorialData($slug)

@@ -1,7 +1,7 @@
 @extends('layouts.admin.app', ['title' => 'Warta Jemaat'])
 
 @section('content')
-<div x-data="{ modal: null, editingId: null, search: '{{ request('search') }}', perPage: '{{ request('per_page', 10) }}', debounceTimer: null }"
+<div id="page-data" x-data="{ modal: null, editingId: null, search: '{{ request('search') }}', perPage: '{{ request('per_page', 10) }}', debounceTimer: null }"
      @edit-announcement.window="editingId = $event.detail; modal = 'edit'"
      @delete-announcement.window="
          Swal.fire({
@@ -30,7 +30,7 @@
          })
      "
 >
-    <div class="bg-white rounded-2xl shadow-sm border border-slate-200">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 sticky top-16 z-30">
         <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
             <h2 class="text-sm font-semibold text-slate-700">Daftar Warta Jemaat</h2>
             <button @click="modal = 'create'" class="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white text-[13px] font-semibold rounded-lg hover:bg-blue-700 transition-colors">
@@ -192,7 +192,7 @@
 function csrf() { return document.querySelector('meta[name="csrf-token"]').content; }
 
 function getParams() {
-    const data = Alpine.$data(document.querySelector('[x-data]'));
+    const data = Alpine.$data(document.getElementById('page-data'));
     return `search=${encodeURIComponent(data.search)}&per_page=${data.perPage}`;
 }
 
@@ -206,7 +206,7 @@ function submitForm(e, form) {
     })
     .then(() => {
         Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Warta berhasil ditambahkan', timer: 1500, showConfirmButton: false, customClass: { popup: 'rounded-2xl' } });
-        form.reset(); loadTable(); Alpine.$data(document.querySelector('[x-data]')).modal = null;
+        form.reset(); loadTable(); Alpine.$data(document.getElementById('page-data')).modal = null;
     })
     .catch(err => {
         if (err.errors) {
@@ -226,7 +226,7 @@ function submitEditForm(e, form) {
     })
     .then(() => {
         Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Warta berhasil diupdate', timer: 1500, showConfirmButton: false, customClass: { popup: 'rounded-2xl' } });
-        Alpine.$data(document.querySelector('[x-data]')).modal = null; loadTable();
+        Alpine.$data(document.getElementById('page-data')).modal = null; loadTable();
     })
     .catch(err => {
         if (err.errors) {
@@ -245,7 +245,7 @@ function loadTable(page = 1) {
 <script>
 document.addEventListener('alpine:init', () => {
     Alpine.effect(() => {
-        const data = Alpine.$data(document.querySelector('[x-data]'));
+        const data = Alpine.$data(document.getElementById('page-data'));
         if (data.editingId && data.modal === 'edit') { openEdit(data.editingId); data.editingId = null; }
     });
 });

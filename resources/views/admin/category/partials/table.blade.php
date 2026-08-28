@@ -1,20 +1,17 @@
-{{ $categories->withQueryString()->links('vendor.pagination.custom') }}
-
 <div class="overflow-x-auto">
-    <table class="w-full text-left">
+    <table class="w-full text-left min-w-[560px]">
         <thead>
             <tr class="border-b border-slate-100">
-                <th class="py-3 px-4 text-[12px] font-semibold text-slate-500 uppercase tracking-wider">No</th>
+                <th class="sticky left-0 z-20 bg-white py-3 px-4 text-[12px] font-semibold text-slate-500 uppercase tracking-wider border-r border-slate-100/60">No</th>
                 <th class="py-3 px-4 text-[12px] font-semibold text-slate-500 uppercase tracking-wider">Nama</th>
                 <th class="py-3 px-4 text-[12px] font-semibold text-slate-500 uppercase tracking-wider">Slug</th>
-                <th class="py-3 px-4 text-[12px] font-semibold text-slate-500 uppercase tracking-wider">Tipe</th>
-                <th class="py-3 px-4 text-[12px] font-semibold text-slate-500 uppercase tracking-wider text-right">Aksi</th>
+                <th class="sticky right-0 z-20 bg-white py-3 px-4 text-[12px] font-semibold text-slate-500 uppercase tracking-wider text-right border-l border-slate-100/60">Aksi</th>
             </tr>
         </thead>
         <tbody class="divide-y divide-slate-50">
             @forelse($categories as $category)
-                <tr class="hover:bg-slate-50/50 transition-colors">
-                    <td class="py-3 px-4 text-[13px] text-slate-500">{{ ($categories->currentPage() - 1) * $categories->perPage() + $loop->iteration }}</td>
+                <tr class="group hover:bg-slate-50/50 transition-colors">
+                    <td class="sticky left-0 z-10 bg-white group-hover:bg-slate-50 border-r border-slate-100/60 py-3 px-4 text-[13px] text-slate-500">{{ $loop->iteration }}</td>
                     <td class="py-3 px-4 text-[13px] font-medium text-slate-700">{{ $category->name }}</td>
                     <td class="py-3 px-4 text-[12px] text-slate-400 font-mono">{{ $category->slug }}</td>
                     <td class="py-3 px-4">
@@ -24,7 +21,7 @@
                             <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-50 text-emerald-600">Jadwal Ibadah</span>
                         @endif
                     </td>
-                    <td class="py-3 px-4 text-right">
+                    <td class="sticky right-0 z-10 bg-white group-hover:bg-slate-50 border-l border-slate-100/60 py-3 px-4 text-right">
                         <div class="flex items-center justify-end gap-1">
                             <button x-on:click="$dispatch('edit-category', {{ $category->id }})" class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors" title="Edit">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>

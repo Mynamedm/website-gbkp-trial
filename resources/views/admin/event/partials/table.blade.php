@@ -1,18 +1,18 @@
 <div class="overflow-x-auto">
-    <table class="w-full text-sm">
+    <table class="w-full text-sm min-w-[680px]">
         <thead>
             <tr class="border-b border-slate-100">
-                <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Event</th>
+                <th class="sticky left-0 z-20 bg-white text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider border-r border-slate-100/60">Event</th>
                 <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Tanggal</th>
                 <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Kategori</th>
                 <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Status</th>
-                <th class="text-right px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Aksi</th>
+                <th class="sticky right-0 z-20 bg-white text-right px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider border-l border-slate-100/60">Aksi</th>
             </tr>
         </thead>
         <tbody class="divide-y divide-slate-50">
             @forelse($events as $event)
-                <tr class="hover:bg-slate-50/50">
-                    <td class="px-6 py-3.5">
+                <tr class="group hover:bg-slate-50/50">
+                    <td class="sticky left-0 z-10 bg-white group-hover:bg-slate-50 border-r border-slate-100/60 px-6 py-3.5">
                         <div>
                             <p class="font-semibold text-slate-700 text-[13.5px]">{{ $event->title }}</p>
                             <p class="text-slate-400 text-[12px] mt-0.5">{{ $event->location ?? '-' }}</p>
@@ -33,7 +33,7 @@
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11.5px] font-medium bg-slate-100 text-slate-500">Archived</span>
                         @endif
                     </td>
-                    <td class="px-6 py-3.5 text-right">
+                    <td class="sticky right-0 z-10 bg-white group-hover:bg-slate-50 border-l border-slate-100/60 px-6 py-3.5 text-right">
                         <div class="flex items-center justify-end gap-1" x-data>
                             <button x-on:click="$dispatch('edit-event', {{ $event->id }})" class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

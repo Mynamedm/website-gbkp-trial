@@ -33,38 +33,20 @@ class AdminScheduleController extends Controller
         return view('admin.schedule.index', compact('schedules', 'categories'));
     }
 
-    public function umum(Request $request)
-    {
-        $perPage = (int) $request->input('per_page', 10);
-        $search = $request->input('search', '');
-
-        $schedules = Schedule::with('categoryRel')
-            ->whereNull('category_id')
-            ->latest('date')
-            ->when($search, function ($q, $search) {
-                $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('sector', 'like', "%{$search}%")
-                  ->orWhere('location', 'like', "%{$search}%")
-                  ->orWhere('host', 'like', "%{$search}%");
-            })
-            ->paginate($perPage);
-
-        if ($request->ajax()) {
-            return view('admin.schedule.partials.table', compact('schedules'));
-        }
-
-        $categories = Category::where('type', 'schedule')->orderBy('name')->get();
-
-        return view('admin.schedule.umum', compact('schedules', 'categories'));
-    }
-
     public function kategorial(Request $request)
     {
         $perPage = (int) $request->input('per_page', 10);
         $search = $request->input('search', '');
+        $categoryId = $request->input('category_id', '');
+        $sector = $request->input('sector', '');
 
         $schedules = Schedule::with('categoryRel')
-            ->whereNotNull('category_id')
+            ->when($categoryId, function ($q, $categoryId) {
+                $q->where('category_id', $categoryId);
+            })
+            ->when($sector, function ($q, $sector) {
+                $q->where('sector', $sector);
+            })
             ->latest('date')
             ->when($search, function ($q, $search) {
                 $q->where('title', 'like', "%{$search}%")
@@ -80,7 +62,7 @@ class AdminScheduleController extends Controller
 
         $categories = Category::where('type', 'schedule')->orderBy('name')->get();
 
-        return view('admin.schedule.kategorial', compact('schedules', 'categories'));
+        return view('admin.schedule.kategorial', compact('schedules', 'categories', 'categoryId', 'sector'));
     }
 
     public function store(Request $request)
@@ -136,7 +118,9 @@ class AdminScheduleController extends Controller
             $cat = Category::find($validated['category_id']);
             $validated['category'] = $cat?->name;
         } else {
-            $validated['category'] = null;
+            if (empty($validated['category'])) {
+                $validated['category'] = null;
+            }
         }
 
         if ($request->hasFile('image')) {

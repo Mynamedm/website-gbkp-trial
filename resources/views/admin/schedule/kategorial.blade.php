@@ -1,7 +1,18 @@
 @extends('layouts.admin.app', ['title' => 'Ibadah Kategorial'])
 
 @section('content')
-<div x-data="{ modal: null, editingId: null, search: '{{ request('search') }}', perPage: '{{ request('per_page', 10) }}', debounceTimer: null }"
+<div x-data="{ modal: null, editingId: null, search: '{{ request('search') }}', perPage: '{{ request('per_page', 10) }}', debounceTimer: null, categoryFilter: '{{ request('category_id') }}', sectorFilter: '{{ request('sector') }}', sectorOptions: [], sectorLabel: 'Sektor',
+    init() { this.syncSector(); },
+    syncSector() {
+        const slug = window.categorySlugs[this.categoryFilter];
+        const map = window.sectorMap[slug] || { label: 'Sektor', options: [] };
+        this.sectorLabel = map.label;
+        this.sectorOptions = map.options;
+        if (this.sectorFilter && !map.options.includes(this.sectorFilter)) {
+            this.sectorFilter = '';
+        }
+    }
+}"
      @edit-schedule.window="editingId = $event.detail; modal = 'edit'"
      @delete-schedule.window="
          Swal.fire({
@@ -30,7 +41,7 @@
          })
      "
 >
-    <div class="bg-white rounded-2xl shadow-sm border border-slate-200">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 sticky top-16 z-30">
         <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
             <h2 class="text-sm font-semibold text-slate-700">Daftar Ibadah Kategorial</h2>
             <button @click="modal = 'create'" class="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white text-[13px] font-semibold rounded-lg hover:bg-blue-700 transition-colors">
@@ -39,12 +50,26 @@
             </button>
         </div>
 
-        <div class="px-6 py-3 border-b border-slate-100 flex items-center gap-3">
-            <div class="relative flex-1 max-w-xs">
+        <div class="px-6 py-3 border-b border-slate-100 flex flex-wrap items-center gap-3">
+            <div class="relative flex-1 min-w-[200px] max-w-xs">
                 <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
                 <input x-model="search" x-on:input="clearTimeout(debounceTimer); debounceTimer = setTimeout(() => loadTable(), 300)" type="text" placeholder="Cari jadwal..."
                        class="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-[13px] focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
             </div>
+            <select x-model="categoryFilter" x-on:change="syncSector(); loadTable()" class="border border-slate-200 rounded-lg px-3 py-2 text-[13px] text-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                <option value="">Semua Kategorial</option>
+                @foreach($categories as $cat)
+                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                @endforeach
+            </select>
+            <template x-if="sectorOptions.length > 0">
+                <select x-model="sectorFilter" x-on:change="loadTable()" class="border border-slate-200 rounded-lg px-3 py-2 text-[13px] text-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    <option value="" x-text="'Semua ' + sectorLabel"></option>
+                    <template x-for="opt in sectorOptions" :key="opt">
+                        <option :value="opt" x-text="opt"></option>
+                    </template>
+                </select>
+            </template>
             <select x-model="perPage" x-on:change="loadTable()" class="border border-slate-200 rounded-lg px-3 py-2 text-[13px] text-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
                 <option value="10">10</option>
                 <option value="50">50</option>
@@ -70,21 +95,20 @@
                     </div>
                     <form id="create-schedule-form" onsubmit="submitForm(event, this)" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" name="category_id" value="">
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Judul <span class="text-red-500">*</span></label>
                                 <input type="text" name="title" required placeholder="Ibadah Moria" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
                             </div>
-                            <div>
-                                <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Kategori <span class="text-red-500">*</span></label>
-                                <select name="category_id" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                                    <option value="">Pilih Kategori</option>
-                                    @foreach($categories as $cat)
-                                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+            <div>
+                <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Kategori <span class="text-red-500">*</span></label>
+                <select name="category_id" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    <option value="">Pilih Kategori</option>
+                    @foreach($categories as $cat)
+                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                    @endforeach
+                </select>
+            </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Sektor</label>
@@ -154,15 +178,15 @@
                                 <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Judul <span class="text-red-500">*</span></label>
                                 <input type="text" name="title" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
                             </div>
-                            <div>
-                                <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Kategori</label>
-                                <select name="category_id" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                                    <option value="">Pilih Kategori</option>
-                                    @foreach($categories as $cat)
-                                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+            <div>
+                <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Kategori <span class="text-red-500">*</span></label>
+                <select name="category_id" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    <option value="">Pilih Kategori</option>
+                    @foreach($categories as $cat)
+                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                    @endforeach
+                </select>
+            </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Sektor</label>
@@ -218,9 +242,23 @@
 <script>
 function csrf() { return document.querySelector('meta[name="csrf-token"]').content; }
 
+const categorySlugs = @json($categories->pluck('slug', 'id')->toArray());
+window.categorySlugs = categorySlugs;
+
+const sectorMap = {
+    mamre:   { label: 'Sektor', options: ['Kanaan', 'Galilea', 'Betesda', 'Jerusalem', 'Pilipi'] },
+    moria:   { label: 'Sektor', options: ['Yerikho', 'Nazareth', 'Tiberias', 'Getsemani', 'Jerusalem', 'Kapernaum', 'Bethany'] },
+    pjj:     { label: 'Sektor', options: ['Yerikho', 'Nazareth', 'Tiberias', 'Getsemani', 'Jerusalem', 'Kapernaum', 'Bethany'] },
+    permata: { label: 'Sektor', options: [] },
+    saitun:  { label: 'Sektor', options: [] },
+    naomi:   { label: 'Sektor', options: [] },
+    kakr:    { label: 'Kelas', options: ['Kelas Batita-Balita', 'Kelas Kecil', 'Kelas Tanggung', 'Kelas Remaja'] },
+};
+window.sectorMap = sectorMap;
+
 function getParams() {
     const data = Alpine.$data(document.querySelector('[x-data]'));
-    return `search=${encodeURIComponent(data.search)}&per_page=${data.perPage}`;
+    return `search=${encodeURIComponent(data.search)}&per_page=${data.perPage}&category_id=${data.categoryFilter}&sector=${encodeURIComponent(data.sectorFilter)}`;
 }
 
 function submitForm(e, form) {
@@ -264,7 +302,7 @@ function submitEditForm(e, form) {
 }
 
 function loadTable(page = 1) {
-    fetch(`/admin/schedules/kategorial?page=${page}&${getParams()}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+    fetch(`/admin/jadwal-ibadah/kategorial?page=${page}&${getParams()}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
     .then(r => r.text())
     .then(html => { document.getElementById('schedule-table-container').innerHTML = html; });
 }

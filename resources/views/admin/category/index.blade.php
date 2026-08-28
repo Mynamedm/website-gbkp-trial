@@ -1,7 +1,7 @@
 @extends('layouts.admin.app', ['title' => 'Kategori'])
 
 @section('content')
-<div x-data="{ modal: null, editingId: null, search: '{{ request('search') }}', perPage: '{{ request('per_page', 10) }}', filterType: '{{ request('type') }}', debounceTimer: null }"
+<div x-data="{ modal: null, editingId: null, eventSearch: '{{ request('search') }}', scheduleSearch: '{{ request('search') }}', debounceTimer: null, createType: 'event' }"
      @edit-category.window="editingId = $event.detail; modal = 'edit'"
      @delete-category.window="
          Swal.fire({
@@ -24,42 +24,56 @@
                  .then(({ ok, d }) => {
                      if (!ok) { Swal.fire({ icon: 'error', title: 'Gagal', text: d.message || 'Terjadi kesalahan', customClass: { popup: 'rounded-2xl' } }); return; }
                      Swal.fire({ icon: 'success', title: 'Terhapus', text: 'Kategori berhasil dihapus', timer: 1500, showConfirmButton: false, customClass: { popup: 'rounded-2xl' } });
-                     loadTable();
+                     loadTable('event'); loadTable('schedule');
                  });
              }
          })
      "
 >
-    <div class="bg-white rounded-2xl shadow-sm border border-slate-200">
-        <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-            <h2 class="text-sm font-semibold text-slate-700">Daftar Kategori</h2>
-            <button @click="modal = 'create'" class="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white text-[13px] font-semibold rounded-lg hover:bg-blue-700 transition-colors">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
-                Tambah Kategori
-            </button>
-        </div>
+    <div class="grid lg:grid-cols-2 gap-6">
 
-        <div class="px-6 py-3 border-b border-slate-100 flex items-center gap-3">
-            <div class="relative flex-1 max-w-xs">
-                <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
-                <input x-model="search" x-on:input="clearTimeout(debounceTimer); debounceTimer = setTimeout(() => loadTable(), 300)" type="text" placeholder="Cari kategori..."
-                       class="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-[13px] focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+        {{-- KATEGORI EVENT --}}
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 sticky top-16 z-30 self-start">
+            <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+                <h2 class="text-sm font-semibold text-slate-700">Kategori Event</h2>
+                <button @click="createType = 'event'; modal = 'create'" class="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white text-[13px] font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                    Tambah
+                </button>
             </div>
-            <select x-model="filterType" x-on:change="loadTable()" class="border border-slate-200 rounded-lg px-3 py-2 text-[13px] text-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                <option value="">Semua Tipe</option>
-                <option value="event">Event</option>
-                <option value="schedule">Jadwal Ibadah</option>
-            </select>
-            <select x-model="perPage" x-on:change="loadTable()" class="border border-slate-200 rounded-lg px-3 py-2 text-[13px] text-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                <option value="10">10</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select>
+            <div class="px-6 py-3 border-b border-slate-100">
+                <div class="relative max-w-xs">
+                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+                    <input x-model="eventSearch" x-on:input="clearTimeout(debounceTimer); debounceTimer = setTimeout(() => loadTable('event'), 300)" type="text" placeholder="Cari kategori event..."
+                           class="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-[13px] focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                </div>
+            </div>
+            <div id="event-table-container">
+                @include('admin.category.partials.table', ['categories' => $eventCategories])
+            </div>
         </div>
 
-        <div id="category-table-container">
-            @include('admin.category.partials.table')
+        {{-- KATEGORI JADWAL IBADAH --}}
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 sticky top-16 z-30 self-start">
+            <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+                <h2 class="text-sm font-semibold text-slate-700">Kategori Jadwal Ibadah</h2>
+                <button @click="createType = 'schedule'; modal = 'create'" class="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-600 text-white text-[13px] font-semibold rounded-lg hover:bg-emerald-700 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                    Tambah
+                </button>
+            </div>
+            <div class="px-6 py-3 border-b border-slate-100">
+                <div class="relative max-w-xs">
+                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+                    <input x-model="scheduleSearch" x-on:input="clearTimeout(debounceTimer); debounceTimer = setTimeout(() => loadTable('schedule'), 300)" type="text" placeholder="Cari kategori jadwal..."
+                           class="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-[13px] focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                </div>
+            </div>
+            <div id="schedule-table-container">
+                @include('admin.category.partials.table', ['categories' => $scheduleCategories])
+            </div>
         </div>
+
     </div>
 
     {{-- Create Modal --}}
@@ -82,10 +96,9 @@
                             </div>
                             <div>
                                 <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Tipe <span class="text-red-500">*</span></label>
-                                <select name="type" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                                    <option value="event">Event</option>
-                                    <option value="schedule">Jadwal Ibadah</option>
-                                </select>
+                                <input type="hidden" name="type" :value="createType">
+                                <span x-show="createType === 'event'" class="inline-flex items-center px-2.5 py-1 rounded-md text-[12px] font-medium bg-blue-50 text-blue-600">Event</span>
+                                <span x-show="createType === 'schedule'" class="inline-flex items-center px-2.5 py-1 rounded-md text-[12px] font-medium bg-emerald-50 text-emerald-600">Jadwal Ibadah</span>
                             </div>
                         </div>
                         <div class="flex justify-end gap-2 mt-6 pt-4 border-t border-slate-100">
@@ -140,9 +153,12 @@
 <script>
 function csrf() { return document.querySelector('meta[name="csrf-token"]').content; }
 
-function getParams() {
+function loadTable(type) {
     const data = Alpine.$data(document.querySelector('[x-data]'));
-    return `search=${encodeURIComponent(data.search)}&per_page=${data.perPage}&type=${encodeURIComponent(data.filterType)}`;
+    const search = type === 'event' ? data.eventSearch : data.scheduleSearch;
+    fetch(`/admin/categories?type=${type}&search=${encodeURIComponent(search)}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+    .then(r => r.text())
+    .then(html => { document.getElementById(`${type}-table-container`).innerHTML = html; });
 }
 
 function submitForm(e, form) {
@@ -155,7 +171,8 @@ function submitForm(e, form) {
     })
     .then(() => {
         Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Kategori berhasil ditambahkan', timer: 1500, showConfirmButton: false, customClass: { popup: 'rounded-2xl' } });
-        form.reset(); loadTable(); Alpine.$data(document.querySelector('[x-data]')).modal = null;
+        form.reset(); Alpine.$data(document.querySelector('[x-data]')).modal = null;
+        loadTable('event'); loadTable('schedule');
     })
     .catch(err => {
         if (err.errors) {
@@ -175,7 +192,8 @@ function submitEditForm(e, form) {
     })
     .then(() => {
         Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Kategori berhasil diupdate', timer: 1500, showConfirmButton: false, customClass: { popup: 'rounded-2xl' } });
-        Alpine.$data(document.querySelector('[x-data]')).modal = null; loadTable();
+        Alpine.$data(document.querySelector('[x-data]')).modal = null;
+        loadTable('event'); loadTable('schedule');
     })
     .catch(err => {
         if (err.errors) {
@@ -183,12 +201,6 @@ function submitEditForm(e, form) {
             Swal.fire({ icon: 'error', title: 'Validasi Gagal', html: msgs, customClass: { popup: 'rounded-2xl' } });
         }
     });
-}
-
-function loadTable(page = 1) {
-    fetch(`/admin/categories?page=${page}&${getParams()}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
-    .then(r => r.text())
-    .then(html => { document.getElementById('category-table-container').innerHTML = html; });
 }
 </script>
 <script>

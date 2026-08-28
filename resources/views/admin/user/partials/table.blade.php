@@ -1,18 +1,18 @@
 <div class="overflow-x-auto">
-    <table class="w-full text-sm">
+    <table class="w-full text-sm min-w-[740px]">
         <thead>
             <tr class="border-b border-slate-100">
-                <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">User</th>
+                <th class="sticky left-0 z-20 bg-white text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider border-r border-slate-100/60">User</th>
                 <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Email</th>
                 <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Role</th>
                 <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Bergabung</th>
-                <th class="text-right px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Aksi</th>
+                <th class="sticky right-0 z-20 bg-white text-right px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider border-l border-slate-100/60">Aksi</th>
             </tr>
         </thead>
         <tbody class="divide-y divide-slate-50">
             @forelse($users as $user)
-                <tr class="hover:bg-slate-50/50">
-                    <td class="px-6 py-3.5">
+                <tr class="group hover:bg-slate-50/50">
+                    <td class="sticky left-0 z-10 bg-white group-hover:bg-slate-50 border-r border-slate-100/60 px-6 py-3.5">
                         <div class="flex items-center gap-3">
                             <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 text-xs font-bold shrink-0">
                                 {{ substr($user->name, 0, 1) }}
@@ -33,7 +33,7 @@
                         @endforeach
                     </td>
                     <td class="px-6 py-3.5 text-slate-500 text-[13px]">{{ $user->created_at->format('d M Y') }}</td>
-                    <td class="px-6 py-3.5 text-right">
+                    <td class="sticky right-0 z-10 bg-white group-hover:bg-slate-50 border-l border-slate-100/60 px-6 py-3.5 text-right">
                         <div class="flex items-center justify-end gap-1" x-data>
                             <button x-on:click="$dispatch('edit-user', {{ $user->id }})" class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

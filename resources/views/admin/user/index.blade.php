@@ -1,7 +1,7 @@
 @extends('layouts.admin.app', ['title' => 'Users'])
 
 @section('content')
-<div x-data="{ modal: null, editingId: null, search: '{{ request('search') }}', perPage: '{{ request('per_page', 10) }}', debounceTimer: null }"
+<div id="page-data" x-data="{ modal: null, editingId: null, search: '{{ request('search') }}', perPage: '{{ request('per_page', 10) }}', debounceTimer: null }"
      @edit-user.window="editingId = $event.detail; modal = 'edit'"
      @delete-user.window="
          Swal.fire({
@@ -30,7 +30,7 @@
          })
      "
 >
-    <div class="bg-white rounded-2xl shadow-sm border border-slate-200">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 sticky top-16 z-30">
         <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
             <h2 class="text-sm font-semibold text-slate-700">Daftar User</h2>
             <button @click="modal = 'create'" class="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white text-[13px] font-semibold rounded-lg hover:bg-blue-700 transition-colors">
@@ -174,11 +174,11 @@ function csrf() {
 }
 
 function close() {
-    Alpine.$data(document.querySelector('[x-data]')).modal = null;
+    Alpine.$data(document.getElementById('page-data')).modal = null;
 }
 
 function getUserParams() {
-    const el = document.querySelector('[x-data]');
+    const el = document.getElementById('page-data');
     const data = Alpine.$data(el);
     return `search=${encodeURIComponent(data.search)}&per_page=${data.perPage}`;
 }
@@ -243,7 +243,7 @@ function loadUserTable(page = 1) {
 <script>
 document.addEventListener('alpine:init', () => {
     Alpine.effect(() => {
-        const data = Alpine.$data(document.querySelector('[x-data]'));
+        const data = Alpine.$data(document.getElementById('page-data'));
         if (data.editingId && data.modal === 'edit') {
             openEditUser(data.editingId);
             data.editingId = null;

@@ -32,13 +32,13 @@
                 ['label' => 'Kategori', 'route' => 'admin.categories.index', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z"/>'],
             ];
 
-            $jadwalActive = in_array($current, ['admin.schedules.index', 'admin.schedules.umum', 'admin.schedules.kategorial']);
+            $jadwalActive = in_array($current, ['admin.schedules.index', 'admin.schedules.kategorial', 'admin.worships.index']);
 
             if(auth()->user()->hasRole('super_admin')) {
                 $navItems[] = ['label' => 'Users', 'route' => 'admin.users.index', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/>'];
             }
 
-            $navItems[] = ['label' => 'Kembali ke Site', 'route' => 'home', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"/>'];
+            $navItems[] = ['label' => 'Kembali ke Site', 'route' => 'client.home', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"/>'];
         @endphp
 
         @foreach($navItems as $item)
@@ -69,10 +69,10 @@
                          x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
                          x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-1">
                         <div class="ml-5 pl-4 border-l border-slate-600 space-y-0.5 mt-0.5 mb-1">
-                            <a href="{{ route('admin.schedules.umum') }}"
-                               class="flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium transition-colors
-                                      {{ $current === 'admin.schedules.umum' ? 'bg-blue-600/20 text-blue-400' : 'text-slate-400 hover:bg-slate-700/50 hover:text-white' }}">
-                                <span class="w-1.5 h-1.5 rounded-full {{ $current === 'admin.schedules.umum' ? 'bg-blue-400' : 'bg-slate-500' }}"></span>
+                            <a href="{{ route('admin.worships.index') }}"
+                                class="flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium transition-colors
+                                       {{ $current === 'admin.worships.index' ? 'bg-blue-600/20 text-blue-400' : 'text-slate-400 hover:bg-slate-700/50 hover:text-white' }}">
+                                <span class="w-1.5 h-1.5 rounded-full {{ $current === 'admin.worships.index' ? 'bg-blue-400' : 'bg-slate-500' }}"></span>
                                 Ibadah Umum
                             </a>
                             <a href="{{ route('admin.schedules.kategorial') }}"
