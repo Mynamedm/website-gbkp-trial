@@ -23,7 +23,7 @@
                         ['label' => 'Beranda', 'route' => route('home')],
                         ['label' => 'Warta Jemaat', 'route' => route('client.announcements')],
                         ['label' => 'Jadwal Ibadah', 'route' => 'schedule-dropdown'],
-                        ['label' => 'Tentang Gereja', 'route' => '#'],
+                        ['label' => 'Tentang', 'route' => 'about-dropdown'],
                         ['label' => 'Kegiatan Gereja', 'route' => '#'],
                         ['label' => 'Struktur Organisasi', 'route' => '#'],
                     ];
@@ -37,11 +37,46 @@
                         ['label' => 'Saitun', 'route' => route('client.schedule-worship.detail', 7), 'pattern' => 'jadwal-ibadah/7'],
                         ['label' => 'Naomi', 'route' => route('client.schedule-worship.detail', 8), 'pattern' => 'jadwal-ibadah/8'],
                     ];
+                    $aboutCategories = [
+                        ['label' => 'Tentang Gereja', 'route' => route('client.about-church'), 'pattern' => 'tentang-gereja'],
+                        ['label' => 'Tentang Kategorial', 'route' => route('client.about-kategorial'), 'pattern' => 'tentang-kategorial'],
+                    ];
                     $isScheduleActive = request()->is('jadwal-ibadah*');
+                    $isAboutActive = request()->is('tentang-gereja*') || request()->is('tentang-kategorial*');
                 @endphp
 
                 @foreach($navItems as $item)
-                    @if($item['route'] === 'schedule-dropdown')
+                    @if($item['route'] === 'about-dropdown')
+                        {{-- Tentang Dropdown --}}
+                        <div x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" class="relative">
+                            <a href="{{ route('client.about-church') }}"
+                               class="px-3 py-2 text-[13.5px] font-medium rounded-md transition-colors inline-flex items-center gap-1
+                                      {{ $isAboutActive ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' }}">
+                                Tentang
+                                <svg class="w-3.5 h-3.5 transition-transform duration-200" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
+                                </svg>
+                            </a>
+                            <div x-show="open" x-cloak
+                                 x-transition:enter="transition ease-out duration-200"
+                                 x-transition:enter-start="opacity-0 translate-y-1"
+                                 x-transition:enter-end="opacity-100 translate-y-0"
+                                 x-transition:leave="transition ease-in duration-150"
+                                 x-transition:leave-start="opacity-100 translate-y-0"
+                                 x-transition:leave-end="opacity-0 -translate-y-1"
+                                 class="absolute left-0 top-full pt-1 z-50">
+                                <div class="bg-white rounded-xl shadow-lg border border-slate-100 py-2 w-56">
+                                    @foreach($aboutCategories as $cat)
+                                        <a href="{{ $cat['route'] }}"
+                                           class="block px-4 py-2 text-[13px] font-medium transition-colors
+                                                  {{ request()->is($cat['pattern']) ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' }}">
+                                            {{ $cat['label'] }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    @elseif($item['route'] === 'schedule-dropdown')
                         {{-- Jadwal Ibadah Dropdown --}}
                         <div x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" class="relative">
                             <a href="{{ route('client.schedule-worship') }}"
@@ -117,7 +152,7 @@
          class="lg:hidden border-t border-slate-100 bg-white">
         <div class="px-4 py-3 space-y-1">
             @foreach($navItems as $item)
-                @if($item['route'] !== 'schedule-dropdown')
+                @if($item['route'] !== 'schedule-dropdown' && $item['route'] !== 'about-dropdown')
                     <a href="{{ $item['route'] }}"
                        class="block px-3 py-2.5 text-[14px] font-medium rounded-lg
                               {{ $item['route'] !== '#' && $currentUrl === $item['route'] ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:bg-slate-50' }}">
@@ -134,6 +169,22 @@
             </a>
             <div class="pl-4 space-y-0.5">
                 @foreach($scheduleCategories as $cat)
+                    <a href="{{ $cat['route'] }}"
+                       class="block px-3 py-2 text-[13px] font-medium rounded-lg
+                              {{ request()->is($cat['pattern']) ? 'text-blue-700 bg-blue-50' : 'text-slate-500 hover:bg-slate-50' }}">
+                        {{ $cat['label'] }}
+                    </a>
+                @endforeach
+            </div>
+
+            {{-- Tentang --}}
+            <a href="{{ route('client.about-church') }}"
+               class="block px-3 py-2.5 text-[14px] font-medium rounded-lg
+                      {{ $isAboutActive ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:bg-slate-50' }}">
+                Tentang
+            </a>
+            <div class="pl-4 space-y-0.5">
+                @foreach($aboutCategories as $cat)
                     <a href="{{ $cat['route'] }}"
                        class="block px-3 py-2 text-[13px] font-medium rounded-lg
                               {{ request()->is($cat['pattern']) ? 'text-blue-700 bg-blue-50' : 'text-slate-500 hover:bg-slate-50' }}">

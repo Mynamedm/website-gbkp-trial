@@ -14,6 +14,9 @@ Route::get('/warta-jemaat', [ClientController::class, 'announcements'])->name('c
 Route::get('/jadwal-ibadah', [ClientController::class, 'scheduleWorship'])->name('client.schedule-worship');
 Route::get('/jadwal-ibadah/umum', [ClientController::class, 'scheduleWorshipUmum'])->name('client.schedule-worship.umum');
 Route::get('/jadwal-ibadah/{id}', [ClientController::class, 'scheduleWorshipDetail'])->name('client.schedule-worship.detail');
+Route::get('/tentang-gereja', [ClientController::class, 'aboutChurch'])->name('client.about-church');
+Route::get('/tentang-kategorial', [ClientController::class, 'aboutKategorial'])->name('client.about-kategorial');
+Route::get('/tentang-kategorial/{slug}', [ClientController::class, 'kategorialDetail'])->name('client.kategorial-detail');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
