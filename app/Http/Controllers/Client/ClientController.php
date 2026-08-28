@@ -21,6 +21,11 @@ class ClientController extends Controller
         return view('client.schedule-worship.index');
     }
 
+    public function scheduleWorshipUmum()
+    {
+        return view('client.schedule-worship.umum');
+    }
+
     public function scheduleWorshipDetail($id)
     {
         $kategori = $this->getKategori($id);
@@ -32,8 +37,9 @@ class ClientController extends Controller
         $sektor = $this->getSektor($id);
         $hostLabel = $this->getHostLabel($id);
         $petugas = $this->getPetugas($id);
+        $permataEvent = in_array($id, [5, 7, 8]) ? $this->getPermataEvent($id) : null;
 
-        return view('client.schedule-worship.detail', compact('kategori', 'sektor', 'hostLabel', 'petugas'));
+        return view('client.schedule-worship.detail', compact('kategori', 'sektor', 'hostLabel', 'petugas', 'permataEvent'));
     }
 
     private function getKategori($id)
@@ -75,9 +81,9 @@ class ClientController extends Controller
                 'breadcrumb' => 'Permata',
                 'judul' => 'PERMATA',
                 'deskripsi' => 'Jadwal ibadah pemuda-pemudi di GBKP Bandar Lampung.',
-                'type' => 'sektor',
-                'section_title' => 'Sektor Pelayanan PERMATA',
-                'section_subtitle' => 'Jadwal ibadah berdasarkan sektor pelayanan PERMATA GBKP Bandar Lampung',
+                'type' => 'permata',
+                'section_title' => 'Kegiatan PERMATA',
+                'section_subtitle' => 'Jadwal kegiatan ibadah pemuda-pemudi GBKP Bandar Lampung',
             ],
             6 => [
                 'breadcrumb' => 'KA-KR',
@@ -91,17 +97,17 @@ class ClientController extends Controller
                 'breadcrumb' => 'Saitun',
                 'judul' => 'SAITUN',
                 'deskripsi' => 'Jadwal ibadah kaum lansia di GBKP Bandar Lampung.',
-                'type' => 'sektor',
-                'section_title' => 'Sektor Pelayanan SAITUN',
-                'section_subtitle' => 'Jadwal ibadah berdasarkan sektor pelayanan SAITUN GBKP Bandar Lampung',
+                'type' => 'permata',
+                'section_title' => 'Kegiatan SAITUN',
+                'section_subtitle' => 'Jadwal kegiatan ibadah kaum lansia GBKP Bandar Lampung',
             ],
             8 => [
                 'breadcrumb' => 'Naomi',
                 'judul' => 'NAOMI',
                 'deskripsi' => 'Jadwal ibadah kaum janda di GBKP Bandar Lampung.',
-                'type' => 'sektor',
-                'section_title' => 'Sektor Pelayanan NAOMI',
-                'section_subtitle' => 'Jadwal ibadah berdasarkan sektor pelayanan NAOMI GBKP Bandar Lampung',
+                'type' => 'permata',
+                'section_title' => 'Kegiatan NAOMI',
+                'section_subtitle' => 'Jadwal kegiatan ibadah kaum janda GBKP Bandar Lampung',
             ],
         ];
 
@@ -288,5 +294,71 @@ class ClientController extends Controller
                 'ayat' => '( 2 Timotius 2 : 1 )',
             ],
         ];
+    }
+
+    private function getPermataEvent($id)
+    {
+        $events = [
+            5 => [
+                'judul' => 'Kebaktian Malam PERMATA',
+                'tanggal' => 'Sabtu, 29 Agustus 2026',
+                'waktu' => '19:00 - Selesai',
+                'lokasi' => 'GBKP Bandar Lampung',
+                'tema' => 'Kristus Harapan Kemuliaan',
+                'ayat_tema' => 'Kolose 1:27',
+                'pembicara' => 'Pdt. Edy Surbakti, S.Th',
+                'worship_leader' => 'Angelica Br. Surbakti',
+                'gitaris' => 'Viko Alexandro Sebayang',
+                'cajonist' => 'Riko Manurung',
+                'basist' => 'Daniel Siahaan',
+                'singer_1' => 'Melpa Br. Surbakti',
+                'singer_2' => 'Nora Nd. Bara Sembiring',
+                'multimedia' => 'Claresta Br. Ginting',
+                'dokumentasi' => [
+                    'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=600&q=80',
+                    'https://images.unsplash.com/photo-1438232992990-99d20e86b633?w=600&q=80',
+                    'https://images.unsplash.com/photo-1529070538774-1843cb3265df?w=600&q=80',
+                ],
+                'kegiatan' => [
+                    ['kode' => 'KMP', 'nama' => 'Kebaktian Malam PERMATA', 'route' => '#'],
+                    ['kode' => 'PA', 'nama' => 'Pendalaman Alkitab', 'route' => '#'],
+                    ['kode' => 'Jam Doa', 'nama' => 'Ibadah Jam doa', 'route' => '#'],
+                ],
+            ],
+            7 => [
+                'judul' => 'Ibadah Lansia SAITUN',
+                'tanggal' => 'Minggu, 30 Agustus 2026',
+                'waktu' => '09:00 - Selesai',
+                'lokasi' => 'GBKP Bandar Lampung',
+                'tema' => 'Tetap Setia Sampai Akhir',
+                'ayat_tema' => '2 Timotius 4:7',
+                'pembicara' => 'Pdt. Andreas Pranata Meliala, M.Th',
+                'dokumentasi' => [
+                    'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=600&q=80',
+                    'https://images.unsplash.com/photo-1438232992990-99d20e86b633?w=600&q=80',
+                ],
+                'kegiatan' => [
+                    ['kode' => 'Riwayat Ibadah', 'nama' => 'Riwayat Ibadah Saitun', 'route' => '#'],
+                ],
+            ],
+            8 => [
+                'judul' => 'Ibadah Janda NAOMI',
+                'tanggal' => 'Sabtu, 5 September 2026',
+                'waktu' => '10:00 - Selesai',
+                'lokasi' => 'GBKP Bandar Lampung',
+                'tema' => 'Kuat dan Berserah',
+                'ayat_tema' => 'Yesaya 41:10',
+                'pembicara' => 'Pdt. Edy Surbakti, S.Th',
+                'dokumentasi' => [
+                    'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=600&q=80',
+                    'https://images.unsplash.com/photo-1529070538774-1843cb3265df?w=600&q=80',
+                ],
+                'kegiatan' => [
+                    ['kode' => 'Riwayat Ibadah', 'nama' => 'Riwayat Ibadah Naomi', 'route' => '#'],
+                ],
+            ],
+        ];
+
+        return $events[$id] ?? null;
     }
 }

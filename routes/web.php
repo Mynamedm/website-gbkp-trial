@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [ClientController::class, 'index'])->name('home');
 Route::get('/warta-jemaat', [ClientController::class, 'announcements'])->name('client.announcements');
 Route::get('/jadwal-ibadah', [ClientController::class, 'scheduleWorship'])->name('client.schedule-worship');
+Route::get('/jadwal-ibadah/umum', [ClientController::class, 'scheduleWorshipUmum'])->name('client.schedule-worship.umum');
 Route::get('/jadwal-ibadah/{id}', [ClientController::class, 'scheduleWorshipDetail'])->name('client.schedule-worship.detail');
 
 Route::get('/dashboard', function () {
@@ -34,6 +35,8 @@ Route::middleware(['auth', 'role:super_admin|admin'])->prefix('admin')->name('ad
     Route::get('events/{event}/edit', [AdminEventController::class, 'edit'])->name('events.edit');
 
     Route::resource('schedules', AdminScheduleController::class)->only(['index', 'store', 'update', 'destroy']);
+    Route::get('schedules/umum', [AdminScheduleController::class, 'umum'])->name('schedules.umum');
+    Route::get('schedules/kategorial', [AdminScheduleController::class, 'kategorial'])->name('schedules.kategorial');
     Route::get('schedules/{schedule}/edit', [AdminScheduleController::class, 'edit'])->name('schedules.edit');
 
     Route::resource('announcements', AdminAnnouncementController::class)->only(['index', 'store', 'update', 'destroy']);
