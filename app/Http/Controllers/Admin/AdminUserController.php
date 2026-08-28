@@ -21,7 +21,8 @@ class AdminUserController extends Controller
                   ->orWhere('email', 'like', "%{$search}%");
             })
             ->latest()
-            ->paginate($perPage);
+            ->paginate($perPage)
+            ->withQueryString();
 
         if ($request->ajax()) {
             return view('admin.user.partials.table', compact('users'));

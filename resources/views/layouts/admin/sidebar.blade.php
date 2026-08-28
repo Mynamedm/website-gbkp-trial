@@ -1,5 +1,5 @@
-<aside x-data="{ open: false }" class="fixed lg:static inset-y-0 left-0 z-50 w-64 bg-slate-800 text-slate-300 flex flex-col transform transition-transform duration-200 lg:translate-x-0"
-       :class="open ? 'translate-x-0' : '-translate-x-full'">
+<aside class="fixed lg:static inset-y-0 left-0 z-50 w-64 bg-slate-800 text-slate-300 flex flex-col transform transition-transform duration-200 lg:translate-x-0"
+       :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
 
     {{-- Logo --}}
     <div class="h-16 flex items-center gap-3 px-5 border-b border-slate-700/50 shrink-0">
@@ -90,4 +90,4 @@
 </aside>
 
 {{-- Mobile overlay --}}
-<div x-data="{ open: false }" x-show="open" x-cloak @sidebar-toggle.window="open = $event.detail" class="fixed inset-0 z-40 bg-black/50 lg:hidden" @click="open = false; $dispatch('sidebar-close')"></div>
+<div x-show="sidebarOpen" x-cloak @click="sidebarOpen = false" class="fixed inset-0 z-40 bg-black/50 lg:hidden"></div>

@@ -9,8 +9,14 @@
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        dialog.modal { padding: 0; border: 0; border-radius: 1rem; background: transparent; max-width: calc(100vw - 2rem); width: 42rem; max-height: calc(100vh - 2rem); overflow-y: auto; }
+        dialog.modal.sm { width: 32rem; }
+        dialog.modal::backdrop { background: rgba(15, 23, 42, .5); backdrop-filter: blur(4px); }
+        dialog.modal .modal-box { background: white; border-radius: 1rem; overflow: hidden; box-shadow: 0 20px 25px -5px rgb(0 0 0 / .1), 0 10px 10px -5px rgb(0 0 0 / .04); }
+    </style>
 </head>
-<body class="font-sans antialiased bg-slate-100">
+<body class="font-sans antialiased bg-slate-100" x-data="{ sidebarOpen: false }">
     <div class="flex min-h-screen">
         @include('layouts.admin.sidebar')
 
@@ -77,6 +83,14 @@
             </main>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('click', function (event) {
+            if (event.target.matches && event.target.matches('dialog.modal') && event.target.open) {
+                event.target.close();
+            }
+        });
+    </script>
 
     @stack('scripts')
 </body>

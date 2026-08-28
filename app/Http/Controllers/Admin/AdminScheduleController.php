@@ -22,7 +22,8 @@ class AdminScheduleController extends Controller
                   ->orWhere('location', 'like', "%{$search}%")
                   ->orWhere('host', 'like', "%{$search}%");
             })
-            ->paginate($perPage);
+            ->paginate($perPage)
+            ->withQueryString();
 
         if ($request->ajax()) {
             return view('admin.schedule.partials.table', compact('schedules'));
@@ -54,7 +55,8 @@ class AdminScheduleController extends Controller
                   ->orWhere('location', 'like', "%{$search}%")
                   ->orWhere('host', 'like', "%{$search}%");
             })
-            ->paginate($perPage);
+            ->paginate($perPage)
+            ->withQueryString();
 
         if ($request->ajax()) {
             return view('admin.schedule.partials.table', compact('schedules'));

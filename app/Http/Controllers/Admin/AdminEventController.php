@@ -22,7 +22,8 @@ class AdminEventController extends Controller
                   ->orWhere('location', 'like', "%{$search}%")
                   ->orWhere('category', 'like', "%{$search}%");
             })
-            ->paginate($perPage);
+            ->paginate($perPage)
+            ->withQueryString();
 
         if ($request->ajax()) {
             return view('admin.event.partials.table', compact('events'));

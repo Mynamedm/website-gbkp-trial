@@ -21,7 +21,8 @@ class AdminGeneralWorshipController extends Controller
                   ->orWhere('location', 'like', "%{$search}%")
                   ->orWhere('time', 'like', "%{$search}%");
             })
-            ->paginate($perPage);
+            ->paginate($perPage)
+            ->withQueryString();
 
         if ($request->ajax()) {
             return view('admin.worship.partials.table', compact('worships'));

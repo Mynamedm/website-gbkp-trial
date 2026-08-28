@@ -20,7 +20,8 @@ class AdminAnnouncementController extends Controller
                   ->orWhere('theme', 'like', "%{$search}%")
                   ->orWhere('bible_verse', 'like', "%{$search}%");
             })
-            ->paginate($perPage);
+            ->paginate($perPage)
+            ->withQueryString();
 
         if ($request->ajax()) {
             return view('admin.announcement.partials.table', compact('announcements'));
