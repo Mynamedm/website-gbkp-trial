@@ -1,5 +1,4 @@
-<aside class="fixed lg:static inset-y-0 left-0 z-50 w-64 bg-slate-800 text-slate-300 flex flex-col transform transition-transform duration-200 lg:translate-x-0"
-       :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
+<aside id="admin-sidebar" class="fixed lg:static inset-y-0 left-0 z-50 w-64 bg-slate-800 text-slate-300 flex flex-col transform transition-transform duration-200 lg:translate-x-0 -translate-x-full">
 
     {{-- Logo --}}
     <div class="h-16 flex items-center gap-3 px-5 border-b border-slate-700/50 shrink-0">
@@ -51,8 +50,8 @@
 
             @if($item['route'] === 'admin.events.index')
                 {{-- Jadwal Ibadah with submenu --}}
-                <div x-data="{ open: {{ $jadwalActive ? 'true' : 'false' }} }">
-                    <button @click="open = !open"
+                <div>
+                    <button type="button" onclick="toggleSubmenu()"
                             class="w-full flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg text-[13.5px] font-medium transition-colors
                                    {{ $jadwalActive ? 'bg-blue-600 text-white' : 'text-slate-400 hover:bg-slate-700/50 hover:text-white' }}">
                         <span class="flex items-center gap-3">
@@ -61,13 +60,11 @@
                             </svg>
                             Jadwal Ibadah
                         </span>
-                        <svg class="w-4 h-4 shrink-0 transition-transform duration-200" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <svg id="jadwal-chevron" class="w-4 h-4 shrink-0 transition-transform duration-200 {{ $jadwalActive ? 'rotate-180' : '' }}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
                         </svg>
                     </button>
-                    <div x-show="open" x-cloak
-                         x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
-                         x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-1">
+                    <div id="jadwal-submenu" class="{{ $jadwalActive ? '' : 'hidden' }}">
                         <div class="ml-5 pl-4 border-l border-slate-600 space-y-0.5 mt-0.5 mb-1">
                             <a href="{{ route('admin.worships.index') }}"
                                 class="flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium transition-colors
@@ -90,4 +87,4 @@
 </aside>
 
 {{-- Mobile overlay --}}
-<div x-show="sidebarOpen" x-cloak @click="sidebarOpen = false" class="fixed inset-0 z-40 bg-black/50 lg:hidden"></div>
+<div id="sidebar-overlay" onclick="closeSidebar()" class="hidden fixed inset-0 z-40 bg-black/50 lg:hidden"></div>

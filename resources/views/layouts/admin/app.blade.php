@@ -16,7 +16,7 @@
         dialog.modal .modal-box { background: white; border-radius: 1rem; overflow: hidden; box-shadow: 0 20px 25px -5px rgb(0 0 0 / .1), 0 10px 10px -5px rgb(0 0 0 / .04); }
     </style>
 </head>
-<body class="font-sans antialiased bg-slate-100" x-data="{ sidebarOpen: false }">
+<body class="font-sans antialiased bg-slate-100">
     <div class="flex min-h-screen">
         @include('layouts.admin.sidebar')
 
@@ -24,7 +24,7 @@
             {{-- Top Bar --}}
             <header class="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-6 sticky top-0 z-40">
                 <div class="flex items-center gap-3">
-                    <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden text-slate-500 hover:text-slate-700">
+                    <button type="button" onclick="toggleSidebar()" class="lg:hidden text-slate-500 hover:text-slate-700">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
                         </svg>
@@ -85,6 +85,28 @@
     </div>
 
     <script>
+        function toggleSidebar() {
+            const drawer = document.getElementById('admin-sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (!drawer) return;
+            const closed = drawer.classList.toggle('-translate-x-full');
+            if (overlay) overlay.classList.toggle('hidden', closed);
+        }
+
+        function closeSidebar() {
+            const drawer = document.getElementById('admin-sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (drawer) drawer.classList.add('-translate-x-full');
+            if (overlay) overlay.classList.add('hidden');
+        }
+
+        function toggleSubmenu() {
+            const sub = document.getElementById('jadwal-submenu');
+            if (sub) sub.classList.toggle('hidden');
+            const chevron = document.getElementById('jadwal-chevron');
+            if (chevron) chevron.classList.toggle('rotate-180');
+        }
+
         document.addEventListener('click', function (event) {
             if (event.target.matches && event.target.matches('dialog.modal') && event.target.open) {
                 event.target.close();
