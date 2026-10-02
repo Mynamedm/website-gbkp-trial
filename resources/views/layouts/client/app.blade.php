@@ -11,6 +11,8 @@
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800|plus-jakarta-sans:600,700,800&display=swap" rel="stylesheet" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    @stack('styles')
 </head>
 <body class="font-sans antialiased bg-white text-slate-700">
     @include('layouts.client.header')
@@ -20,5 +22,7 @@
     </main>
 
     @include('layouts.client.footer')
+
+    @stack('scripts')
 </body>
 </html>

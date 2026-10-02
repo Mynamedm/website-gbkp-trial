@@ -85,7 +85,7 @@
                                     </div>
                                     <div class="p-5 flex flex-col flex-1">
                                         <span class="inline-block {{ $catColor }} text-[11px] font-semibold px-2.5 py-1 rounded-md mb-3 self-start uppercase tracking-wide">
-                                            {{ $event->category }}
+                                            {{ ucfirst($event->category) }}
                                         </span>
                                         <h3 class="font-display text-slate-800 text-[15px] font-bold leading-snug mb-2">{{ $event->title }}</h3>
                                         <p class="text-slate-500 text-[13px] leading-relaxed mb-4 line-clamp-2">{{ $event->description }}</p>

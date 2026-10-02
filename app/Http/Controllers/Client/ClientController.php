@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Announcement;
 use App\Models\Category;
 use App\Models\Event;
+use App\Models\OrganizationMember;
+use App\Models\OrganizationSetting;
+use App\Models\Reflection;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -30,7 +33,36 @@ class ClientController extends Controller
             ->take(3)
             ->get();
 
-        return view('client.index', compact('schedules', 'announcements', 'events'));
+        $todayReflection = Reflection::query()
+            ->active()
+            ->latestFirst()
+            ->first();
+
+        return view('client.index', compact('schedules', 'announcements', 'events', 'todayReflection'));
+    }
+
+    public function reflections()
+    {
+        $reflections = Reflection::query()
+            ->active()
+            ->latestFirst()
+            ->paginate(9);
+
+        return view('client.reflection.index', compact('reflections'));
+    }
+
+    public function reflectionDetail(Reflection $reflection)
+    {
+        abort_unless($reflection->status === 'active', 404);
+
+        $otherReflections = Reflection::query()
+            ->active()
+            ->whereKeyNot($reflection->id)
+            ->latestFirst()
+            ->take(4)
+            ->get();
+
+        return view('client.reflection.detail', compact('reflection', 'otherReflections'));
     }
 
     public function announcements()
@@ -61,7 +93,110 @@ class ClientController extends Controller
         $petugas = $this->getPetugas($id);
         $permataEvent = in_array($id, [5, 7, 8]) ? $this->getPermataEvent($id) : null;
 
-        return view('client.schedule-worship.detail', compact('kategori', 'sektor', 'hostLabel', 'petugas', 'permataEvent'));
+        return view('client.schedule-worship.detail', compact('kategori', 'sektor', 'hostLabel', 'petugas', 'permataEvent', 'id'));
+    }
+
+    public function scheduleWorshipSektor($kategoriId, $sektorIndex)
+    {
+        $kategori = $this->getKategori($kategoriId);
+
+        if (!$kategori) {
+            abort(404);
+        }
+
+        $allSektor = $this->getSektor($kategoriId);
+        $hostLabel = $this->getHostLabel($kategoriId);
+
+        if (empty($allSektor) || !isset($allSektor[$sektorIndex])) {
+            abort(404);
+        }
+
+        $sektorItem = $allSektor[$sektorIndex];
+
+        $isMoria = ($kategoriId == 2);
+
+        $sektorEvent = [
+            'judul' => $sektorItem['nama'],
+            'tanggal' => $sektorItem['tanggal'],
+            'waktu' => $sektorItem['waktu'],
+            'lokasi' => $sektorItem['lokasi'],
+            'tema' => 'Berserah dalam Kasih',
+            'ayat_tema' => 'Yohanes 3:16',
+            'pembicara' => 'Pdt. Andreas Pranata Meliala, M.Th',
+            'worship_leader' => '-',
+            'dokumentasi' => [
+                'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=600&q=80',
+                'https://images.unsplash.com/photo-1438232992990-99d20e86b633?w=600&q=80',
+            ],
+            'kegiatan' => $isMoria ? [] : [
+                ['kode' => 'Ibadah Rutin', 'nama' => 'Ibadah Rutin ' . $sektorItem['nama'], 'route' => '#'],
+            ],
+            'host' => $sektorItem['host'] ?? '-',
+            'host_label' => $hostLabel,
+            'is_moria' => $isMoria,
+        ];
+
+        return view('client.schedule-worship.sektor', compact('kategori', 'sektorItem', 'sektorEvent', 'kategoriId', 'sektorIndex'));
+    }
+
+    public function scheduleWorshipRiwayat($kategoriId, $sektorIndex)
+    {
+        $kategori = $this->getKategori($kategoriId);
+
+        if (!$kategori) {
+            abort(404);
+        }
+
+        $allSektor = $this->getSektor($kategoriId);
+        $hostLabel = $this->getHostLabel($kategoriId);
+
+        if (empty($allSektor) || !isset($allSektor[$sektorIndex])) {
+            abort(404);
+        }
+
+        $sektorItem = $allSektor[$sektorIndex];
+
+        $now = now();
+        $riwayatIbadah = [];
+        
+        // Generate riwayat dari awal tahun 2026 sampai sekarang
+        $startDate = \Carbon\Carbon::create(2026, 1, 5)->startOfWeek(); // Senin pertama 2026
+        $endDate = $now->copy()->endOfWeek();
+        
+        $currentDate = $startDate->copy();
+        while ($currentDate->lte($endDate)) {
+            $temaList = [
+                ['tema' => 'Tetap Setia dalam Pengharapan', 'ayat' => 'Roma 8:28'],
+                ['tema' => 'Kasih yang Tidak Berkesudahan', 'ayat' => 'Yeremia 31:3'],
+                ['tema' => 'Berjalan dalam Terang-Nya', 'ayat' => '1 Yohanes 1:7'],
+                ['tema' => 'Kekuatan di Dalam Kelemahan', 'ayat' => '2 Korintus 12:9'],
+                ['tema' => 'Damai Sejahtera Allah', 'ayat' => 'Filipi 4:7'],
+                ['tema' => 'Bergantung sepenuhnya kepada Tuhan', 'ayat' => 'Mazmur 62:9'],
+            ];
+            $randomTemas = $temaList[array_rand($temaList)];
+            
+            $pembicaraList = [
+                'Pdt. Andreas Pranata Meliala, M.Th',
+                'Pdt. Ruth Yuliana Br. Siahaan, M.Th',
+                'Pdt. Reinhard Luhut Siahaan, M.Th',
+                'Cev. Ishak David Ginting',
+            ];
+            
+            $riwayatIbadah[] = [
+                'tanggal' => $currentDate->translatedFormat('l, d F Y'),
+                'tema' => $randomTemas['tema'],
+                'ayat_tema' => $randomTemas['ayat'],
+                'pembicara' => $pembicaraList[array_rand($pembicaraList)],
+                'lokasi' => $sektorItem['lokasi'],
+            ];
+            
+            $currentDate->addWeek();
+        }
+        
+        // Kembalikan dari yang terbaru ke terlama
+        $riwayatIbadah = array_reverse($riwayatIbadah);
+
+        return view('client.schedule-worship.riwayat', compact('kategori', 'sektorItem', 'riwayatIbadah', 'kategoriId', 'sektorIndex'));
     }
 
     public function aboutChurch()
@@ -71,7 +206,62 @@ class ClientController extends Controller
 
     public function aboutKategorial()
     {
-        return view('client.about-kategorial.index');
+        return view('client.about-kategorial.index', $this->kategorialIndexData());
+    }
+
+    private function kategorialIndexData()
+    {
+        $dataDir = resource_path('views/client/about-kategorial/data');
+        $slugs = ['moria', 'mamre', 'pjj', 'kakr', 'permata', 'saitun', 'naomi'];
+
+        $kategorials = array_map(
+            fn ($slug) => include $dataDir . '/' . $slug . '.php',
+            $slugs
+        );
+
+        return [
+            'kategorials' => $kategorials,
+            'pengurus' => include $dataDir . '/pengurus.php',
+            'dokumentasi' => include $dataDir . '/dokumentasi.php',
+        ];
+    }
+
+    public function persembahan()
+    {
+        $categories = \App\Models\OfferingCategory::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        return view('client.persembahan.index', compact('categories'));
+    }
+
+    public function organization()
+    {
+        $settings = OrganizationSetting::current();
+
+        $roots = OrganizationMember::tree(activeOnly: true);
+
+        return view('client.organization.index', compact('settings', 'roots'));
+    }
+
+    public function organizationDetail(OrganizationMember $member)
+    {
+        abort_if(! $member->is_active, 404);
+
+        $settings = OrganizationSetting::current();
+
+        $parent = $member->parent()->where('is_active', true)->first();
+
+        $children = $member->children()
+            ->active()
+            ->get()
+            ->sortBy([
+                fn ($a, $b) => $a->sort_order <=> $b->sort_order,
+                fn ($a, $b) => strcasecmp($a->position, $b->position),
+            ])
+            ->values();
+
+        return view('client.organization.detail', compact('settings', 'member', 'parent', 'children'));
     }
 
     public function kategorialDetail($slug)
@@ -243,7 +433,8 @@ class ClientController extends Controller
             'pjj' => [
                 'name' => 'PJJ',
                 'color' => 'teal',
-                'tagline' => 'Perpulungen Jabu-Jabu',
+                'tagline' => 'Perpulungan Jabu-Jabu',
+                'satuan' => 'keluarga',
                 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/>',
                 'deskripsi' => 'PJJ (Perpulungen Jabu-Jabu) adalah persekutuan keluarga di GBKP Bandar Lampung. Kategorial ini membina kehidupan keluarga Kristen dalam berbagai aspek.',
                 'pengurus' => [
@@ -373,6 +564,12 @@ class ClientController extends Controller
                 ],
             ],
         ];
+
+        $alias = [
+            'ka-kr' => 'kakr',
+        ];
+
+        $slug = $alias[$slug] ?? $slug;
 
         return $data[$slug] ?? null;
     }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -11,6 +12,13 @@ class EventSeeder extends Seeder
     public function run(): void
     {
         $admin = User::where('email', 'admin@gbkp.id')->first();
+
+        $catIds = [
+            'marturia' => Category::where('slug', 'marturia')->where('type', 'event')->value('id'),
+            'diakonia' => Category::where('slug', 'diakonia')->where('type', 'event')->value('id'),
+            'koinonia' => Category::where('slug', 'koinonia')->where('type', 'event')->value('id'),
+            'keuangan' => Category::where('slug', 'keuangan')->where('type', 'event')->value('id'),
+        ];
 
         $events = [
             [
@@ -23,7 +31,8 @@ class EventSeeder extends Seeder
                 'time_end' => 'Selesai',
                 'location' => 'GBKP Bandar Lampung',
                 'organized_by' => $admin?->id,
-                'category' => 'Pernikahan',
+                'category' => 'marturia',
+                'category_id' => $catIds['marturia'],
                 'quote' => 'Demikianlah mereka bukan lagi dua, melainkan satu. Karena itu, apa yang telah dipersatukan Allah, tidak boleh diceraikan manusia.',
                 'quote_source' => 'Matius 19:6',
                 'status' => 'published',
@@ -38,7 +47,8 @@ class EventSeeder extends Seeder
                 'time_end' => '10:00',
                 'location' => 'GBKP Bandar Lampung',
                 'organized_by' => $admin?->id,
-                'category' => 'Ibadah',
+                'category' => 'marturia',
+                'category_id' => $catIds['marturia'],
                 'quote' => 'Karena itu, kamu harus siap sedia juga, karena Anak Manusia datang pada saat yang tidak kamu duga.',
                 'quote_source' => 'Matius 24:44',
                 'status' => 'published',
@@ -53,7 +63,8 @@ class EventSeeder extends Seeder
                 'time_end' => '16:00',
                 'location' => 'GBKP Bandar Lampung',
                 'organized_by' => $admin?->id,
-                'category' => 'Persekutuan',
+                'category' => 'koinonia',
+                'category_id' => $catIds['koinonia'],
                 'quote' => 'Janganlah kamu hendak berlaku lemah lembut, tetapi marilah berlomba di dalam perlombaan iman.',
                 'quote_source' => 'Ibrani 12:1',
                 'status' => 'published',
@@ -68,7 +79,8 @@ class EventSeeder extends Seeder
                 'time_end' => '11:00',
                 'location' => 'GBKP Bandar Lampung',
                 'organized_by' => $admin?->id,
-                'category' => 'Baptisan',
+                'category' => 'marturia',
+                'category_id' => $catIds['marturia'],
                 'quote' => 'Karena itu, pergilah, jadikanlah murid-murid dari segala bangsa, membaptislah mereka dalam nama Bapa dan Anak dan Roh Kudus.',
                 'quote_source' => 'Matius 28:19',
                 'status' => 'published',

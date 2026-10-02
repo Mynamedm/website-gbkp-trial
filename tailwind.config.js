@@ -9,6 +9,13 @@ export default {
         './resources/views/**/*.blade.php',
     ],
 
+    safelist: [
+        {
+            pattern: /^(bg|text|from|to|border|ring)-(pink|blue|teal|green|violet|amber|rose)-(50|100|300|400|500|600)$/,
+            variants: ['hover', 'focus'],
+        },
+    ],
+
     theme: {
         extend: {
             fontFamily: {

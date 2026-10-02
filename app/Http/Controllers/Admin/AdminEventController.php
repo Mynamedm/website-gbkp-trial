@@ -45,7 +45,7 @@ class AdminEventController extends Controller
             'time_end' => 'nullable|string|max:50',
             'location' => 'nullable|string|max:255',
             'organized_by' => 'nullable|string|max:255',
-            'category_id' => 'nullable|exists:categories,id',
+            'category_id' => 'required|exists:categories,id',
             'quote' => 'nullable|string',
             'quote_source' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
@@ -54,10 +54,8 @@ class AdminEventController extends Controller
 
         $validated['slug'] = Str::slug($validated['title']);
 
-        if (!empty($validated['category_id'])) {
-            $cat = Category::find($validated['category_id']);
-            $validated['category'] = $cat?->name;
-        }
+        $cat = Category::find($validated['category_id']);
+        $validated['category'] = $cat?->name;
 
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('events', 'public');
@@ -84,7 +82,7 @@ class AdminEventController extends Controller
             'time_end' => 'nullable|string|max:50',
             'location' => 'nullable|string|max:255',
             'organized_by' => 'nullable|string|max:255',
-            'category_id' => 'nullable|exists:categories,id',
+            'category_id' => 'required|exists:categories,id',
             'quote' => 'nullable|string',
             'quote_source' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
@@ -93,12 +91,8 @@ class AdminEventController extends Controller
 
         $validated['slug'] = Str::slug($validated['title']);
 
-        if (!empty($validated['category_id'])) {
-            $cat = Category::find($validated['category_id']);
-            $validated['category'] = $cat?->name;
-        } else {
-            $validated['category'] = null;
-        }
+        $cat = Category::find($validated['category_id']);
+        $validated['category'] = $cat?->name;
 
         if ($request->hasFile('image')) {
             if ($event->image) {

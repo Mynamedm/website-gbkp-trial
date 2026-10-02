@@ -16,14 +16,14 @@
             <div class="space-y-4">
                 <div>
                     <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Nama</label>
-                    <input type="text" name="name" value="{{ old('name', $user->name }}" required autofocus autocomplete="name"
+                    <input type="text" name="name" value="{{ old('name', $user->name) }}" required autofocus autocomplete="name"
                            class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
                     @error('name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
                     <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Email</label>
-                    <input type="email" name="email" value="{{ old('email', $user->email }}" required autocomplete="username"
+                    <input type="email" name="email" value="{{ old('email', $user->email) }}" required autocomplete="username"
                            class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
                     @error('email') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>

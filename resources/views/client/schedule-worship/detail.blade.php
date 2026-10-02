@@ -182,8 +182,8 @@
                 <p class="text-slate-500 text-[14px] mb-8">{{ $kategori['section_subtitle'] }}</p>
 
                 <div class="space-y-4">
-                    @foreach($sektor as $item)
-                        <a href="#" class="flex items-center justify-between bg-gradient-to-r from-slate-800 to-slate-700 rounded-2xl p-5 sm:p-6 hover:from-slate-700 hover:to-slate-600 transition-all group">
+                    @foreach($sektor as $index => $item)
+                        <a href="{{ route('client.schedule-worship.sektor', [$id, $index]) }}" class="flex items-center justify-between bg-gradient-to-r from-slate-800 to-slate-700 rounded-2xl p-5 sm:p-6 hover:from-slate-700 hover:to-slate-600 transition-all group">
                             <div class="flex items-center gap-0 min-w-0">
                                 <div class="shrink-0 w-[200px] sm:w-[220px]">
                                     <h3 class="text-white font-bold text-[14px] sm:text-[15px] uppercase tracking-wide leading-tight">{{ $item['nama'] }}</h3>
@@ -369,8 +369,8 @@
                 <p class="text-slate-500 text-[14px] mb-8">{{ $kategori['section_subtitle'] }}</p>
 
                 <div class="space-y-4">
-                    @foreach($sektor as $item)
-                        <a href="#" class="flex items-center justify-between bg-gradient-to-r from-slate-800 to-slate-700 rounded-2xl p-5 sm:p-6 hover:from-slate-700 hover:to-slate-600 transition-all group">
+                    @foreach($sektor as $index => $item)
+                        <a href="{{ route('client.schedule-worship.sektor', [$id, $index]) }}" class="flex items-center justify-between bg-gradient-to-r from-slate-800 to-slate-700 rounded-2xl p-5 sm:p-6 hover:from-slate-700 hover:to-slate-600 transition-all group">
                             <div class="flex items-center gap-0 min-w-0">
                                 <div class="shrink-0 w-[200px] sm:w-[220px]">
                                     <h3 class="text-white font-bold text-[14px] sm:text-[15px] uppercase tracking-wide leading-tight">{{ $item['nama'] }}</h3>

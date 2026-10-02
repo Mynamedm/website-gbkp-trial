@@ -15,6 +15,7 @@
         dialog.modal::backdrop { background: rgba(15, 23, 42, .5); backdrop-filter: blur(4px); }
         dialog.modal .modal-box { background: white; border-radius: 1rem; overflow: hidden; box-shadow: 0 20px 25px -5px rgb(0 0 0 / .1), 0 10px 10px -5px rgb(0 0 0 / .04); }
     </style>
+    @stack('styles')
 </head>
 <body class="font-sans antialiased bg-slate-100">
     <div class="flex min-h-screen">

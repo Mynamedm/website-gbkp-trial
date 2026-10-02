@@ -1,36 +1,51 @@
 <div class="overflow-x-auto">
-    <table class="w-full text-sm min-w-[680px]">
+    <table class="w-full text-sm min-w-[960px]">
         <thead>
             <tr class="border-b border-slate-100">
                 <th class="sticky left-0 z-20 bg-white text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider border-r border-slate-100/60">Event</th>
                 <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Tanggal</th>
                 <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Kategori</th>
+                <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Deskripsi</th>
+                <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Kutipan Alkitab</th>
                 <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Status</th>
                 <th class="sticky right-0 z-20 bg-white text-right px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider border-l border-slate-100/60">Aksi</th>
             </tr>
         </thead>
         <tbody class="divide-y divide-slate-50">
             @forelse($events as $event)
-                <tr class="group hover:bg-slate-50/50">
+                <tr class="group hover:bg-slate-50/50 align-top">
                     <td class="sticky left-0 z-10 bg-white group-hover:bg-slate-50 border-r border-slate-100/60 px-6 py-3.5">
                         <div>
                             <p class="font-semibold text-slate-700 text-[13.5px]">{{ $event->title }}</p>
                             <p class="text-slate-400 text-[12px] mt-0.5">{{ $event->location ?? '-' }}</p>
                         </div>
                     </td>
-                    <td class="px-6 py-3.5 text-slate-600 text-[13px]">{{ $event->date->format('d M Y') }}</td>
+                    <td class="px-6 py-3.5 text-slate-600 text-[13px] whitespace-nowrap">{{ $event->date->format('d M Y') }}</td>
                     <td class="px-6 py-3.5">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11.5px] font-medium bg-slate-100 text-slate-600">
-                            {{ $event->category ?? '-' }}
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11.5px] font-medium bg-slate-100 text-slate-600 whitespace-nowrap">
+                            {{ $event->category ? ucfirst($event->category) : '-' }}
                         </span>
+                    </td>
+                    <td class="px-6 py-3.5 text-slate-600 text-[12.5px] leading-relaxed break-words min-w-[220px] max-w-[320px]">
+                        {{ $event->description ?: '-' }}
+                    </td>
+                    <td class="px-6 py-3.5 text-slate-600 text-[12.5px] leading-relaxed break-words min-w-[180px] max-w-[280px]">
+                        @if($event->quote)
+                            <p class="italic">{{ $event->quote }}</p>
+                            @if($event->quote_source)
+                                <p class="text-slate-400 mt-1">{{ $event->quote_source }}</p>
+                            @endif
+                        @else
+                            -
+                        @endif
                     </td>
                     <td class="px-6 py-3.5">
                         @if($event->status === 'published')
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11.5px] font-medium bg-emerald-50 text-emerald-600">Published</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11.5px] font-medium bg-emerald-50 text-emerald-600 whitespace-nowrap">Published</span>
                         @elseif($event->status === 'draft')
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11.5px] font-medium bg-amber-50 text-amber-600">Draft</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11.5px] font-medium bg-amber-50 text-amber-600 whitespace-nowrap">Draft</span>
                         @else
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11.5px] font-medium bg-slate-100 text-slate-500">Archived</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11.5px] font-medium bg-slate-100 text-slate-500 whitespace-nowrap">Archived</span>
                         @endif
                     </td>
                     <td class="sticky right-0 z-10 bg-white group-hover:bg-slate-50 border-l border-slate-100/60 px-6 py-3.5 text-right">
@@ -50,7 +65,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5" class="px-6 py-12 text-center text-slate-400 text-sm">Belum ada data event.</td>
+                    <td colspan="7" class="px-6 py-12 text-center text-slate-400 text-sm">Belum ada data event.</td>
                 </tr>
             @endforelse
         </tbody>
@@ -58,7 +73,7 @@
 </div>
 
 @forelse($events as $event)
-    <form id="delete-event-{{ $event->id }}" method="POST" action="{{ route('admin.events.destroy', $event->id) }}" class="hidden">
+    <form id="delete-event-{{ $event->id }}" method="POST" action="{{ route('admin.events.destroy', $event->slug) }}" class="hidden">
         @csrf
         @method('DELETE')
     </form>
@@ -71,7 +86,7 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
-            <form method="POST" action="{{ route('admin.events.update', $event->id) }}" enctype="multipart/form-data" class="p-6">
+            <form method="POST" action="{{ route('admin.events.update', $event->slug) }}" enctype="multipart/form-data" class="p-6">
                 @csrf
                 @method('PUT')
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -84,11 +99,10 @@
                         <input type="date" name="date" value="{{ $event->date->format('Y-m-d') }}" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
                     </div>
                     <div>
-                        <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Kategori</label>
-                        <select name="category_id" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-                            <option value="">Tanpa Kategori</option>
+                        <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Kategori <span class="text-red-500">*</span></label>
+                        <select name="category_id" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
                             @foreach($categories ?? [] as $cat)
-                                <option value="{{ $cat->id }}" @selected($event->category_id === $cat->id)>{{ $cat->name }}</option>
+                                <option value="{{ $cat->id }}" @selected($event->category_id === $cat->id)>{{ ucfirst($cat->name) }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -126,7 +140,7 @@
                     </div>
                     <div class="sm:col-span-2">
                         <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Kutipan Alkitab</label>
-                        <input type="text" name="quote" value="{{ $event->quote }}" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                        <textarea name="quote" rows="2" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-y">{{ $event->quote }}</textarea>
                     </div>
                     <div>
                         <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Sumber Kutipan</label>

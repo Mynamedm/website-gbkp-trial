@@ -17,7 +17,7 @@
                 <p class="text-slate-300 text-[15px] leading-relaxed mb-8 max-w-md">
                     Tempat bertumbuh dalam iman, pelayanan, dan persekutuan bersama Tuhan.
                 </p>
-                <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-800 text-[13.5px] font-semibold rounded-lg hover:bg-slate-50 transition-colors shadow-lg shadow-black/10">
+                <a href="{{ route('client.about-church') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-800 text-[13.5px] font-semibold rounded-lg hover:bg-slate-50 transition-colors shadow-lg shadow-black/10">
                     Lihat Selengkapnya
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
@@ -27,7 +27,8 @@
         </div>
     </section>
 
-    {{-- RENUNGAN HARI INI --}}
+{{-- RENUNGAN HARI INI --}}
+    @if($todayReflection)
     <section class="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
             <div class="grid lg:grid-cols-[280px_1fr] gap-6">
@@ -36,23 +37,27 @@
                 <div class="bg-white/[0.08] backdrop-blur-sm rounded-2xl p-6 border border-white/10">
                     <div class="flex items-center gap-2 mb-4">
                         <svg class="w-4 h-4 text-blue-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.966 8.966 0 00-6 2.292m0-14.25v14.25"/>
                         </svg>
                         <span class="text-blue-200 text-[11.5px] font-semibold uppercase tracking-wider">Renungan Hari Ini</span>
                     </div>
-                    <p class="text-white/60 text-[11.5px] uppercase tracking-wide font-medium">Minggu</p>
-                    <p class="text-white text-xl font-bold mt-1">9 Agustus 2026</p>
-                    <div class="mt-5 pt-5 border-t border-white/10">
-                        <p class="text-white/50 text-[11px] uppercase tracking-wide font-medium mb-1">Hari Gereja</p>
-                        <p class="text-white text-sm font-semibold">Minggu Advent</p>
-                    </div>
-                    <div class="mt-4">
-                        <p class="text-white/50 text-[11px] uppercase tracking-wide font-medium mb-1">Bacaan</p>
-                        <p class="text-white text-sm font-semibold flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-yellow-400 shrink-0"></span>
-                            Matius 14 : 22 - 33
-                        </p>
-                    </div>
+                    <p class="text-white/60 text-[11.5px] uppercase tracking-wide font-medium">{{ $todayReflection->date->translatedFormat('l') }}</p>
+                    <p class="text-white text-xl font-bold mt-1">{{ $todayReflection->date->format('d F Y') }}</p>
+                    @if(filled($todayReflection->church_day))
+                        <div class="mt-5 pt-5 border-t border-white/10">
+                            <p class="text-white/50 text-[11px] uppercase tracking-wide font-medium mb-1">Hari Gereja</p>
+                            <p class="text-white text-sm font-semibold">{{ $todayReflection->church_day }}</p>
+                        </div>
+                    @endif
+                    @if(filled($todayReflection->bible_verse))
+                        <div class="mt-4">
+                            <p class="text-white/50 text-[11px] uppercase tracking-wide font-medium mb-1">Bacaan</p>
+                            <p class="text-white text-sm font-semibold flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-yellow-400 shrink-0"></span>
+                                {{ $todayReflection->bible_verse }}
+                            </p>
+                        </div>
+                    @endif
                 </div>
 
                 {{-- Kanan: Isi Renungan --}}
@@ -62,21 +67,23 @@
                             <svg class="w-4 h-4 text-blue-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/>
                             </svg>
-                            <span class="text-white font-bold text-sm uppercase tracking-wide">Tenanglah, Jangan Takut</span>
+                            <span class="text-white font-bold text-sm uppercase tracking-wide">{{ $todayReflection->title }}</span>
                         </div>
-                        <blockquote class="text-white/80 text-[14.5px] leading-[1.75] italic space-y-3">
-                            <p>Sesudah itu Yesus segera memerintahkan murid-murid-Nya naik ke perahu dan mendahului-Nya ke seberang...</p>
-                            <p class="text-white/50">Dan setelah orang banyak itu dihuus ribuah tingai kaplingdinga, Yesus naik ke atas bukit untuk berdoa seorang diri. Ketika hari sudah malam, Ia sendirian di situ.</p>
-                            <p>Perahu murid-murid-Nya sudah beberapa mil jauhnya dari pantai dan diombang-ambingkan gelombang, karena angin sakal. ...</p>
+                        <blockquote class="text-white/80 text-[14.5px] leading-[1.75] italic space-y-3 line-clamp-4">
+                            {{ $todayReflection->summary }}
                         </blockquote>
-                        <div class="mt-6 flex items-center gap-3">
-                            <span class="text-blue-300 text-[12.5px] font-bold uppercase tracking-wide">Matius 14 : 22 - 33</span>
-                            <span class="text-white/30 text-[12px]">Terjemahan Baru</span>
-                        </div>
+                        @if(filled($todayReflection->bible_verse))
+                            <div class="mt-6 flex items-center gap-3">
+                                <span class="text-blue-300 text-[12.5px] font-bold uppercase tracking-wide">{{ $todayReflection->bible_verse }}</span>
+                                @if(filled($todayReflection->bible_translation))
+                                    <span class="text-white/30 text-[12px]">{{ $todayReflection->bible_translation }}</span>
+                                @endif
+                            </div>
+                        @endif
                     </div>
                     <div class="mt-6 pt-5 border-t border-white/10 flex items-center justify-between">
                         <p class="text-white/30 text-[12px] italic">Renungan Harian GBKP BANDAR LAMPUNG</p>
-                        <a href="#" class="inline-flex items-center gap-1.5 px-4 py-2 bg-white text-blue-700 text-[12.5px] font-semibold rounded-lg hover:bg-blue-50 transition-colors">
+                        <a href="{{ route('client.reflections.detail', $todayReflection) }}" class="inline-flex items-center gap-1.5 px-4 py-2 bg-white text-blue-700 text-[12.5px] font-semibold rounded-lg hover:bg-blue-50 transition-colors">
                             Baca Selengkapnya
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
@@ -88,6 +95,7 @@
             </div>
         </div>
     </section>
+    @endif
 
     {{-- JADWAL IBADAH TERDEKAT --}}
     <section class="py-14 sm:py-20 bg-white">

@@ -90,7 +90,7 @@
                             <div class="flex items-start gap-4 py-3">
                                 <span class="text-slate-500 text-[13.5px] w-36 shrink-0">Jenis Kegiatan</span>
                                 <span class="text-slate-500 text-[13.5px]">:</span>
-                                <span class="text-slate-700 text-[13.5px] font-medium">{{ $event->category }}</span>
+                                <span class="text-slate-700 text-[13.5px] font-medium">{{ ucfirst($event->category) }}</span>
                             </div>
                             <div class="flex items-start gap-4 py-3">
                                 <span class="text-slate-500 text-[13.5px] w-36 shrink-0">Tanggal</span>
@@ -208,8 +208,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="text-slate-700 text-[14px] font-bold">{{ $event->category }}</p>
-                                    <p class="text-slate-400 text-[12px]">Kategori {{ $event->category }}</p>
+                                    <p class="text-slate-700 text-[14px] font-bold">{{ ucfirst($event->category) }}</p>
+                                    <p class="text-slate-400 text-[12px]">Kategori {{ ucfirst($event->category) }}</p>
                                 </div>
                             </div>
                             <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

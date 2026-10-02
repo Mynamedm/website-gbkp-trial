@@ -3,25 +3,21 @@
 @section('content')
 
     {{-- Breadcrumb --}}
-    <section class="bg-gradient-to-r from-slate-800 to-slate-700 py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-slate-50 border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div class="flex items-center gap-2 text-[13px] text-slate-400">
-                <a href="{{ route('client.home') }}" class="hover:text-white transition-colors">Beranda</a>
+                <a href="{{ route('client.about-church') }}" class="hover:text-blue-600 transition-colors">Tentang</a>
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
                 </svg>
-                <a href="{{ route('client.about-church') }}" class="hover:text-white transition-colors">Tentang</a>
+                <a href="{{ route('client.about-kategorial') }}" class="hover:text-blue-600 transition-colors">Kategorial</a>
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
                 </svg>
-                <a href="{{ route('client.about-kategorial') }}" class="hover:text-white transition-colors">Kategorial</a>
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
-                </svg>
-                <span class="text-white font-medium">{{ $kategorial['name'] }}</span>
+                <span class="text-slate-800 font-medium">{{ $kategorial['name'] }}</span>
             </div>
         </div>
-    </section>
+    </div>
 
     {{-- Hero --}}
     <section class="relative bg-gradient-to-br from-{{ $kategorial['color'] }}-600 via-{{ $kategorial['color'] }}-700 to-{{ $kategorial['color'] }}-800 overflow-hidden">
@@ -44,7 +40,7 @@
             <p class="text-white/80 text-[15px] leading-relaxed max-w-xl">{{ $kategorial['deskripsi'] }}</p>
             <div class="mt-6 flex items-center gap-6">
                 <div class="bg-white/10 backdrop-blur-sm rounded-xl px-5 py-3 border border-white/20">
-                    <p class="text-white/60 text-[11px] uppercase tracking-wider font-semibold">Total Anggota</p>
+                    <p class="text-white/60 text-[11px] uppercase tracking-wider font-semibold">{{ ($kategorial['satuan'] ?? 'orang') === 'keluarga' ? 'Total Keluarga' : 'Total Anggota' }}</p>
                     <p class="text-white text-2xl font-extrabold">{{ $kategorial['total_anggota'] }}</p>
                 </div>
             </div>
@@ -113,8 +109,8 @@
                                     <span class="text-slate-800 text-[13px] font-medium">{{ $sektor['host'] }}</span>
                                 </div>
                                 <div class="flex items-center justify-between">
-                                    <span class="text-slate-500 text-[12.5px]">Jumlah Anggota</span>
-                                    <span class="text-{{ $kategorial['color'] }}-600 text-[14px] font-bold">{{ $sektor['jumlah'] }} orang</span>
+                                    <span class="text-slate-500 text-[12.5px]">{{ ($kategorial['satuan'] ?? 'orang') === 'keluarga' ? 'Jumlah Keluarga' : 'Jumlah Anggota' }}</span>
+                                    <span class="text-{{ $kategorial['color'] }}-600 text-[14px] font-bold">{{ $sektor['jumlah'] }} {{ $kategorial['satuan'] ?? 'orang' }}</span>
                                 </div>
                             </div>
                         </div>

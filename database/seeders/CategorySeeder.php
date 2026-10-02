@@ -10,16 +10,10 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            ['name' => 'Pernikahan', 'slug' => 'pernikahan', 'type' => 'event', 'color' => 'bg-rose-100 text-rose-700'],
-            ['name' => 'Ibadah', 'slug' => 'ibadah', 'type' => 'event', 'color' => 'bg-blue-100 text-blue-700'],
-            ['name' => 'Persekutuan', 'slug' => 'persekutuan', 'type' => 'event', 'color' => 'bg-green-100 text-green-700'],
-            ['name' => 'Baptisan', 'slug' => 'baptisan', 'type' => 'event', 'color' => 'bg-purple-100 text-purple-700'],
-            ['name' => 'Retreat', 'slug' => 'retreat', 'type' => 'event', 'color' => 'bg-teal-100 text-teal-700'],
-            ['name' => 'Bakti Sosial', 'slug' => 'bakti-sosial', 'type' => 'event', 'color' => 'bg-amber-100 text-amber-700'],
-            ['name' => 'Kajian', 'slug' => 'kajian', 'type' => 'event', 'color' => 'bg-indigo-100 text-indigo-700'],
-            ['name' => 'Pemuda', 'slug' => 'pemuda', 'type' => 'event', 'color' => 'bg-violet-100 text-violet-700'],
-            ['name' => 'Lansia', 'slug' => 'lansia', 'type' => 'event', 'color' => 'bg-orange-100 text-orange-700'],
-            ['name' => 'Perayaan', 'slug' => 'perayaan', 'type' => 'event', 'color' => 'bg-sky-100 text-sky-700'],
+            ['name' => 'marturia', 'slug' => 'marturia', 'type' => 'event', 'color' => 'bg-sky-100 text-sky-700'],
+            ['name' => 'diakonia', 'slug' => 'diakonia', 'type' => 'event', 'color' => 'bg-amber-100 text-amber-700'],
+            ['name' => 'koinonia', 'slug' => 'koinonia', 'type' => 'event', 'color' => 'bg-emerald-100 text-emerald-700'],
+            ['name' => 'keuangan', 'slug' => 'keuangan', 'type' => 'event', 'color' => 'bg-indigo-100 text-indigo-700'],
         ];
 
         $scheduleCategories = [

@@ -22,13 +22,15 @@
                     $navItems = [
                         ['label' => 'Beranda', 'route' => route('client.home')],
                         ['label' => 'Warta Jemaat', 'route' => route('client.announcements')],
+                        ['label' => 'Renungan', 'route' => route('client.reflections'), 'pattern' => 'renungan*'],
                         ['label' => 'Jadwal Ibadah', 'route' => 'schedule-dropdown'],
                         ['label' => 'Tentang', 'route' => 'about-dropdown'],
                         ['label' => 'Kegiatan Gereja', 'route' => route('client.events')],
-                        ['label' => 'Struktur Organisasi', 'route' => '#'],
+                        ['label' => 'Persembahan', 'route' => route('client.persembahan')],
+                        ['label' => 'Struktur Organisasi', 'route' => route('client.organization'), 'pattern' => 'struktur-organisasi*'],
                     ];
                     $scheduleCategories = [
-                        ['label' => 'Ibadah Umum', 'route' => route('client.schedule-worship.detail', 1), 'pattern' => 'jadwal-ibadah/1'],
+                        ['label' => 'Ibadah Umum', 'route' => route('client.schedule-worship.umum'), 'pattern' => 'jadwal-ibadah/umum'],
                         ['label' => 'Moria', 'route' => route('client.schedule-worship.detail', 2), 'pattern' => 'jadwal-ibadah/2'],
                         ['label' => 'Mamre', 'route' => route('client.schedule-worship.detail', 3), 'pattern' => 'jadwal-ibadah/3'],
                         ['label' => 'Perpulungen Jabu-Jabu', 'route' => route('client.schedule-worship.detail', 4), 'pattern' => 'jadwal-ibadah/4'],
@@ -79,7 +81,7 @@
                     @elseif($item['route'] === 'schedule-dropdown')
                         {{-- Jadwal Ibadah Dropdown --}}
                         <div x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" class="relative">
-                            <a href="{{ route('client.schedule-worship') }}"
+                            <a href="{{ route('client.schedule-worship.umum') }}"
                                class="px-3 py-2 text-[13.5px] font-medium rounded-md transition-colors inline-flex items-center gap-1
                                       {{ $isScheduleActive ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' }}">
                                 Jadwal Ibadah
@@ -107,9 +109,10 @@
                             </div>
                         </div>
                     @else
+                        @php $isActive = $item['route'] !== '#' && ($currentUrl === $item['route'] || (isset($item['pattern']) && request()->is($item['pattern']))); @endphp
                         <a href="{{ $item['route'] }}"
                            class="px-3 py-2 text-[13.5px] font-medium rounded-md transition-colors
-                                  {{ $item['route'] !== '#' && $currentUrl === $item['route'] ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' }}">
+                                  {{ $isActive ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' }}">
                             {{ $item['label'] }}
                         </a>
                     @endif
@@ -153,16 +156,17 @@
         <div class="px-4 py-3 space-y-1">
             @foreach($navItems as $item)
                 @if($item['route'] !== 'schedule-dropdown' && $item['route'] !== 'about-dropdown')
+                    @php $isActive = $item['route'] !== '#' && ($currentUrl === $item['route'] || (isset($item['pattern']) && request()->is($item['pattern']))); @endphp
                     <a href="{{ $item['route'] }}"
                        class="block px-3 py-2.5 text-[14px] font-medium rounded-lg
-                              {{ $item['route'] !== '#' && $currentUrl === $item['route'] ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:bg-slate-50' }}">
+                              {{ $isActive ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:bg-slate-50' }}">
                         {{ $item['label'] }}
                     </a>
                 @endif
             @endforeach
 
             {{-- Jadwal Ibadah --}}
-            <a href="{{ route('client.schedule-worship') }}"
+            <a href="{{ route('client.schedule-worship.umum') }}"
                class="block px-3 py-2.5 text-[14px] font-medium rounded-lg
                       {{ $isScheduleActive ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:bg-slate-50' }}">
                 Jadwal Ibadah
