@@ -23,7 +23,7 @@
 
         <div class="flex-1 flex flex-col">
             {{-- Top Bar --}}
-            <header class="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-6 sticky top-0 z-40">
+            <header class="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-40">
                 <div class="flex items-center gap-3">
                     <button type="button" onclick="toggleSidebar()" class="lg:hidden text-slate-500 hover:text-slate-700">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -64,19 +64,19 @@
             </header>
 
             {{-- Content --}}
-            <main class="flex-1 p-6">
+            <main class="flex-1 p-4 sm:p-6">
                 @if(session('success'))
                     <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000"
                          class="mb-4 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm rounded-lg px-4 py-3 flex items-center justify-between">
-                        <span>{{ session('success') }}</span>
-                        <button @click="show = false" class="text-emerald-500 hover:text-emerald-700">&times;</button>
+                        <span class="min-w-0 break-words">{{ session('success') }}</span>
+                        <button @click="show = false" class="text-emerald-500 hover:text-emerald-700 shrink-0">&times;</button>
                     </div>
                 @endif
                 @if(session('error'))
                     <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000"
                          class="mb-4 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3 flex items-center justify-between">
-                        <span>{{ session('error') }}</span>
-                        <button @click="show = false" class="text-red-500 hover:text-red-700">&times;</button>
+                        <span class="min-w-0 break-words">{{ session('error') }}</span>
+                        <button @click="show = false" class="text-red-500 hover:text-red-700 shrink-0">&times;</button>
                     </div>
                 @endif
 

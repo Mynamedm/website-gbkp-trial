@@ -70,12 +70,12 @@
 
     {{-- Pohon jabatan --}}
     <div class="bg-white rounded-2xl shadow-sm border border-slate-200">
-        <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-            <div>
-                <h2 class="text-sm font-semibold text-slate-700">Susunan Jabatan</h2>
+<div class="px-6 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-2">
+            <div class="min-w-0">
+                <h2 class="text-sm font-semibold text-slate-700 truncate">Susunan Jabatan</h2>
                 <p class="text-[11.5px] text-slate-400 mt-0.5">Jabatan tanpa atasan akan tampil sebagai akar bagan.</p>
             </div>
-            <div class="flex items-center gap-2">
+            <div class="flex flex-wrap items-center gap-2 shrink-0">
                 <a href="{{ route('client.organization') }}" target="_blank" class="px-4 py-2 border border-slate-200 text-slate-600 text-[13px] font-semibold rounded-lg hover:bg-slate-50 transition-colors">
                     Lihat Halaman
                 </a>
@@ -429,3 +429,5 @@ function deleteMember(id) {
 }
 </script>
 @endpush
+
+
