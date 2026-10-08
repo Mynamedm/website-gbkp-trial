@@ -113,71 +113,71 @@
                     </div>
                     <div class="divide-y divide-slate-100">
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Pengkhotbah</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Pengkhotbah</span>
                             <span class="text-slate-800 text-[13px] font-medium">Pdt. Andreas Pranata Meliala, M.Th</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Liturgis</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Liturgis</span>
                             <span class="text-slate-800 text-[13px] font-medium">Pt. Dedy K. Sinulingga</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Koordinator</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Koordinator</span>
                             <span class="text-slate-800 text-[13px] font-medium">Dk. Diana Nona Br. Sembiring</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Pengantar Doa</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Pengantar Doa</span>
                             <span class="text-slate-800 text-[13px] font-medium">Pt. Gunawan Barus</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Kata Pengantar / Warta Jemaat</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Kata Pengantar / Warta Jemaat</span>
                             <span class="text-slate-800 text-[13px] font-medium">Dk. Mariatim Br. Kaban</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Persembahan</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Persembahan</span>
                             <span class="text-slate-800 text-[13px] font-medium">Pt. Gelora Sinuhaji</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Kolektan / Counter 1</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Kolektan / Counter 1</span>
                             <span class="text-slate-800 text-[13px] font-medium">Pt. Hiskia Juana Ginting</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Kolektan / Counter 2</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Kolektan / Counter 2</span>
                             <span class="text-slate-800 text-[13px] font-medium">Dk. Misnawati Br. Sebayang</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Penerima Jemaat 1</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Penerima Jemaat 1</span>
                             <span class="text-slate-800 text-[13px] font-medium">Dk. Patuan Situmorang</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Penerima Jemaat 2</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Penerima Jemaat 2</span>
                             <span class="text-slate-800 text-[13px] font-medium">Dk. Dwija Ginting</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Organis</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Organis</span>
                             <span class="text-slate-800 text-[13px] font-medium">Anselmus Libreynra Sinulingga</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0"></span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]"></span>
                             <span class="text-slate-800 text-[13px] font-medium">Dk. Margaretba Sagala</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Song Leader</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Song Leader</span>
                             <span class="text-slate-800 text-[13px] font-medium">Liwarni Simamora</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0"></span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]"></span>
                             <span class="text-slate-800 text-[13px] font-medium">Mispia Br. Surbakti</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Worship Leader</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Worship Leader</span>
                             <span class="text-slate-800 text-[13px] font-medium">-</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Multimedia</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Multimedia</span>
                             <span class="text-slate-800 text-[13px] font-medium">Claresta Br. Ginting</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Persembahan Pujian</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Persembahan Pujian</span>
                             <span class="text-slate-800 text-[13px] font-medium">Getsemani</span>
                         </div>
                     </div>
@@ -207,71 +207,71 @@
                     </div>
                     <div class="divide-y divide-slate-100">
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Pengkhotbah</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Pengkhotbah</span>
                             <span class="text-slate-800 text-[13px] font-medium">Pdt. Edy Surbakti, S.Th</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Liturgis</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Liturgis</span>
                             <span class="text-slate-800 text-[13px] font-medium">Pt. Normal Ginting</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Koordinator</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Koordinator</span>
                             <span class="text-slate-800 text-[13px] font-medium">Pt. Fransta Kacaribu</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Pengantar Doa</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Pengantar Doa</span>
                             <span class="text-slate-800 text-[13px] font-medium">Dk. Riza Surbakti</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Kata Pengantar / Warta Jemaat</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Kata Pengantar / Warta Jemaat</span>
                             <span class="text-slate-800 text-[13px] font-medium">Dk. Herlan Tarigan</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Persembahan</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Persembahan</span>
                             <span class="text-slate-800 text-[13px] font-medium">Dk. Antony Tarigan</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Kolektan / Counter 1</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Kolektan / Counter 1</span>
                             <span class="text-slate-800 text-[13px] font-medium">Dk. Riston Surbakti</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Kolektan / Counter 2</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Kolektan / Counter 2</span>
                             <span class="text-slate-800 text-[13px] font-medium">Dk. Andelta Sinuraya</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Penerima Jemaat 1</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Penerima Jemaat 1</span>
                             <span class="text-slate-800 text-[13px] font-medium">Pt. Masdi Sitepu</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Penerima Jemaat 2</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Penerima Jemaat 2</span>
                             <span class="text-slate-800 text-[13px] font-medium">Pt. Em. Gideon Perangin-angin</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Organis</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Organis</span>
                             <span class="text-slate-800 text-[13px] font-medium">Pt. Bartolomeus Sinuhaji</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0"></span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]"></span>
                             <span class="text-slate-800 text-[13px] font-medium">Pt. Yetty Br. Tobing</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Song Leader</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Song Leader</span>
                             <span class="text-slate-800 text-[13px] font-medium">Angelica Br. Surbakti</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0"></span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]"></span>
                             <span class="text-slate-800 text-[13px] font-medium">Viko Alexandro Sebayang</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Worship Leader</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Worship Leader</span>
                             <span class="text-slate-800 text-[13px] font-medium">Nora Nd. Bara Sembiring</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Multimedia</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Multimedia</span>
                             <span class="text-slate-800 text-[13px] font-medium">Vina Br. Perangin-angin</span>
                         </div>
                         <div class="flex items-center px-5 py-2.5">
-                            <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">Persembahan Pujian</span>
+                            <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">Persembahan Pujian</span>
                             <span class="text-slate-800 text-[13px] font-medium">-</span>
                         </div>
                     </div>

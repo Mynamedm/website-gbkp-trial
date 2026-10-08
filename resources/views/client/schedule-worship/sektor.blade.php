@@ -63,25 +63,25 @@
                             <div class="space-y-3">
                                 @if(!empty($sektorEvent['host']) && $sektorEvent['host'] !== '-')
                                 <div class="flex items-center gap-4">
-                                    <span class="text-slate-500 text-[13px] w-[130px] shrink-0 font-medium">{{ $sektorEvent['host_label'] }}</span>
+                                    <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">{{ $sektorEvent['host_label'] }}</span>
                                     <span class="text-slate-800 text-[13px] font-semibold">: {{ $sektorEvent['host'] }}</span>
                                 </div>
                                 @endif
                                 <div class="flex items-center gap-4">
-                                    <span class="text-slate-500 text-[13px] w-[130px] shrink-0 font-medium">Tema</span>
+                                    <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Tema</span>
                                     <span class="text-slate-800 text-[13px] font-semibold">: {{ $sektorEvent['tema'] }}</span>
                                 </div>
                                 <div class="flex items-center gap-4">
-                                    <span class="text-slate-500 text-[13px] w-[130px] shrink-0 font-medium">Ayat Tema</span>
+                                    <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Ayat Tema</span>
                                     <span class="text-slate-800 text-[13px] font-semibold">: {{ $sektorEvent['ayat_tema'] }}</span>
                                 </div>
                                 <div class="flex items-center gap-4">
-                                    <span class="text-slate-500 text-[13px] w-[130px] shrink-0 font-medium">Pembicara</span>
+                                    <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Pembicara</span>
                                     <span class="text-slate-800 text-[13px] font-semibold">: {{ $sektorEvent['pembicara'] }}</span>
                                 </div>
                                 @if(!empty($sektorEvent['worship_leader']) && $sektorEvent['worship_leader'] !== '-')
                                 <div class="flex items-center gap-4">
-                                    <span class="text-slate-500 text-[13px] w-[130px] shrink-0 font-medium">Worship Leader</span>
+                                    <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Worship Leader</span>
                                     <span class="text-slate-800 text-[13px] font-semibold">: {{ $sektorEvent['worship_leader'] }}</span>
                                 </div>
                                 @endif
@@ -110,7 +110,7 @@
                 <div class="mt-8">
                     <a href="{{ route('client.schedule-worship.riwayat', [$kategoriId, $sektorIndex]) }}" class="flex items-center justify-between bg-gradient-to-r from-slate-800 to-slate-700 rounded-2xl p-5 sm:p-6 hover:from-slate-700 hover:to-slate-600 transition-all group">
                         <div class="flex items-center gap-0 min-w-0">
-                            <div class="shrink-0 w-[200px] sm:w-[220px]">
+                            <div class="shrink-0 min-w-[160px] sm:min-w-[180px]">
                                 <h3 class="text-white font-bold text-[18px] sm:text-[20px] uppercase tracking-wide leading-tight">Riwayat Ibadah</h3>
                                 <p class="text-slate-400 text-[12px] sm:text-[12.5px] mt-1">Lihat ibadah minggu kemarin</p>
                             </div>
@@ -128,7 +128,7 @@
                     @foreach($sektorEvent['kegiatan'] as $kg)
                         <a href="{{ $kg['route'] }}" class="flex items-center justify-between bg-gradient-to-r from-slate-800 to-slate-700 rounded-2xl p-5 sm:p-6 hover:from-slate-700 hover:to-slate-600 transition-all group">
                             <div class="flex items-center gap-0 min-w-0">
-                                <div class="shrink-0 w-[200px] sm:w-[220px]">
+                                <div class="shrink-0 min-w-[160px] sm:min-w-[180px]">
                                     <h3 class="text-white font-bold text-[18px] sm:text-[20px] uppercase tracking-wide leading-tight">{{ $kg['kode'] }}</h3>
                                     <p class="text-slate-400 text-[12px] sm:text-[12.5px] mt-1">{{ $kg['nama'] }}</p>
                                 </div>

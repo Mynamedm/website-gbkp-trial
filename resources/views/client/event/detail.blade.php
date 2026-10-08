@@ -15,7 +15,7 @@
                 <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
                 </svg>
-                <span class="text-white font-medium truncate max-w-[300px]">{{ $event->title }}</span>
+                <span class="text-white font-medium truncate max-w-full sm:max-w-[300px]">{{ $event->title }}</span>
             </nav>
 
             {{-- Title --}}
@@ -55,7 +55,7 @@
                 $catText = $catParts[1] ?? 'text-slate-700';
             @endphp
 
-            <div class="grid lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {{-- Main Content --}}
                 <div class="lg:col-span-2 space-y-6">
                     {{-- Tentang Kegiatan --}}
@@ -88,39 +88,39 @@
                         <h2 class="font-display text-slate-800 text-xl font-extrabold mb-5">Detail Kegiatan</h2>
                         <div class="divide-y divide-slate-100">
                             <div class="flex items-start gap-4 py-3">
-                                <span class="text-slate-500 text-[13.5px] w-36 shrink-0">Jenis Kegiatan</span>
+                                <span class="text-slate-500 text-[13.5px] shrink-0 min-w-[100px]">Jenis Kegiatan</span>
                                 <span class="text-slate-500 text-[13.5px]">:</span>
                                 <span class="text-slate-700 text-[13.5px] font-medium">{{ ucfirst($event->category) }}</span>
                             </div>
                             <div class="flex items-start gap-4 py-3">
-                                <span class="text-slate-500 text-[13.5px] w-36 shrink-0">Tanggal</span>
+                                <span class="text-slate-500 text-[13.5px] shrink-0 min-w-[100px]">Tanggal</span>
                                 <span class="text-slate-500 text-[13.5px]">:</span>
                                 <span class="text-slate-700 text-[13.5px] font-medium">{{ $event->date->translatedFormat('d F Y') }}</span>
                             </div>
                             @if($event->time_start)
                             <div class="flex items-start gap-4 py-3">
-                                <span class="text-slate-500 text-[13.5px] w-36 shrink-0">Waktu</span>
+                                <span class="text-slate-500 text-[13.5px] shrink-0 min-w-[100px]">Waktu</span>
                                 <span class="text-slate-500 text-[13.5px]">:</span>
                                 <span class="text-slate-700 text-[13.5px] font-medium">{{ $event->time_start }}{{ $event->time_end ? ' - ' . $event->time_end : '' }}</span>
                             </div>
                             @endif
                             @if($event->location)
                             <div class="flex items-start gap-4 py-3">
-                                <span class="text-slate-500 text-[13.5px] w-36 shrink-0">Tempat</span>
+                                <span class="text-slate-500 text-[13.5px] shrink-0 min-w-[100px]">Tempat</span>
                                 <span class="text-slate-500 text-[13.5px]">:</span>
                                 <span class="text-slate-700 text-[13.5px] font-medium">{{ $event->location }}</span>
                             </div>
                             @endif
                             @if($event->organizedBy)
                             <div class="flex items-start gap-4 py-3">
-                                <span class="text-slate-500 text-[13.5px] w-36 shrink-0">Dilayani Oleh</span>
+                                <span class="text-slate-500 text-[13.5px] shrink-0 min-w-[100px]">Dilayani Oleh</span>
                                 <span class="text-slate-500 text-[13.5px]">:</span>
                                 <span class="text-slate-700 text-[13.5px] font-medium">{{ $event->organizedBy }}</span>
                             </div>
                             @endif
                             @if($event->content)
                             <div class="flex items-start gap-4 py-3">
-                                <span class="text-slate-500 text-[13.5px] w-36 shrink-0">Keterangan</span>
+                                <span class="text-slate-500 text-[13.5px] shrink-0 min-w-[100px]">Keterangan</span>
                                 <span class="text-slate-500 text-[13.5px]">:</span>
                                 <span class="text-slate-700 text-[13.5px] font-medium">{!! strip_tags($event->content) !!}</span>
                             </div>

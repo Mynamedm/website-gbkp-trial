@@ -14,7 +14,7 @@
 
     @stack('styles')
 </head>
-<body class="font-sans antialiased bg-white text-slate-700">
+<body class="font-sans antialiased bg-white text-slate-700 overflow-x-hidden">
     @include('layouts.client.header')
 
     <main>

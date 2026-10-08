@@ -116,7 +116,7 @@
                             <div class="divide-y divide-slate-100">
                                 @foreach($petugas['pagi']['petugas'] as $p)
                                     <div class="flex items-center px-5 py-2.5">
-                                        <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">{{ $p['jabatan'] }}</span>
+                                        <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">{{ $p['jabatan'] }}</span>
                                         <span class="text-slate-800 text-[13px] font-medium">{{ $p['nama'] }}</span>
                                     </div>
                                 @endforeach
@@ -148,7 +148,7 @@
                             <div class="divide-y divide-slate-100">
                                 @foreach($petugas['sore']['petugas'] as $p)
                                     <div class="flex items-center px-5 py-2.5">
-                                        <span class="text-slate-600 text-[12.5px] w-[180px] shrink-0">{{ $p['jabatan'] }}</span>
+                                        <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]">{{ $p['jabatan'] }}</span>
                                         <span class="text-slate-800 text-[13px] font-medium">{{ $p['nama'] }}</span>
                                     </div>
                                 @endforeach
@@ -182,10 +182,10 @@
                 <p class="text-slate-500 text-[14px] mb-8">{{ $kategori['section_subtitle'] }}</p>
 
                 <div class="space-y-4">
-                    @foreach($sektor as $index => $item)
+@foreach($sektor as $index => $item)
                         <a href="{{ route('client.schedule-worship.sektor', [$id, $index]) }}" class="flex items-center justify-between bg-gradient-to-r from-slate-800 to-slate-700 rounded-2xl p-5 sm:p-6 hover:from-slate-700 hover:to-slate-600 transition-all group">
                             <div class="flex items-center gap-0 min-w-0">
-                                <div class="shrink-0 w-[200px] sm:w-[220px]">
+                                <div class="shrink-0 min-w-[160px] sm:min-w-[180px]">
                                     <h3 class="text-white font-bold text-[14px] sm:text-[15px] uppercase tracking-wide leading-tight">{{ $item['nama'] }}</h3>
                                     <p class="text-slate-400 text-[12px] sm:text-[12.5px] mt-1">Waktu Ibadah : {{ $item['waktu'] }}</p>
                                 </div>
@@ -255,56 +255,56 @@
                             <div class="p-6">
                                 <div class="space-y-3">
                                     <div class="flex items-center gap-4">
-                                        <span class="text-slate-500 text-[13px] w-[130px] shrink-0 font-medium">Tema</span>
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Tema</span>
                                         <span class="text-slate-800 text-[13px] font-semibold">: {{ $permataEvent['tema'] }}</span>
                                     </div>
                                     <div class="flex items-center gap-4">
-                                        <span class="text-slate-500 text-[13px] w-[130px] shrink-0 font-medium">Ayat Tema</span>
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Ayat Tema</span>
                                         <span class="text-slate-800 text-[13px] font-semibold">: {{ $permataEvent['ayat_tema'] }}</span>
                                     </div>
                                     <div class="flex items-center gap-4">
-                                        <span class="text-slate-500 text-[13px] w-[130px] shrink-0 font-medium">Pembicara</span>
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Pembicara</span>
                                         <span class="text-slate-800 text-[13px] font-semibold">: {{ $permataEvent['pembicara'] }}</span>
                                     </div>
                                     @if(!empty($permataEvent['worship_leader']))
                                     <div class="flex items-center gap-4">
-                                        <span class="text-slate-500 text-[13px] w-[130px] shrink-0 font-medium">Worship Leader</span>
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Worship Leader</span>
                                         <span class="text-slate-800 text-[13px] font-semibold">: {{ $permataEvent['worship_leader'] }}</span>
                                     </div>
                                     @endif
                                     @if(!empty($permataEvent['gitaris']))
                                     <div class="flex items-center gap-4">
-                                        <span class="text-slate-500 text-[13px] w-[130px] shrink-0 font-medium">Gitaris</span>
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Gitaris</span>
                                         <span class="text-slate-800 text-[13px] font-semibold">: {{ $permataEvent['gitaris'] }}</span>
                                     </div>
                                     @endif
                                     @if(!empty($permataEvent['cajonist']))
                                     <div class="flex items-center gap-4">
-                                        <span class="text-slate-500 text-[13px] w-[130px] shrink-0 font-medium">Cajonist</span>
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Cajonist</span>
                                         <span class="text-slate-800 text-[13px] font-semibold">: {{ $permataEvent['cajonist'] }}</span>
                                     </div>
                                     @endif
                                     @if(!empty($permataEvent['basist']))
                                     <div class="flex items-center gap-4">
-                                        <span class="text-slate-500 text-[13px] w-[130px] shrink-0 font-medium">Basist</span>
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Basist</span>
                                         <span class="text-slate-800 text-[13px] font-semibold">: {{ $permataEvent['basist'] }}</span>
                                     </div>
                                     @endif
                                     @if(!empty($permataEvent['singer_1']))
                                     <div class="flex items-center gap-4">
-                                        <span class="text-slate-500 text-[13px] w-[130px] shrink-0 font-medium">Singer 1</span>
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Singer 1</span>
                                         <span class="text-slate-800 text-[13px] font-semibold">: {{ $permataEvent['singer_1'] }}</span>
                                     </div>
                                     @endif
                                     @if(!empty($permataEvent['singer_2']))
                                     <div class="flex items-center gap-4">
-                                        <span class="text-slate-500 text-[13px] w-[130px] shrink-0 font-medium">Singer 2</span>
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Singer 2</span>
                                         <span class="text-slate-800 text-[13px] font-semibold">: {{ $permataEvent['singer_2'] }}</span>
                                     </div>
                                     @endif
                                     @if(!empty($permataEvent['multimedia']))
                                     <div class="flex items-center gap-4">
-                                        <span class="text-slate-500 text-[13px] w-[130px] shrink-0 font-medium">Multimedia</span>
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Multimedia</span>
                                         <span class="text-slate-800 text-[13px] font-semibold">: {{ $permataEvent['multimedia'] }}</span>
                                     </div>
                                     @endif
@@ -333,7 +333,7 @@
                     @foreach($permataEvent['kegiatan'] as $kg)
                         <a href="{{ $kg['route'] }}" class="flex items-center justify-between bg-gradient-to-r from-slate-800 to-slate-700 rounded-2xl p-5 sm:p-6 hover:from-slate-700 hover:to-slate-600 transition-all group">
                             <div class="flex items-center gap-0 min-w-0">
-                                <div class="shrink-0 w-[200px] sm:w-[220px]">
+                                <div class="shrink-0 min-w-[160px] sm:min-w-[180px]">
                                     <h3 class="text-white font-bold text-[18px] sm:text-[20px] uppercase tracking-wide leading-tight">{{ $kg['kode'] }}</h3>
                                     <p class="text-slate-400 text-[12px] sm:text-[12.5px] mt-1">{{ $kg['nama'] }}</p>
                                 </div>
@@ -372,7 +372,7 @@
                     @foreach($sektor as $index => $item)
                         <a href="{{ route('client.schedule-worship.sektor', [$id, $index]) }}" class="flex items-center justify-between bg-gradient-to-r from-slate-800 to-slate-700 rounded-2xl p-5 sm:p-6 hover:from-slate-700 hover:to-slate-600 transition-all group">
                             <div class="flex items-center gap-0 min-w-0">
-                                <div class="shrink-0 w-[200px] sm:w-[220px]">
+                                <div class="shrink-0 min-w-[160px] sm:min-w-[180px]">
                                     <h3 class="text-white font-bold text-[14px] sm:text-[15px] uppercase tracking-wide leading-tight">{{ $item['nama'] }}</h3>
                                     @if($hostLabel && $item['host'])
                                         <p class="text-slate-400 text-[12px] sm:text-[12.5px] mt-1">{{ $hostLabel }} : {{ $item['host'] }}</p>

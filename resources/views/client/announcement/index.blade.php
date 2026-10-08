@@ -93,7 +93,7 @@
                     </div>
                     <h3 class="font-display text-slate-800 text-base font-bold">Cara Membaca Warta Jemaat</h3>
                 </div>
-                <div class="grid sm:grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div class="flex items-start gap-3">
                         <div class="w-7 h-7 rounded-full bg-blue-700 text-white flex items-center justify-center shrink-0 text-[12px] font-bold">1</div>
                         <p class="text-slate-600 text-[13.5px] leading-relaxed">Klik "Baca Warta" pada warta yang dipilih</p>
@@ -173,12 +173,12 @@
                 ];
             @endphp
 
-            <div class="grid sm:grid-cols-2 lg:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($wartaList as $index => $warta)
                     <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow">
                         <div class="flex flex-col sm:flex-row">
                             {{-- Thumbnail --}}
-                            <div class="sm:w-48 h-48 sm:h-auto bg-gradient-to-br {{ $warta['warna'] }} flex items-center justify-center relative shrink-0">
+                            <div class="w-full h-48 sm:w-48 sm:h-auto bg-gradient-to-br {{ $warta['warna'] }} flex items-center justify-center relative shrink-0">
                                 <div class="text-center px-4">
                                     <p class="text-white/60 text-[10px] uppercase tracking-wider mb-1">Warta</p>
                                     <p class="text-white font-bold text-lg leading-tight">Jemaat</p>

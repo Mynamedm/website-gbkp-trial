@@ -79,7 +79,7 @@
                 @foreach($kategori as $item)
                     <a href="{{ route('client.schedule-worship.detail', $item['id']) }}" class="flex items-center justify-between bg-gradient-to-r from-slate-800 to-slate-700 rounded-2xl p-5 sm:p-6 hover:from-slate-700 hover:to-slate-600 transition-all group">
                         <div class="flex items-center gap-0 min-w-0">
-                            <div class="shrink-0 w-[180px] sm:w-[200px]">
+                            <div class="shrink-0 min-w-[150px] sm:min-w-[180px]">
                                 <h3 class="text-white font-bold text-[14px] sm:text-[15px] uppercase tracking-wide leading-tight">{{ $item['nama'] }}</h3>
                                 <p class="text-slate-400 text-[12px] sm:text-[12.5px] mt-0.5">{{ $item['subtitle'] }}</p>
                             </div>

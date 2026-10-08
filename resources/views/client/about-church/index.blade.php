@@ -8,7 +8,7 @@
 
             {{-- Slide 1: Hero (Full Width) --}}
             <div class="carousel-slide min-w-full">
-                <section class="relative w-full h-[85vh] overflow-hidden">
+                <section class="relative w-full min-h-[85vh] overflow-hidden">
                     <div class="absolute inset-0">
                         <img src="https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=1920&q=80"
                              alt="Gereja GBKP" class="w-full h-full object-cover">
@@ -38,7 +38,7 @@
 
             {{-- Slide 2: Sejarah GBKP Mula-Mula di Indonesia --}}
             <div class="carousel-slide min-w-full">
-                <section class="relative w-full h-[85vh] overflow-hidden bg-slate-50">
+                <section class="relative w-full min-h-[85vh] overflow-hidden bg-slate-50">
                     <div class="absolute inset-0">
                         <img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=1200&q=80"
                              alt="Sejarah GBKP Indonesia" class="w-full h-full object-cover">
@@ -66,7 +66,7 @@
 
             {{-- Slide 3: Sejarah GBKP Bandar Lampung --}}
             <div class="carousel-slide min-w-full">
-                <section class="relative w-full h-[85vh] overflow-hidden bg-white">
+                <section class="relative w-full min-h-[85vh] overflow-hidden bg-white">
                     <div class="absolute inset-0">
                         <img src="https://images.unsplash.com/photo-1438032005730-c779502df39b?w=1200&q=80"
                              alt="Sejarah GBKP Bandar Lampung" class="w-full h-full object-cover">
@@ -94,7 +94,7 @@
 
             {{-- Slide 4: Perkembangan GBKP Bandar Lampung --}}
             <div class="carousel-slide min-w-full">
-                <section class="relative w-full h-[85vh] overflow-hidden bg-slate-900">
+                <section class="relative w-full min-h-[85vh] overflow-hidden bg-slate-900">
                     <div class="absolute inset-0">
                         <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80"
                              alt="Perkembangan GBKP" class="w-full h-full object-cover opacity-40">
