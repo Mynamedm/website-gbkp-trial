@@ -110,7 +110,7 @@
                 </a>
             </div>
 
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 @forelse($schedules as $item)
                     <a href="{{ route('client.schedule-worship') }}" class="group bg-gradient-to-br from-slate-700 to-slate-800 rounded-2xl p-6 flex items-start gap-4 hover:from-slate-600 hover:to-slate-700 transition-all">
                         <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
@@ -149,7 +149,7 @@
                 </a>
             </div>
 
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 @forelse($announcements as $item)
                     <a href="{{ route('client.announcements') }}" class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
                         <div class="bg-gradient-to-br from-sky-100 to-sky-50 h-36 flex items-center justify-center relative overflow-hidden">
@@ -198,7 +198,7 @@
                 </a>
             </div>
 
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 @forelse($events as $item)
                     <a href="{{ route('client.events') }}" class="bg-white rounded-2xl overflow-hidden border border-slate-100 hover:border-slate-200 hover:shadow-md transition-all group">
                         <div class="bg-gradient-to-br from-slate-100 to-slate-50 h-36 flex items-center justify-center relative overflow-hidden">
@@ -233,7 +233,7 @@
             <h2 class="font-display text-slate-800 text-xl sm:text-2xl font-bold mb-8">Lokasi Gereja</h2>
 
             <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100">
-                <div class="grid md:grid-cols-[1fr_380px]">
+                <div class="grid grid-cols-1 md:grid-cols-[1fr_380px]">
                     <div class="h-64 md:h-auto bg-slate-200 relative">
                         <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.3!2d105.2!3d-5.4!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNcKwMjQnMDAuMCJTIDEwNcKwMTInMDAuMCJF!5e0!3m2!1sid!2sid!4v1"

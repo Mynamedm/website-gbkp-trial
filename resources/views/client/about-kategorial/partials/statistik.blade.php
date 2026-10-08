@@ -6,7 +6,7 @@
                 <h2 class="font-display text-slate-800 text-2xl sm:text-3xl font-bold">Jumlah Anggota</h2>
             </div>
 
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 @foreach($kategorials as $item)
                     <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100 hover:shadow-md transition-all">
                         <div class="flex items-center gap-3 mb-4">

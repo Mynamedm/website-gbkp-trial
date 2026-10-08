@@ -31,7 +31,7 @@
                     <p class="text-slate-400 text-sm">Belum ada renungan yang dipublikasikan.</p>
                 </div>
             @else
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($reflections as $reflection)
                         <a href="{{ route('client.reflections.detail', $reflection) }}"
                            class="group flex flex-col bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-lg hover:border-blue-200 transition-all">

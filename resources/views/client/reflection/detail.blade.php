@@ -31,7 +31,7 @@
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <article class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-9">
                 @if(filled($reflection->theme) || filled($reflection->bible_verse))
-                    <div class="grid sm:grid-cols-2 gap-4 pb-6 mb-6 border-b border-slate-100">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-6 mb-6 border-b border-slate-100">
                         @if(filled($reflection->theme))
                             <div>
                                 <p class="text-blue-600 text-[11px] font-semibold uppercase tracking-wide mb-1">Tema</p>

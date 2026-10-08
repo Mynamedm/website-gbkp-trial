@@ -6,7 +6,7 @@
                 <h2 class="font-display text-slate-800 text-2xl sm:text-3xl font-bold">Pengurus Kategorial</h2>
             </div>
 
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 @foreach($pengurus as $item)
                     <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
                         <div class="bg-{{ $item['color'] }}-50 px-6 py-4 border-b border-{{ $item['color'] }}-100">

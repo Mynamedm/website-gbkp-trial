@@ -6,7 +6,7 @@
                     <div id="kategorialTrack" class="flex transition-transform duration-500 ease-in-out">
                         @foreach($kategorials as $index => $item)
                             <div class="kategorial-slide min-w-full">
-                                <div class="grid lg:grid-cols-2 bg-white border border-slate-100 shadow-sm rounded-3xl overflow-hidden">
+                                <div class="grid grid-cols-1 lg:grid-cols-2 bg-white border border-slate-100 shadow-sm rounded-3xl overflow-hidden">
                                     <div class="bg-gradient-to-br from-{{ $item['color'] }}-100 to-{{ $item['color'] }}-50 min-h-[220px] lg:min-h-[380px] flex items-center justify-center">
                                         <span class="text-{{ $item['color'] }}-300 text-[13px] font-medium">Foto {{ $item['name'] }}</span>
                                     </div>

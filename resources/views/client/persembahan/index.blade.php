@@ -60,7 +60,7 @@
                     <p class="text-slate-400 text-[13px]">Kategori persembahan akan ditampilkan setelah ditambahkan oleh admin.</p>
                 </div>
             @else
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($categories as $category)
                         <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-md transition-shadow"
                              x-data="{ showQR: false }">
@@ -129,9 +129,9 @@
                                     {{-- QR Code Image --}}
                                     <div class="inline-block p-3 bg-white rounded-2xl border-2 border-slate-100 shadow-sm mb-3">
                                         @if($category->qris_image)
-                                            <img src="{{ $category->qris_image }}" alt="QRIS {{ $category->name }}" class="w-48 h-48 object-contain">
+                                            <img src="{{ $category->qris_image }}" alt="QRIS {{ $category->name }}" class="w-full max-w-[192px] h-auto object-contain">
                                         @else
-                                            <img src="{{ $category->qr_code_url }}" alt="QR Code {{ $category->name }}" class="w-48 h-48">
+                                            <img src="{{ $category->qr_code_url }}" alt="QR Code {{ $category->name }}" class="w-full max-w-[192px] h-auto">
                                         @endif
                                     </div>
                                     <p class="text-slate-500 text-[12px] mb-3">Scan barcode di atas untuk melakukan persembahan</p>
