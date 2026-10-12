@@ -1,4 +1,4 @@
-@extends('layouts.client.app')
+    @extends('layouts.client.app')
 
 @section('content')
 
@@ -15,13 +15,13 @@
                         <div class="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/60 to-transparent"></div>
                     </div>
                     <div class="relative h-full flex items-center">
-                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                            <div class="max-w-xl">
+                        <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+                            <div class="max-w-2xl">
                                 <span class="inline-block text-blue-300 text-[11px] font-semibold uppercase tracking-[0.18em] mb-3">Tentang Kami</span>
                                 <h1 class="font-display text-white text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-5">
                                     Gereja Batak Karo Protestan<br>Bandar Lampung
                                 </h1>
-                                <p class="text-white/70 text-[15px] leading-relaxed max-w-lg mb-8">
+                                <p class="text-white/70 text-[15px] leading-relaxed mb-8">
                                     Mengenal lebih dekat sejarah, visi, misi, dan pelayanan GBKP Bandar Lampung dalam melayani jemaat dan masyarakat.
                                 </p>
                                 <button onclick="nextSlide()" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white text-[13px] font-semibold px-5 py-2.5 rounded-full transition-all">
@@ -45,8 +45,8 @@
                         <div class="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/30"></div>
                     </div>
                     <div class="relative h-full flex items-center">
-                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                            <div class="max-w-xl">
+                        <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+                            <div class="max-w-2xl">
                                 <span class="inline-block text-blue-600 text-[11px] font-semibold uppercase tracking-[0.18em] mb-3">Sejarah</span>
                                 <h2 class="font-display text-slate-800 text-2xl sm:text-3xl font-bold mb-5">Awal Mula GBKP di Indonesia</h2>
                                 <p class="text-slate-600 text-[15px] leading-relaxed mb-4">
@@ -73,8 +73,8 @@
                         <div class="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/30"></div>
                     </div>
                     <div class="relative h-full flex items-center">
-                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                            <div class="max-w-xl">
+                        <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+                            <div class="max-w-2xl">
                                 <span class="inline-block text-blue-600 text-[11px] font-semibold uppercase tracking-[0.18em] mb-3">Sejarah Lokal</span>
                                 <h2 class="font-display text-slate-800 text-2xl sm:text-3xl font-bold mb-5">Sejarah Berdirinya GBKP Bandar Lampung</h2>
                                 <p class="text-slate-600 text-[15px] leading-relaxed mb-4">
@@ -101,9 +101,9 @@
                         <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/90 to-slate-900/40"></div>
                     </div>
                     <div class="relative h-full flex items-center">
-                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                        <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
                             <div class="grid lg:grid-cols-2 gap-12 items-center">
-                                <div>
+                                <div class="max-w-2xl">
                                     <span class="inline-block text-blue-300 text-[11px] font-semibold uppercase tracking-[0.18em] mb-3">Perkembangan</span>
                                     <h2 class="font-display text-white text-2xl sm:text-3xl font-bold mb-5">Perkembangan GBKP Bandar Lampung</h2>
                                     <p class="text-white/60 text-[15px] leading-relaxed mb-4">

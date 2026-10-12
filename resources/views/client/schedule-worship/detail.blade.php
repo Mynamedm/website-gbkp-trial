@@ -368,34 +368,139 @@
                 <h2 class="font-display text-slate-800 text-xl sm:text-2xl font-extrabold uppercase tracking-wide mb-2">{{ $kategori['section_title'] }}</h2>
                 <p class="text-slate-500 text-[14px] mb-8">{{ $kategori['section_subtitle'] }}</p>
 
-                <div class="space-y-4">
-                    @foreach($sektor as $index => $item)
-                        <a href="{{ route('client.schedule-worship.sektor', [$id, $index]) }}" class="flex items-center justify-between bg-gradient-to-r from-slate-800 to-slate-700 rounded-2xl p-5 sm:p-6 hover:from-slate-700 hover:to-slate-600 transition-all group">
-                            <div class="flex items-center gap-0 min-w-0">
-                                <div class="shrink-0 min-w-[160px] sm:min-w-[180px]">
-                                    <h3 class="text-white font-bold text-[14px] sm:text-[15px] uppercase tracking-wide leading-tight">{{ $item['nama'] }}</h3>
-                                    @if($hostLabel && $item['host'])
-                                        <p class="text-slate-400 text-[12px] sm:text-[12.5px] mt-1">{{ $hostLabel }} : {{ $item['host'] }}</p>
-                                    @endif
-                                    <p class="text-slate-400 text-[12px] sm:text-[12.5px] mt-0.5">Lokasi : {{ $item['lokasi'] }}</p>
-                                </div>
-                                <div class="w-px h-12 bg-slate-500 mx-4 sm:mx-6 shrink-0"></div>
-                                <div class="min-w-0">
-                                    <p class="text-slate-300 text-[12px] sm:text-[12.5px]">Jadwal Ibadah</p>
-                                    <p class="text-white font-bold text-[13px] sm:text-[14px] mt-0.5">{{ $item['tanggal'] }}</p>
-                                    <p class="text-slate-300 text-[12px] sm:text-[12.5px] mt-2">Waktu Ibadah</p>
-                                    <p class="text-white font-bold text-[13px] sm:text-[14px] font-mono mt-0.5">{{ $item['waktu'] }}</p>
-                                </div>
+                {{-- CAROUSEL SEKTOR --}}
+                <div x-data="{
+                    currentIndex: 0,
+                    sektorData: @json($sektor),
+                    hostLabel: @json($hostLabel),
+                    kategoriId: @json($id),
+                    getCurrentSektor() {
+                        return this.sektorData[this.currentIndex];
+                    },
+                    next() {
+                        this.currentIndex = (this.currentIndex + 1) % this.sektorData.length;
+                    },
+                    prev() {
+                        this.currentIndex = (this.currentIndex - 1 + this.sektorData.length) % this.sektorData.length;
+                    },
+                    goTo(index) {
+                        this.currentIndex = index;
+                    }
+                }" class="mb-8">
+                    {{-- Carousel Container --}}
+                    <div class="relative">
+                        {{-- Navigation Arrows --}}
+                        <button @click="prev()" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 sm:-translate-x-8 z-10 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center text-slate-700 hover:bg-slate-100 transition-colors hidden sm:block" aria-label="Sebelumnya">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
+                            </svg>
+                        </button>
+                        <button @click="next()" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 sm:translate-x-8 z-10 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center text-slate-700 hover:bg-slate-100 transition-colors hidden sm:block" aria-label="Selanjutnya">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+                            </svg>
+                        </button>
+
+                        {{-- Carousel Track --}}
+                        <div class="overflow-hidden">
+                            <div class="flex transition-transform duration-500 ease-out" :style="'transform: translateX(' + (-currentIndex * 100) + '%)'">
+                                <template x-for="(item, index) in sektorData" :key="index">
+                                    <div class="w-full shrink-0 px-2 sm:px-3">
+                                        <button @click="goTo(index)" :class="['w-full aspect-[4/3] rounded-2xl bg-gradient-to-br from-slate-800 to-slate-700 flex flex-col items-center justify-center p-5 text-center transition-all duration-300', currentIndex === index ? 'ring-4 ring-blue-500 ring-offset-2 ring-offset-white scale-105 shadow-xl' : 'hover:from-slate-700 hover:to-slate-600']">
+                                            <h3 class="text-white font-bold text-[14px] sm:text-[16px] lg:text-[18px] uppercase tracking-wide leading-tight" x-text="item.nama"></h3>
+                                            <p class="text-yellow-300 text-[11px] sm:text-[12px] mt-1 font-medium">Pilih untuk lihat jadwal</p>
+                                        </button>
+                                    </div>
+                                </template>
                             </div>
-                            <div class="w-10 h-10 rounded-full bg-yellow-500 flex items-center justify-center shrink-0 ml-4 group-hover:bg-yellow-400 transition-colors">
-                                <svg class="w-5 h-5 text-slate-900" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
-                                </svg>
-                            </div>
-                        </a>
-                    @endforeach
+                        </div>
+
+                        {{-- Dots Indicator --}}
+                        <div class="flex items-center justify-center gap-2 mt-6">
+                            <template x-for="(item, index) in sektorData" :key="index">
+                                <button @click="goTo(index)" :class="['w-2.5 h-2.5 rounded-full transition-all duration-300', currentIndex === index ? 'bg-blue-600 w-8' : 'bg-slate-300 hover:bg-slate-400']" :aria-label="'Go to sector ' + (index + 1)"></button>
+                            </template>
+                        </div>
+                    </div>
                 </div>
 
+                {{-- JADWAL IBADAH MINGGU INI --}}
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                    <div class="p-6 border-b border-slate-100 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center">
+                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-slate-400 text-[12px] font-bold uppercase tracking-wider mb-1">Kegiatan Minggu Ini</h3>
+                                <h2 x-text="getCurrentSektor().nama" class="font-display text-blue-700 text-xl sm:text-2xl font-extrabold"></h2>
+                            </div>
+                        </div>
+                        <span x-text="getCurrentSektor().tanggal" class="text-slate-500 text-[13px] font-medium whitespace-nowrap hidden sm:block"></span>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid sm:grid-cols-2 gap-4 mb-6">
+                            <div class="flex items-center gap-3 p-4 bg-slate-50 rounded-xl">
+                                <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-slate-400 text-[11px] font-bold uppercase tracking-wider">Waktu Ibadah</p>
+                                    <p x-text="getCurrentSektor().waktu" class="text-slate-800 text-[14px] font-semibold mt-0.5"></p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 p-4 bg-slate-50 rounded-xl">
+                                <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-slate-400 text-[11px] font-bold uppercase tracking-wider">Lokasi</p>
+                                    <p x-text="getCurrentSektor().lokasi" class="text-slate-800 text-[14px] font-semibold mt-0.5"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Host Info --}}
+                        <template x-if="hostLabel && getCurrentSektor().host">
+                            <div class="flex items-center gap-4 p-4 bg-amber-50 rounded-xl mb-6">
+                                <div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-slate-400 text-[11px] font-bold uppercase tracking-wider" x-text="hostLabel"></p>
+                                    <p x-text="getCurrentSektor().host" class="text-slate-800 text-[14px] font-semibold mt-0.5"></p>
+                                </div>
+                            </div>
+                        </template>
+
+                        {{-- Action Buttons --}}
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a :href="'/jadwal-ibadah/' + kategoriId + '/sektor/' + currentIndex" class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-700 text-white text-[13.5px] font-semibold rounded-lg hover:bg-blue-800 transition-colors shadow-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                                </svg>
+                                Detail Jadwal
+                            </a>
+                            <a :href="'/jadwal-ibadah/' + kategoriId + '/sektor/' + currentIndex + '/riwayat'" class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-slate-100 text-slate-700 text-[13.5px] font-semibold rounded-lg hover:bg-slate-200 transition-colors border border-slate-200">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+                                </svg>
+                                Selengkapnya (Arsip)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Info Perubahan Jadwal --}}
                 <div class="mt-8 bg-white rounded-2xl border border-slate-200 p-5 flex items-start gap-4">
                     <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-0.5">
                         <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
