@@ -15,13 +15,7 @@
             ];
             $scheduleCategories = [
                 ['label' => 'Ibadah Umum', 'route' => route('client.schedule-worship.umum'), 'pattern' => 'jadwal-ibadah/umum'],
-                ['label' => 'Moria', 'route' => route('client.schedule-worship.detail', 2), 'pattern' => 'jadwal-ibadah/2'],
-                ['label' => 'Mamre', 'route' => route('client.schedule-worship.detail', 3), 'pattern' => 'jadwal-ibadah/3'],
-                ['label' => 'Perpulungen Jabu-Jabu', 'route' => route('client.schedule-worship.detail', 4), 'pattern' => 'jadwal-ibadah/4'],
-                ['label' => 'Permata', 'route' => route('client.schedule-worship.detail', 5), 'pattern' => 'jadwal-ibadah/5'],
-                ['label' => 'KA-KR', 'route' => route('client.schedule-worship.detail', 6), 'pattern' => 'jadwal-ibadah/6'],
-                ['label' => 'Saitun', 'route' => route('client.schedule-worship.detail', 7), 'pattern' => 'jadwal-ibadah/7'],
-                ['label' => 'Naomi', 'route' => route('client.schedule-worship.detail', 8), 'pattern' => 'jadwal-ibadah/8'],
+                ['label' => 'Ibadah Kategorial', 'route' => route('client.schedule-worship'), 'pattern' => 'jadwal-ibadah(?![^/])'],
             ];
             $aboutCategories = [
                 ['label' => 'Tentang Gereja', 'route' => route('client.about-church'), 'pattern' => 'tentang-gereja'],
@@ -116,7 +110,7 @@
                     @elseif($item['route'] === 'schedule-dropdown')
                         {{-- Jadwal Ibadah Dropdown --}}
                         <div x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" class="relative">
-                            <a href="{{ route('client.schedule-worship.umum') }}"
+                            <a href="{{ route('client.schedule-worship') }}"
                                class="px-3 py-2 text-[13.5px] font-medium rounded-md transition-colors inline-flex items-center gap-1
                                      {{ $isScheduleActive ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' }}">
                                 Jadwal Ibadah
@@ -134,9 +128,17 @@
                                  class="absolute left-0 top-full pt-1 z-50">
                                 <div class="bg-white rounded-xl shadow-lg border border-slate-100 py-2 w-56">
                                     @foreach($scheduleCategories as $cat)
+                                        @php
+                                            $isActive = false;
+                                            if ($cat['label'] === 'Ibadah Kategorial') {
+                                                $isActive = request()->url() === route('client.schedule-worship');
+                                            } elseif ($cat['label'] === 'Ibadah Umum') {
+                                                $isActive = request()->is('jadwal-ibadah/umum');
+                                            }
+                                        @endphp
                                         <a href="{{ $cat['route'] }}"
                                            class="block px-4 py-2 text-[13px] font-medium transition-colors
-                                                 {{ request()->is($cat['pattern']) ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' }}">
+                                                  {{ $isActive ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' }}">
                                             {{ $cat['label'] }}
                                         </a>
                                     @endforeach
@@ -225,9 +227,17 @@
                          x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
                          class="mt-2 space-y-1 pl-4 border-l-2 border-slate-200">
                         @foreach($scheduleCategories as $cat)
+                            @php
+                                $isActive = false;
+                                if ($cat['label'] === 'Ibadah Kategorial') {
+                                    $isActive = request()->url() === route('client.schedule-worship');
+                                } elseif ($cat['label'] === 'Ibadah Umum') {
+                                    $isActive = request()->is('jadwal-ibadah/umum');
+                                }
+                            @endphp
                             <a href="{{ $cat['route'] }}" @click="open = false"
                                class="block px-4 py-3 text-[16px] font-medium rounded-lg transition-colors
-                                     {{ request()->is($cat['pattern']) ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:bg-slate-50' }}">
+                                     {{ $isActive ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:bg-slate-50' }}">
                                 {{ $cat['label'] }}
                             </a>
                         @endforeach
