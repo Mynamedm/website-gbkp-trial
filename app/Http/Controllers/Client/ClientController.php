@@ -80,23 +80,29 @@ class ClientController extends Controller
         return view('client.schedule-worship.umum');
     }
 
-    public function scheduleWorshipDetail($id)
+    public function scheduleWorshipDetail($kategoriId, $sektorIndex = null)
     {
-        $kategori = $this->getKategori($id);
+        $kategori = $this->getKategori($kategoriId);
 
         if (!$kategori) {
             abort(404);
         }
 
-        $sektor = $this->getSektor($id);
-        $hostLabel = $this->getHostLabel($id);
-        $petugas = $this->getPetugas($id);
-        $permataEvent = in_array($id, [5, 7, 8]) ? $this->getPermataEvent($id) : null;
+        // Jika ada sektorIndex, tampilkan detail sektor
+        if ($sektorIndex !== null) {
+            return $this->showSektorDetail($kategoriId, $sektorIndex);
+        }
 
-        return view('client.schedule-worship.detail', compact('kategori', 'sektor', 'hostLabel', 'petugas', 'permataEvent', 'id'));
+        // Default: tampilkan semua sektor
+        $sektor = $this->getSektor($kategoriId);
+        $hostLabel = $this->getHostLabel($kategoriId);
+        $petugas = $this->getPetugas($kategoriId);
+        $permataEvent = in_array($kategoriId, [5, 7, 8]) ? $this->getPermataEvent($kategoriId) : null;
+
+        return view('client.schedule-worship.detail', compact('kategori', 'sektor', 'hostLabel', 'petugas', 'permataEvent', 'kategoriId'));
     }
 
-    public function scheduleWorshipSektor($kategoriId, $sektorIndex)
+    private function showSektorDetail($kategoriId, $sektorIndex)
     {
         $kategori = $this->getKategori($kategoriId);
 
@@ -664,13 +670,13 @@ class ClientController extends Controller
             2 => [
                 'host_label' => 'Nyonya Rumah',
                 'sektor' => [
-                    ['nama' => 'SEKTOR YERIKHO', 'host' => 'Nd. Ari Ginting', 'lokasi' => 'Jambur Cawir Metua', 'tanggal' => 'Rabu, 12 Agustus 2026', 'waktu' => '17 : 00 WIB'],
-                    ['nama' => 'SEKTOR NAZARETH', 'host' => 'Nd. Siti Surbakti', 'lokasi' => 'Jambur Cawir Metua', 'tanggal' => 'Rabu, 12 Agustus 2026', 'waktu' => '17 : 00 WIB'],
-                    ['nama' => 'SEKTOR TIBERIAS', 'host' => 'Nd. Rina br. Sitepu', 'lokasi' => 'Jambur Cawir Metua', 'tanggal' => 'Rabu, 12 Agustus 2026', 'waktu' => '17 : 00 WIB'],
-                    ['nama' => 'SEKTOR GETSEMANI', 'host' => 'Nd. Dewi br. Karo', 'lokasi' => 'Jambur Cawir Metua', 'tanggal' => 'Rabu, 12 Agustus 2026', 'waktu' => '17 : 00 WIB'],
-                    ['nama' => 'SEKTOR JERUSALEM', 'host' => 'Nd. Ester br. Ginting', 'lokasi' => 'Jambur Cawir Metua', 'tanggal' => 'Rabu, 12 Agustus 2026', 'waktu' => '17 : 00 WIB'],
-                    ['nama' => 'SEKTOR KAPERNAUM', 'host' => 'Nd. Ruth br. Sinulingga', 'lokasi' => 'Jambur Cawir Metua', 'tanggal' => 'Rabu, 12 Agustus 2026', 'waktu' => '17 : 00 WIB'],
-                    ['nama' => 'SEKTOR BETHANY', 'host' => 'Nd. Sarah br. Perangin-angin', 'lokasi' => 'Jambur Cawir Metua', 'tanggal' => 'Rabu, 12 Agustus 2026', 'waktu' => '17 : 00 WIB'],
+                    ['nama' => 'SEKTOR NAZARETH', 'host' => 'Nd. Siti Surbakti', 'lokasi' => 'Jambur Cawir Metua', 'tanggal' => $this->getUpcomingWednesday(), 'waktu' => '17 : 00 WIB'],
+                    ['nama' => 'SEKTOR TIBERIAS', 'host' => 'Nd. Rina br. Sitepu', 'lokasi' => 'Jambur Cawir Metua', 'tanggal' => $this->getUpcomingWednesday(), 'waktu' => '17 : 00 WIB'],
+                    ['nama' => 'SEKTOR YERIKHO', 'host' => 'Nd. Ari Ginting', 'lokasi' => 'Jambur Cawir Metua', 'tanggal' => $this->getUpcomingWednesday(), 'waktu' => '17 : 00 WIB'],
+                    ['nama' => 'SEKTOR GETSEMANI', 'host' => 'Nd. Dewi br. Karo', 'lokasi' => 'Jambur Cawir Metua', 'tanggal' => $this->getUpcomingWednesday(), 'waktu' => '17 : 00 WIB'],
+                    ['nama' => 'SEKTOR JERUSALEM', 'host' => 'Nd. Ester br. Ginting', 'lokasi' => 'Jambur Cawir Metua', 'tanggal' => $this->getUpcomingWednesday(), 'waktu' => '17 : 00 WIB'],
+                    ['nama' => 'SEKTOR KAPERNAUM', 'host' => 'Nd. Ruth br. Sinulingga', 'lokasi' => 'Jambur Cawir Metua', 'tanggal' => $this->getUpcomingWednesday(), 'waktu' => '17 : 00 WIB'],
+                    ['nama' => 'SEKTOR BETHANY', 'host' => 'Nd. Sarah br. Perangin-angin', 'lokasi' => 'Jambur Cawir Metua', 'tanggal' => $this->getUpcomingWednesday(), 'waktu' => '17 : 00 WIB'],
                 ],
             ],
             3 => [
@@ -892,5 +898,19 @@ class ClientController extends Controller
         ];
 
         return $events[$id] ?? null;
+    }
+
+    private function getUpcomingWednesday(): string
+    {
+        $now = now();
+        // Jika hari ini Rabu (3) atau sebelum, ambil Rabu minggu ini
+        // Jika sudah lewat Rabu, ambil Rabu minggu depan
+        $daysUntilWednesday = (3 - $now->dayOfWeek + 7) % 7;
+        if ($daysUntilWednesday === 0 && $now->hour >= 17) {
+            // Jika hari ini Rabu tapi sudah lewat jam 17:00, ambil minggu depan
+            $daysUntilWednesday = 7;
+        }
+        $wednesday = $now->copy()->addDays($daysUntilWednesday);
+        return $wednesday->translatedFormat('l, d F Y');
     }
 }

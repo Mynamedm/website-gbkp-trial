@@ -1,0 +1,428 @@
+<?php $__env->startSection('content'); ?>
+
+    
+    <section class="relative bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=1600&q=80"
+                 alt="Gereja GBKP" class="w-full h-full object-cover opacity-30 mix-blend-overlay">
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+            <div class="flex items-center gap-2 text-slate-300 text-[13px] mb-4">
+                <a href="<?php echo e(route('client.schedule-worship')); ?>" class="hover:text-white transition-colors">Jadwal Ibadah</a>
+                <span>&#9654;</span>
+                <span class="text-white"><?php echo e($kategori['breadcrumb']); ?></span>
+            </div>
+            <h1 class="font-display text-white text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-3">
+                IBADAH <span class="text-yellow-500"><?php echo e($kategori['judul']); ?></span>
+            </h1>
+            <div class="w-16 h-1 bg-blue-500 rounded-full mb-4"></div>
+            <p class="text-slate-300 text-[15px] leading-relaxed max-w-xl">
+                <?php echo e($kategori['deskripsi']); ?>
+
+            </p>
+        </div>
+    </section>
+
+    <?php if($kategori['type'] === 'umum'): ?>
+        
+        <section class="bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+
+                
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 mb-10">
+                    <div class="flex items-center gap-2 mb-5">
+                        <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+                        </svg>
+                        <h2 class="font-display text-slate-800 text-base font-bold uppercase tracking-wide"><?php echo e($kategori['section_title']); ?></h2>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-end gap-4">
+                        <div class="flex-1 w-full">
+                            <label class="block text-[12.5px] font-medium text-slate-600 mb-1.5">Pilih Tahun</label>
+                            <div class="relative">
+                                <select class="w-full appearance-none bg-white border border-slate-300 rounded-lg px-4 py-2.5 pr-10 text-[14px] text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="2026" selected>2026</option>
+                                    <option value="2025">2025</option>
+                                </select>
+                                <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-1 w-full">
+                            <label class="block text-[12.5px] font-medium text-slate-600 mb-1.5">Pilih Nama Minggu</label>
+                            <div class="relative">
+                                <select class="w-full appearance-none bg-white border border-slate-300 rounded-lg px-4 py-2.5 pr-10 text-[14px] text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option>Minggu Advent II</option>
+                                    <option>Minggu Advent III</option>
+                                    <option>Minggu Advent IV</option>
+                                    <option>Minggu Natal</option>
+                                </select>
+                                <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-blue-700 text-white text-[13.5px] font-semibold rounded-lg hover:bg-blue-800 transition-colors shadow-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+                            </svg>
+                            Tampilkan
+                        </button>
+                    </div>
+                    <p class="text-slate-400 text-[12px] mt-3 flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/>
+                        </svg>
+                        Pilih tahun dan nama minggu untuk melihat jadwal dan petugas pelayanan.
+                    </p>
+                </div>
+
+                
+                <?php if($petugas): ?>
+                    <div class="text-center mb-8">
+                        <h3 class="text-blue-700 text-[13px] font-bold uppercase tracking-wider mb-1">Petugas Kebaktian Minggu</h3>
+                        <p class="font-display text-slate-800 text-2xl sm:text-3xl font-extrabold"><?php echo e($petugas['tanggal']); ?></p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        
+                        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                            <div class="p-5 border-b border-slate-100">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-blue-700 font-bold text-base">IBADAH UMUM PAGI</h4>
+                                        <p class="text-slate-800 font-bold text-sm"><?php echo e($petugas['pagi']['jam']); ?></p>
+                                    </div>
+                                </div>
+                                <p class="text-slate-500 text-[12.5px] flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+                                    </svg>
+                                    <?php echo e($petugas['pagi']['lokasi']); ?>
+
+                                </p>
+                            </div>
+                            <div class="divide-y divide-slate-100">
+                                <?php $__currentLoopData = $petugas['pagi']['petugas']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <div class="flex items-center px-5 py-2.5">
+                                        <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]"><?php echo e($p['jabatan']); ?></span>
+                                        <span class="text-slate-800 text-[13px] font-medium"><?php echo e($p['nama']); ?></span>
+                                    </div>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </div>
+                        </div>
+
+                        
+                        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                            <div class="p-5 border-b border-slate-100">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-yellow-600 font-bold text-base">IBADAH UMUM SORE</h4>
+                                        <p class="text-slate-800 font-bold text-sm"><?php echo e($petugas['sore']['jam']); ?></p>
+                                    </div>
+                                </div>
+                                <p class="text-slate-500 text-[12.5px] flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+                                    </svg>
+                                    <?php echo e($petugas['sore']['lokasi']); ?>
+
+                                </p>
+                            </div>
+                            <div class="divide-y divide-slate-100">
+                                <?php $__currentLoopData = $petugas['sore']['petugas']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <div class="flex items-center px-5 py-2.5">
+                                        <span class="text-slate-600 text-[12.5px] shrink-0 min-w-[140px]"><?php echo e($p['jabatan']); ?></span>
+                                        <span class="text-slate-800 text-[13px] font-medium"><?php echo e($p['nama']); ?></span>
+                                    </div>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="mt-8 bg-blue-50 rounded-2xl border border-blue-100 p-5 flex items-start gap-4 max-w-xl mx-auto">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-0.5">
+                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/>
+                            </svg>
+                        </div>
+                        <div class="text-center flex-1">
+                            <h4 class="font-bold text-slate-800 text-[14.5px] mb-1"><?php echo e($petugas['info']['judul']); ?></h4>
+                            <p class="text-slate-600 text-[13px]"><?php echo e($petugas['info']['deskripsi']); ?></p>
+                            <p class="text-slate-500 text-[12px] mt-1 italic"><?php echo e($petugas['info']['ayat']); ?></p>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
+            </div>
+        </section>
+
+    <?php elseif($kategori['type'] === 'permata'): ?>
+        
+        <section class="bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    
+                    <div class="lg:col-span-2">
+                        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                            <div class="p-6 border-b border-slate-100">
+                                <h3 class="text-slate-400 text-[12px] font-bold uppercase tracking-wider mb-2">Kegiatan Minggu Ini</h3>
+                                <h2 class="font-display text-blue-700 text-xl sm:text-2xl font-extrabold"><?php echo e($permataEvent['judul']); ?></h2>
+                                <div class="flex flex-wrap items-center gap-4 mt-3 text-[13px] text-slate-600">
+                                    <span class="flex items-center gap-1.5">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
+                                        </svg>
+                                        <?php echo e($permataEvent['tanggal']); ?>
+
+                                    </span>
+                                    <span class="flex items-center gap-1.5">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        <?php echo e($permataEvent['waktu']); ?>
+
+                                    </span>
+                                    <span class="flex items-center gap-1.5">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+                                        </svg>
+                                        <?php echo e($permataEvent['lokasi']); ?>
+
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <div class="space-y-3">
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Tema</span>
+                                        <span class="text-slate-800 text-[13px] font-semibold">: <?php echo e($permataEvent['tema']); ?></span>
+                                    </div>
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Ayat Tema</span>
+                                        <span class="text-slate-800 text-[13px] font-semibold">: <?php echo e($permataEvent['ayat_tema']); ?></span>
+                                    </div>
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Pembicara</span>
+                                        <span class="text-slate-800 text-[13px] font-semibold">: <?php echo e($permataEvent['pembicara']); ?></span>
+                                    </div>
+                                    <?php if(!empty($permataEvent['worship_leader'])): ?>
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Worship Leader</span>
+                                        <span class="text-slate-800 text-[13px] font-semibold">: <?php echo e($permataEvent['worship_leader']); ?></span>
+                                    </div>
+                                    <?php endif; ?>
+                                    <?php if(!empty($permataEvent['gitaris'])): ?>
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Gitaris</span>
+                                        <span class="text-slate-800 text-[13px] font-semibold">: <?php echo e($permataEvent['gitaris']); ?></span>
+                                    </div>
+                                    <?php endif; ?>
+                                    <?php if(!empty($permataEvent['cajonist'])): ?>
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Cajonist</span>
+                                        <span class="text-slate-800 text-[13px] font-semibold">: <?php echo e($permataEvent['cajonist']); ?></span>
+                                    </div>
+                                    <?php endif; ?>
+                                    <?php if(!empty($permataEvent['basist'])): ?>
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Basist</span>
+                                        <span class="text-slate-800 text-[13px] font-semibold">: <?php echo e($permataEvent['basist']); ?></span>
+                                    </div>
+                                    <?php endif; ?>
+                                    <?php if(!empty($permataEvent['singer_1'])): ?>
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Singer 1</span>
+                                        <span class="text-slate-800 text-[13px] font-semibold">: <?php echo e($permataEvent['singer_1']); ?></span>
+                                    </div>
+                                    <?php endif; ?>
+                                    <?php if(!empty($permataEvent['singer_2'])): ?>
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Singer 2</span>
+                                        <span class="text-slate-800 text-[13px] font-semibold">: <?php echo e($permataEvent['singer_2']); ?></span>
+                                    </div>
+                                    <?php endif; ?>
+                                    <?php if(!empty($permataEvent['multimedia'])): ?>
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-slate-500 text-[13px] shrink-0 min-w-[110px] font-medium">Multimedia</span>
+                                        <span class="text-slate-800 text-[13px] font-semibold">: <?php echo e($permataEvent['multimedia']); ?></span>
+                                    </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="lg:col-span-1">
+                        <div class="bg-white rounded-2xl border border-slate-200 p-6">
+                            <h3 class="text-slate-800 text-[14px] font-bold mb-4">Dokumentasi</h3>
+                            <div class="space-y-4">
+                                <?php $__currentLoopData = $permataEvent['dokumentasi']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <div class="w-full h-40 bg-slate-200 rounded-xl overflow-hidden">
+                                        <img src="<?php echo e($img); ?>" alt="Dokumentasi <?php echo e($kategori['judul']); ?>" class="w-full h-full object-cover">
+                                    </div>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="mt-8 space-y-4">
+                    <?php $__currentLoopData = $permataEvent['kegiatan']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kg): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <a href="<?php echo e($kg['route']); ?>" class="flex items-center justify-between bg-gradient-to-r from-slate-800 to-slate-700 rounded-2xl p-5 sm:p-6 hover:from-slate-700 hover:to-slate-600 transition-all group">
+                            <div class="flex items-center gap-0 min-w-0">
+                                <div class="shrink-0 min-w-[160px] sm:min-w-[180px]">
+                                    <h3 class="text-white font-bold text-[18px] sm:text-[20px] uppercase tracking-wide leading-tight"><?php echo e($kg['kode']); ?></h3>
+                                    <p class="text-slate-400 text-[12px] sm:text-[12.5px] mt-1"><?php echo e($kg['nama']); ?></p>
+                                </div>
+                            </div>
+                            <div class="w-10 h-10 rounded-full bg-yellow-500 flex items-center justify-center shrink-0 ml-4 group-hover:bg-yellow-400 transition-colors">
+                                <svg class="w-5 h-5 text-slate-900" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                                </svg>
+                            </div>
+                        </a>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+
+                <div class="mt-8 bg-white rounded-2xl border border-slate-200 p-5 flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-0.5">
+                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-[14.5px] mb-1">Perubahan Jadwal</h4>
+                        <p class="text-slate-500 text-[13px] leading-relaxed">Jadwal dapat berubah sewaktu-waktu. Pastikan untuk selalu memeriksa informasi terbaru</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <?php else: ?>
+        
+        <section class="bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+                <h2 class="font-display text-slate-800 text-xl sm:text-2xl font-extrabold uppercase tracking-wide mb-2"><?php echo e($kategori['section_title']); ?></h2>
+                <p class="text-slate-500 text-[14px] mb-8"><?php echo e($kategori['section_subtitle']); ?></p>
+
+                
+                <div x-data="sektorCarousel({
+                        total: <?php echo e(count($sektor)); ?>,
+                        sektorData: <?php echo json_encode($sektor, 15, 512) ?>,
+                        kategoriId: <?php echo e($kategoriId); ?>
+
+                    })"
+                    class="relative">
+                    
+                    <div class="mb-8">
+                        
+                        <button @click="prevPage()" :disabled="currentPage === 0"
+                                class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center text-slate-700 hover:bg-slate-100 transition-colors disabled:opacity-40 disabled:cursor-not-allowed hidden sm:flex"
+                                aria-label="Sebelumnya">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
+                            </svg>
+                        </button>
+                        <button @click="nextPage()" :disabled="currentPage >= pages - 1"
+                                class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center text-slate-700 hover:bg-slate-100 transition-colors disabled:opacity-40 disabled:cursor-not-allowed hidden sm:flex"
+                                aria-label="Selanjutnya">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+                            </svg>
+                        </button>
+
+                        
+                        <div class="overflow-hidden touch-pan-y" style="touch-action: pan-y;">
+                            <div class="flex transition-transform duration-500 ease-out cursor-grab active:cursor-grabbing" :style="track()">
+                                <template x-for="(item, index) in sektorData" :key="index">
+                                    <div class="shrink-0 basis-1/2 sm:basis-1/3 lg:basis-1/4 xl:basis-1/5 px-1.5 sm:px-2">
+                                        <a :href="getSektorUrl(index)"
+                                           class="group w-full aspect-[4/3] rounded-2xl bg-gradient-to-br from-slate-800 to-slate-700 flex flex-col items-center justify-center p-4 sm:p-5 text-center transition-all duration-300 hover:from-slate-700 hover:to-slate-600 hover:shadow-lg">
+                                            <h3 class="text-white font-bold text-[13px] sm:text-[14px] lg:text-[15px] uppercase tracking-wide leading-tight" x-text="item.nama"></h3>
+                                            <p class="text-yellow-300 text-[10px] sm:text-[11px] font-medium mt-1.5">Lihat jadwal</p>
+                                        </a>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
+                        
+                        <div class="flex items-center justify-center flex-wrap gap-2 mt-6">
+                            <template x-for="page in pages" :key="page">
+                                <button @click="goToPage(page - 1)"
+                                        :class="currentPage === (page - 1) ? 'bg-blue-600 w-8' : 'bg-slate-300 hover:bg-slate-400 w-2.5'"
+                                        class="h-2.5 rounded-full transition-all duration-300"
+                                        :aria-label="'Halaman ' + page"></button>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="mt-8 bg-white rounded-2xl border border-slate-200 p-5 flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-0.5">
+                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-[14.5px] mb-1">Perubahan Jadwal</h4>
+                        <p class="text-slate-500 text-[13px] leading-relaxed">Jadwal dapat berubah sewaktu-waktu. Pastikan untuk selalu memeriksa informasi terbaru</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <?php endif; ?>
+
+    <?php $__env->startPush('scripts'); ?>
+    <script>
+        Alpine.data('sektorCarousel', (props) => ({
+            currentPage: 0,
+            perView: 3,
+            total: props.total,
+            pages: 1,
+            sektorData: props.sektorData,
+            kategoriId: props.kategoriId,
+            init() {
+                this.updateLayout();
+                window.addEventListener('resize', () => this.updateLayout());
+            },
+            updateLayout() {
+                this.perView = window.innerWidth >= 1024 ? 5 : (window.innerWidth >= 768 ? 4 : (window.innerWidth >= 640 ? 3 : 2));
+                this.pages = Math.max(1, this.total - this.perView + 1);
+                if (this.currentPage > this.pages - 1) this.currentPage = this.pages - 1;
+            },
+            nextPage() { if (this.currentPage < this.pages - 1) this.currentPage++; },
+            prevPage() { if (this.currentPage > 0) this.currentPage--; },
+            goToPage(page) { this.currentPage = page; },
+            track() { return 'transform: translateX(-' + (this.currentPage * (100 / this.perView)) + '%);'; },
+            getSektorUrl(index) { return '/jadwal-ibadah/' + this.kategoriId + '/sektor/' + index; }
+        }));
+    </script>
+    <?php $__env->stopPush(); ?>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.client.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\User\Documents\GitHub\website-gbkp-trial\resources\views/client/schedule-worship/detail.blade.php ENDPATH**/ ?>

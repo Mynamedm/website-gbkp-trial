@@ -325,28 +325,11 @@
                 <p class="text-slate-500 text-[14px] mb-8">{{ $kategori['section_subtitle'] }}</p>
 
                 {{-- CAROUSEL SEKTOR --}}
-                <div x-data="{
-                        currentPage: 0,
-                        perView: 3,
+                <div x-data="sektorCarousel({
                         total: {{ count($sektor) }},
-                        pages: 1,
                         sektorData: @json($sektor),
-                        kategoriId: {{ $id }},
-                        init: function() {
-                            this.updateLayout();
-                            window.addEventListener('resize', () => this.updateLayout());
-                        },
-                        updateLayout: function() {
-                            this.perView = window.innerWidth >= 1024 ? 5 : (window.innerWidth >= 768 ? 4 : (window.innerWidth >= 640 ? 3 : 2));
-                            this.pages = Math.max(1, this.total - this.perView + 1);
-                            if (this.currentPage > this.pages - 1) this.currentPage = this.pages - 1;
-                        },
-                        nextPage: function() { if (this.currentPage < this.pages - 1) this.currentPage++; },
-                        prevPage: function() { if (this.currentPage > 0) this.currentPage--; },
-                        goToPage: function(page) { this.currentPage = page; },
-                        track: function() { return 'transform: translateX(-' + (this.currentPage * (100 / this.perView)) + '%);'; },
-                        getSektorUrl: function(index) { return '/jadwal-ibadah/' + this.kategoriId + '/sektor/' + index; }
-                    }"
+                        kategoriId: {{ $kategoriId }}
+                    })"
                     class="relative">
                     {{-- Carousel --}}
                     <div class="mb-8">
@@ -408,5 +391,32 @@
             </div>
         </section>
     @endif
+
+    @push('scripts')
+    <script>
+        Alpine.data('sektorCarousel', (props) => ({
+            currentPage: 0,
+            perView: 3,
+            total: props.total,
+            pages: 1,
+            sektorData: props.sektorData,
+            kategoriId: props.kategoriId,
+            init() {
+                this.updateLayout();
+                window.addEventListener('resize', () => this.updateLayout());
+            },
+            updateLayout() {
+                this.perView = window.innerWidth >= 1024 ? 5 : (window.innerWidth >= 768 ? 4 : (window.innerWidth >= 640 ? 3 : 2));
+                this.pages = Math.max(1, this.total - this.perView + 1);
+                if (this.currentPage > this.pages - 1) this.currentPage = this.pages - 1;
+            },
+            nextPage() { if (this.currentPage < this.pages - 1) this.currentPage++; },
+            prevPage() { if (this.currentPage > 0) this.currentPage--; },
+            goToPage(page) { this.currentPage = page; },
+            track() { return 'transform: translateX(-' + (this.currentPage * (100 / this.perView)) + '%);'; },
+            getSektorUrl(index) { return '/jadwal-ibadah/' + this.kategoriId + '/sektor/' + index; }
+        }));
+    </script>
+    @endpush
 
 @endsection

@@ -51,48 +51,17 @@
                     </div>
 
                     {{-- CAROUSEL KATEGORIAL --}}
-                    <div x-data="{
-                            current: 0,
-                            perView: 2,
-                            total: {{ count($kategorial) }},
-                            pages: 1,
-                            touchStartX: 0,
-                            touchEndX: 0,
-                            init: function() {
-                                this.updateLayout();
-                                window.addEventListener('resize', () => this.updateLayout());
-                            },
-                            updateLayout: function() {
-                                this.perView = window.innerWidth >= 1024 ? 4 : (window.innerWidth >= 640 ? 3 : 2);
-                                this.pages = Math.max(1, this.total - this.perView + 1);
-                                if (this.current > this.pages - 1) this.current = this.pages - 1;
-                            },
-                            next: function() { if (this.current < this.pages - 1) this.current++; },
-                            prev: function() { if (this.current > 0) this.current--; },
-                            goTo: function(page) { this.current = page; },
-                            track: function() { return 'transform: translateX(-' + (this.current * (100 / this.perView)) + '%);'; },
-                            handleTouchStart: function(e) { this.touchStartX = e.changedTouches[0].screenX; },
-                            handleTouchEnd: function(e) { this.touchEndX = e.changedTouches[0].screenX; this.handleSwipe(); },
-                            handleSwipe: function() {
-                                var diff = this.touchStartX - this.touchEndX;
-                                if (Math.abs(diff) > 50) {
-                                    if (diff > 0) this.next();
-                                    else this.prev();
-                                }
-                            }
-                        }"
-                        class="relative"
-                        @touchstart="handleTouchStart($event)"
-                        @touchend="handleTouchEnd($event)">
+                    <div x-data="kategorialCarousel({ total: {{ count($kategorial) }} })"
+                        class="relative">
                         {{-- Arrows --}}
-                        <button @click="prev()" :disabled="current === 0"
+                        <button @click="prevPage()" :disabled="currentPage === 0"
                                 class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center text-slate-700 hover:bg-slate-100 transition-colors disabled:opacity-40 disabled:cursor-not-allowed hidden sm:flex"
                                 aria-label="Sebelumnya">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
                             </svg>
                         </button>
-                        <button @click="next()" :disabled="current >= pages - 1"
+                        <button @click="nextPage()" :disabled="currentPage >= pages - 1"
                                 class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center text-slate-700 hover:bg-slate-100 transition-colors disabled:opacity-40 disabled:cursor-not-allowed hidden sm:flex"
                                 aria-label="Selanjutnya">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -101,7 +70,7 @@
                         </button>
 
                         {{-- Track --}}
-                        <div class="overflow-hidden touch-pan-y" style="touch-action: pan-y;">
+                        <div class="overflow-hidden touch-pan-y" style="touch-action: pan-y;" @touchstart="handleTouchStart($event)" @touchend="handleTouchEnd($event)">
                             <div class="flex transition-transform duration-500 ease-out cursor-grab active:cursor-grabbing" :style="track()">
                                 @foreach($kategorial as $item)
                                     <div class="shrink-0 basis-1/2 sm:basis-1/3 lg:basis-1/4 px-1.5 sm:px-2">
@@ -123,8 +92,8 @@
                         {{-- Dots --}}
                         <div class="flex items-center justify-center flex-wrap gap-2 mt-6">
                             <template x-for="page in pages" :key="page">
-                                <button @click="goTo(page - 1)"
-                                        :class="current === (page - 1) ? 'bg-blue-600 w-8' : 'bg-slate-300 hover:bg-slate-400 w-2.5'"
+                                <button @click="goToPage(page - 1)"
+                                        :class="currentPage === (page - 1) ? 'bg-blue-600 w-8' : 'bg-slate-300 hover:bg-slate-400 w-2.5'"
                                         class="h-2.5 rounded-full transition-all duration-300"
                                         :aria-label="'Halaman ' + page"></button>
                             </template>
@@ -148,5 +117,40 @@
             </div>
         </div>
     </section>
+
+    @push('scripts')
+    <script>
+        Alpine.data('kategorialCarousel', (props) => ({
+            currentPage: 0,
+            perView: 2,
+            total: props.total,
+            pages: 1,
+            touchStartX: 0,
+            touchEndX: 0,
+            init() {
+                this.updateLayout();
+                window.addEventListener('resize', () => this.updateLayout());
+            },
+            updateLayout() {
+                this.perView = window.innerWidth >= 1024 ? 4 : (window.innerWidth >= 640 ? 3 : 2);
+                this.pages = Math.max(1, this.total - this.perView + 1);
+                if (this.currentPage > this.pages - 1) this.currentPage = this.pages - 1;
+            },
+            nextPage() { if (this.currentPage < this.pages - 1) this.currentPage++; },
+            prevPage() { if (this.currentPage > 0) this.currentPage--; },
+            goToPage(page) { this.currentPage = page; },
+            track() { return 'transform: translateX(-' + (this.currentPage * (100 / this.perView)) + '%);'; },
+            handleTouchStart(e) { this.touchStartX = e.changedTouches[0].screenX; },
+            handleTouchEnd(e) { this.touchEndX = e.changedTouches[0].screenX; this.handleSwipe(); },
+            handleSwipe() {
+                const diff = this.touchStartX - this.touchEndX;
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0) this.nextPage();
+                    else this.prevPage();
+                }
+            }
+        }));
+    </script>
+    @endpush
 
 @endsection

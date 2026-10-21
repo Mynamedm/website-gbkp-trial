@@ -19,9 +19,9 @@ Route::get('/renungan', [ClientController::class, 'reflections'])->name('client.
 Route::get('/renungan/{reflection:slug}', [ClientController::class, 'reflectionDetail'])->name('client.reflections.detail');
 Route::get('/jadwal-ibadah', [ClientController::class, 'scheduleWorship'])->name('client.schedule-worship');
 Route::get('/jadwal-ibadah/umum', [ClientController::class, 'scheduleWorshipUmum'])->name('client.schedule-worship.umum');
-Route::get('/jadwal-ibadah/{kategoriId}/sektor/{sektorIndex}', [ClientController::class, 'scheduleWorshipSektor'])->whereNumber('kategoriId')->whereNumber('sektorIndex')->name('client.schedule-worship.sektor');
+Route::get('/jadwal-ibadah/{kategoriId}', [ClientController::class, 'scheduleWorshipDetail'])->whereNumber('kategoriId')->name('client.schedule-worship.detail');
+Route::get('/jadwal-ibadah/{kategoriId}/sektor/{sektorIndex}', [ClientController::class, 'scheduleWorshipDetail'])->whereNumber('kategoriId')->whereNumber('sektorIndex')->name('client.schedule-worship.sektor');
 Route::get('/jadwal-ibadah/{kategoriId}/sektor/{sektorIndex}/riwayat', [ClientController::class, 'scheduleWorshipRiwayat'])->whereNumber('kategoriId')->whereNumber('sektorIndex')->name('client.schedule-worship.riwayat');
-Route::get('/jadwal-ibadah/{id}', [ClientController::class, 'scheduleWorshipDetail'])->whereNumber('id')->name('client.schedule-worship.detail');
 Route::get('/kegiatan-gereja', [ClientController::class, 'events'])->name('client.events');
 Route::get('/kegiatan-gereja/cari', [ClientController::class, 'eventSearch'])->name('client.events.search');
 Route::get('/kegiatan-gereja/{slug}', [ClientController::class, 'eventDetail'])->name('client.events.detail');
