@@ -12,7 +12,12 @@ class Reflection extends Model
 {
     use HasFactory;
 
+    public const TYPE_RENUNGAN = 'renungan';
+
+    public const TYPE_BAHAN_IBADAH = 'bahan_ibadah';
+
     protected $fillable = [
+        'type',
         'title',
         'slug',
         'date',
@@ -61,6 +66,11 @@ class Reflection extends Model
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('status', 'active');
+    }
+
+    public function scopeOfType(Builder $query, string $type): Builder
+    {
+        return $query->where('type', $type);
     }
 
     public function scopeLatestFirst(Builder $query): Builder

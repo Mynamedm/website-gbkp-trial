@@ -1,0 +1,1 @@
+<?php /**PATH C:\Users\User\Documents\GitHub\website-gbkp-trial\resources\views\admin\schedule-worship\detail.blade.php ENDPATH**/ ?>

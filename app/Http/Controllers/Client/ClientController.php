@@ -34,6 +34,7 @@ class ClientController extends Controller
             ->get();
 
         $todayReflection = Reflection::query()
+            ->ofType(Reflection::TYPE_RENUNGAN)
             ->active()
             ->latestFirst()
             ->first();
@@ -44,6 +45,7 @@ class ClientController extends Controller
     public function reflections()
     {
         $reflections = Reflection::query()
+            ->ofType(Reflection::TYPE_RENUNGAN)
             ->active()
             ->latestFirst()
             ->paginate(9);
@@ -53,9 +55,10 @@ class ClientController extends Controller
 
     public function reflectionDetail(Reflection $reflection)
     {
-        abort_unless($reflection->status === 'active', 404);
+        abort_unless($reflection->status === 'active' && $reflection->type === Reflection::TYPE_RENUNGAN, 404);
 
         $otherReflections = Reflection::query()
+            ->ofType(Reflection::TYPE_RENUNGAN)
             ->active()
             ->whereKeyNot($reflection->id)
             ->latestFirst()
@@ -63,6 +66,32 @@ class ClientController extends Controller
             ->get();
 
         return view('client.reflection.detail', compact('reflection', 'otherReflections'));
+    }
+
+    public function bahanIbadah()
+    {
+        $reflections = Reflection::query()
+            ->ofType(Reflection::TYPE_BAHAN_IBADAH)
+            ->active()
+            ->latestFirst()
+            ->paginate(9);
+
+        return view('client.reflection.bahan-ibadah', compact('reflections'));
+    }
+
+    public function bahanIbadahDetail(Reflection $reflection)
+    {
+        abort_unless($reflection->status === 'active' && $reflection->type === Reflection::TYPE_BAHAN_IBADAH, 404);
+
+        $otherReflections = Reflection::query()
+            ->ofType(Reflection::TYPE_BAHAN_IBADAH)
+            ->active()
+            ->whereKeyNot($reflection->id)
+            ->latestFirst()
+            ->take(4)
+            ->get();
+
+        return view('client.reflection.bahan-ibadah-detail', compact('reflection', 'otherReflections'));
     }
 
     public function announcements()

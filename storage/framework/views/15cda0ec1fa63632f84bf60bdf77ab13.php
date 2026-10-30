@@ -118,38 +118,40 @@
 
     <?php $__env->startPush('scripts'); ?>
     <script>
-        Alpine.data('kategorialCarousel', (props) => ({
-            currentPage: 0,
-            perView: 2,
-            total: props.total,
-            pages: 1,
-            touchStartX: 0,
-            touchEndX: 0,
-            init() {
-                this.updateLayout();
-                window.addEventListener('resize', () => this.updateLayout());
-            },
-            updateLayout() {
-                this.perView = window.innerWidth >= 1024 ? 4 : (window.innerWidth >= 640 ? 3 : 2);
-                this.pages = Math.max(1, this.total - this.perView + 1);
-                if (this.currentPage > this.pages - 1) this.currentPage = this.pages - 1;
-            },
-            nextPage() { if (this.currentPage < this.pages - 1) this.currentPage++; },
-            prevPage() { if (this.currentPage > 0) this.currentPage--; },
-            goToPage(page) { this.currentPage = page; },
-            track() { return 'transform: translateX(-' + (this.currentPage * (100 / this.perView)) + '%);'; },
-            handleTouchStart(e) { this.touchStartX = e.changedTouches[0].screenX; },
-            handleTouchEnd(e) { this.touchEndX = e.changedTouches[0].screenX; this.handleSwipe(); },
-            handleSwipe() {
-                const diff = this.touchStartX - this.touchEndX;
-                if (Math.abs(diff) > 50) {
-                    if (diff > 0) this.nextPage();
-                    else this.prevPage();
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('kategorialCarousel', (props) => ({
+                currentPage: 0,
+                perView: 2,
+                total: props.total,
+                pages: 1,
+                touchStartX: 0,
+                touchEndX: 0,
+                init() {
+                    this.updateLayout();
+                    window.addEventListener('resize', () => this.updateLayout());
+                },
+                updateLayout() {
+                    this.perView = window.innerWidth >= 1024 ? 4 : (window.innerWidth >= 640 ? 3 : 2);
+                    this.pages = Math.max(1, this.total - this.perView + 1);
+                    if (this.currentPage > this.pages - 1) this.currentPage = this.pages - 1;
+                },
+                nextPage() { if (this.currentPage < this.pages - 1) this.currentPage++; },
+                prevPage() { if (this.currentPage > 0) this.currentPage--; },
+                goToPage(page) { this.currentPage = page; },
+                track() { return 'transform: translateX(-' + (this.currentPage * (100 / this.perView)) + '%);'; },
+                handleTouchStart(e) { this.touchStartX = e.changedTouches[0].screenX; },
+                handleTouchEnd(e) { this.touchEndX = e.changedTouches[0].screenX; this.handleSwipe(); },
+                handleSwipe() {
+                    const diff = this.touchStartX - this.touchEndX;
+                    if (Math.abs(diff) > 50) {
+                        if (diff > 0) this.nextPage();
+                        else this.prevPage();
+                    }
                 }
-            }
-        }));
+            }));
+        });
     </script>
     <?php $__env->stopPush(); ?>
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.client.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\User\Documents\GitHub\website-gbkp-trial\resources\views/client/schedule-worship/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.client.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\User\Documents\GitHub\website-gbkp-trial\resources\views\client\schedule-worship\index.blade.php ENDPATH**/ ?>

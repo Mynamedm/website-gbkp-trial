@@ -1,0 +1,1 @@
+<?php /**PATH C:\Users\User\Documents\GitHub\website-gbkp-trial\resources\views\admin\user\create.blade.php ENDPATH**/ ?>

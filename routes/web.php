@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminAnnouncementController;
+use App\Http\Controllers\Admin\AdminBahanIbadahController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\AdminEventController;
 use App\Http\Controllers\Admin\AdminGeneralWorshipController;
@@ -17,6 +18,8 @@ Route::get('/', [ClientController::class, 'index'])->name('client.home');
 Route::get('/warta-jemaat', [ClientController::class, 'announcements'])->name('client.announcements');
 Route::get('/renungan', [ClientController::class, 'reflections'])->name('client.reflections');
 Route::get('/renungan/{reflection:slug}', [ClientController::class, 'reflectionDetail'])->name('client.reflections.detail');
+Route::get('/bahan-ibadah', [ClientController::class, 'bahanIbadah'])->name('client.bahan-ibadah');
+Route::get('/bahan-ibadah/{reflection:slug}', [ClientController::class, 'bahanIbadahDetail'])->name('client.bahan-ibadah.detail');
 Route::get('/jadwal-ibadah', [ClientController::class, 'scheduleWorship'])->name('client.schedule-worship');
 Route::get('/jadwal-ibadah/umum', [ClientController::class, 'scheduleWorshipUmum'])->name('client.schedule-worship.umum');
 Route::get('/jadwal-ibadah/{kategoriId}', [ClientController::class, 'scheduleWorshipDetail'])->whereNumber('kategoriId')->name('client.schedule-worship.detail');
@@ -72,6 +75,14 @@ Route::middleware(['auth', 'role:super_admin|admin'])->prefix('admin')->name('ad
         Route::get('renungan/{reflection}/edit', 'edit')->name('reflections.edit');
         Route::match(['put', 'patch'], 'renungan/{reflection}', 'update')->name('reflections.update');
         Route::delete('renungan/{reflection}', 'destroy')->name('reflections.destroy');
+    });
+
+    Route::controller(AdminBahanIbadahController::class)->group(function () {
+        Route::get('bahan-ibadah', 'index')->name('bahan-ibadah.index');
+        Route::post('bahan-ibadah', 'store')->name('bahan-ibadah.store');
+        Route::get('bahan-ibadah/{reflection}/edit', 'edit')->name('bahan-ibadah.edit');
+        Route::match(['put', 'patch'], 'bahan-ibadah/{reflection}', 'update')->name('bahan-ibadah.update');
+        Route::delete('bahan-ibadah/{reflection}', 'destroy')->name('bahan-ibadah.destroy');
     });
 
     Route::resource('categories', AdminCategoryController::class)->only(['index', 'store', 'edit', 'update', 'destroy']);

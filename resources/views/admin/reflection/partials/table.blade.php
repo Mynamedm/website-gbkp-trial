@@ -2,7 +2,7 @@
     <table class="w-full text-sm min-w-[820px]">
         <thead>
             <tr class="border-b border-slate-100">
-                <th class="sticky left-0 z-20 bg-white text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider border-r border-slate-100/60">Renungan</th>
+                <th class="sticky left-0 z-20 bg-white text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider border-r border-slate-100/60">{{ $meta['label'] }}</th>
                 <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Tanggal</th>
                 <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Hari Gereja</th>
                 <th class="text-left px-6 py-3 text-[11.5px] font-semibold text-slate-500 uppercase tracking-wider">Tema</th>
@@ -25,7 +25,7 @@
                             @endif
                             <div>
                                 <p class="font-semibold text-slate-700 text-[13.5px]">{{ $item->title }}</p>
-                                <a href="{{ route('client.reflections.detail', $item) }}" target="_blank" class="text-blue-500 text-[12px] hover:underline mt-0.5 inline-flex items-center gap-1">
+                                <a href="{{ route($meta['publicDetailRoute'], $item) }}" target="_blank" class="text-blue-500 text-[12px] hover:underline mt-0.5 inline-flex items-center gap-1">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
                                     Lihat di Site
                                 </a>
@@ -56,7 +56,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="7" class="px-6 py-12 text-center text-slate-400 text-sm">Belum ada data renungan.</td>
+                    <td colspan="7" class="px-6 py-12 text-center text-slate-400 text-sm">Belum ada data {{ strtolower($meta['label']) }}.</td>
                 </tr>
             @endforelse
         </tbody>
@@ -64,7 +64,7 @@
 </div>
 
 @forelse($reflections as $item)
-    <form id="delete-reflection-{{ $item->id }}" method="POST" action="{{ route('admin.reflections.destroy', $item->id) }}" class="hidden">
+    <form id="delete-reflection-{{ $item->id }}" method="POST" action="{{ route($meta['routePrefix'] . '.destroy', $item->id) }}" class="hidden">
         @csrf
         @method('DELETE')
     </form>
@@ -72,10 +72,10 @@
     <dialog id="edit-{{ $item->id }}" class="modal sm">
         <div class="modal-box">
             <div class="flex items-center justify-between p-6 pb-4 border-b border-slate-100">
-                <h3 class="text-lg font-bold text-slate-800">Edit Renungan</h3>
+                <h3 class="text-lg font-bold text-slate-800">Edit {{ $meta['label'] }}</h3>
                 <button type="button" onclick="document.getElementById('edit-{{ $item->id }}').close()" class="text-slate-400 hover:text-slate-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
             </div>
-            <form method="POST" action="{{ route('admin.reflections.update', $item->id) }}" enctype="multipart/form-data" class="p-6">
+            <form method="POST" action="{{ route($meta['routePrefix'] . '.update', $item->id) }}" enctype="multipart/form-data" class="p-6">
                 @csrf
                 @method('PUT')
                 <div class="space-y-4">
@@ -121,7 +121,7 @@
                         <textarea name="excerpt" rows="2" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none">{{ $item->excerpt }}</textarea>
                     </div>
                     <div>
-                        <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Isi Renungan</label>
+                        <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Isi {{ $meta['label'] }}</label>
                         <textarea name="body" rows="8" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">{{ $item->body }}</textarea>
                     </div>
                     <div>

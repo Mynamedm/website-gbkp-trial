@@ -329,12 +329,7 @@
                 <p class="text-slate-500 text-[14px] mb-8"><?php echo e($kategori['section_subtitle']); ?></p>
 
                 
-                <div x-data="sektorCarousel({
-                        total: <?php echo e(count($sektor)); ?>,
-                        sektorData: <?php echo json_encode($sektor, 15, 512) ?>,
-                        kategoriId: <?php echo e($kategoriId); ?>
-
-                    })"
+                <div x-data="sektorCarousel({ total: <?php echo e(count($sektor)); ?> })"
                     class="relative">
                     
                     <div class="mb-8">
@@ -357,15 +352,15 @@
                         
                         <div class="overflow-hidden touch-pan-y" style="touch-action: pan-y;">
                             <div class="flex transition-transform duration-500 ease-out cursor-grab active:cursor-grabbing" :style="track()">
-                                <template x-for="(item, index) in sektorData" :key="index">
+                                <?php $__currentLoopData = $sektor; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div class="shrink-0 basis-1/2 sm:basis-1/3 lg:basis-1/4 xl:basis-1/5 px-1.5 sm:px-2">
-                                        <a :href="getSektorUrl(index)"
+                                        <a href="<?php echo e(route('client.schedule-worship.sektor', ['kategoriId' => $kategoriId, 'sektorIndex' => $index])); ?>"
                                            class="group w-full aspect-[4/3] rounded-2xl bg-gradient-to-br from-slate-800 to-slate-700 flex flex-col items-center justify-center p-4 sm:p-5 text-center transition-all duration-300 hover:from-slate-700 hover:to-slate-600 hover:shadow-lg">
-                                            <h3 class="text-white font-bold text-[13px] sm:text-[14px] lg:text-[15px] uppercase tracking-wide leading-tight" x-text="item.nama"></h3>
+                                            <h3 class="text-white font-bold text-[13px] sm:text-[14px] lg:text-[15px] uppercase tracking-wide leading-tight"><?php echo e($item['nama']); ?></h3>
                                             <p class="text-yellow-300 text-[10px] sm:text-[11px] font-medium mt-1.5">Lihat jadwal</p>
                                         </a>
                                     </div>
-                                </template>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
                         </div>
 
@@ -399,30 +394,29 @@
 
     <?php $__env->startPush('scripts'); ?>
     <script>
-        Alpine.data('sektorCarousel', (props) => ({
-            currentPage: 0,
-            perView: 3,
-            total: props.total,
-            pages: 1,
-            sektorData: props.sektorData,
-            kategoriId: props.kategoriId,
-            init() {
-                this.updateLayout();
-                window.addEventListener('resize', () => this.updateLayout());
-            },
-            updateLayout() {
-                this.perView = window.innerWidth >= 1024 ? 5 : (window.innerWidth >= 768 ? 4 : (window.innerWidth >= 640 ? 3 : 2));
-                this.pages = Math.max(1, this.total - this.perView + 1);
-                if (this.currentPage > this.pages - 1) this.currentPage = this.pages - 1;
-            },
-            nextPage() { if (this.currentPage < this.pages - 1) this.currentPage++; },
-            prevPage() { if (this.currentPage > 0) this.currentPage--; },
-            goToPage(page) { this.currentPage = page; },
-            track() { return 'transform: translateX(-' + (this.currentPage * (100 / this.perView)) + '%);'; },
-            getSektorUrl(index) { return '/jadwal-ibadah/' + this.kategoriId + '/sektor/' + index; }
-        }));
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('sektorCarousel', (props) => ({
+                currentPage: 0,
+                perView: 3,
+                total: props.total,
+                pages: 1,
+                init() {
+                    this.updateLayout();
+                    window.addEventListener('resize', () => this.updateLayout());
+                },
+                updateLayout() {
+                    this.perView = window.innerWidth >= 1024 ? 5 : (window.innerWidth >= 768 ? 4 : (window.innerWidth >= 640 ? 3 : 2));
+                    this.pages = Math.max(1, this.total - this.perView + 1);
+                    if (this.currentPage > this.pages - 1) this.currentPage = this.pages - 1;
+                },
+                nextPage() { if (this.currentPage < this.pages - 1) this.currentPage++; },
+                prevPage() { if (this.currentPage > 0) this.currentPage--; },
+                goToPage(page) { this.currentPage = page; },
+                track() { return 'transform: translateX(-' + (this.currentPage * (100 / this.perView)) + '%);'; }
+            }));
+        });
     </script>
     <?php $__env->stopPush(); ?>
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.client.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\User\Documents\GitHub\website-gbkp-trial\resources\views/client/schedule-worship/detail.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.client.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\User\Documents\GitHub\website-gbkp-trial\resources\views\client\schedule-worship\detail.blade.php ENDPATH**/ ?>

@@ -5,16 +5,31 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Reflection;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class AdminReflectionController extends Controller
 {
+    /** Tipe reflection yang dikelola controller ini. */
+    protected string $type = Reflection::TYPE_RENUNGAN;
+
+    /** Prefix nama route admin, mis. "admin.reflections". */
+    protected string $routePrefix = 'admin.reflections';
+
+    /** Label tunggal, mis. "Renungan". */
+    protected string $label = 'Renungan';
+
+    /** Label jamak / nama halaman, mis. "Renungan Harian". */
+    protected string $labelPlural = 'Renungan Harian';
+
+    /** Nama route publik untuk melihat detail. */
+    protected string $publicDetailRoute = 'client.reflections.detail';
+
     public function index(Request $request)
     {
         $perPage = (int) $request->input('per_page', 10);
         $search = $request->input('search', '');
 
         $reflections = Reflection::query()
+            ->ofType($this->type)
             ->latestFirst()
             ->when($search, function ($query, $search) {
                 $query->where(function ($q) use ($search) {
@@ -26,33 +41,40 @@ class AdminReflectionController extends Controller
             ->paginate($perPage)
             ->withQueryString();
 
+        $meta = $this->viewMeta();
+
         if ($request->ajax()) {
-            return view('admin.reflection.partials.table', compact('reflections'));
+            return view('admin.reflection.partials.table', compact('reflections', 'meta'));
         }
 
-        return view('admin.reflection.index', compact('reflections'));
+        return view('admin.reflection.index', compact('reflections', 'meta'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate($this->rules());
+        $validated['type'] = $this->type;
 
+        unset($validated['image']);
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('reflections', 'public');
         }
 
-        unset($validated['image']);
         Reflection::create($validated);
 
+        $message = "{$this->label} berhasil ditambahkan";
+
         if ($request->ajax()) {
-            return response()->json(['message' => 'Renungan berhasil ditambahkan']);
+            return response()->json(['message' => $message]);
         }
 
-        return redirect()->route('admin.reflections.index')->with('success', 'Renungan berhasil ditambahkan');
+        return redirect()->route($this->routePrefix.'.index')->with('success', $message);
     }
 
     public function update(Request $request, Reflection $reflection)
     {
+        $this->ensureType($reflection);
+
         $validated = $request->validate($this->rules());
 
         if ($request->hasFile('image')) {
@@ -63,28 +85,51 @@ class AdminReflectionController extends Controller
         unset($validated['image']);
         $reflection->update($validated);
 
+        $message = "{$this->label} berhasil diupdate";
+
         if ($request->ajax()) {
-            return response()->json(['message' => 'Renungan berhasil diupdate']);
+            return response()->json(['message' => $message]);
         }
 
-        return redirect()->route('admin.reflections.index')->with('success', 'Renungan berhasil diupdate');
+        return redirect()->route($this->routePrefix.'.index')->with('success', $message);
     }
 
     public function edit(Reflection $reflection)
     {
+        $this->ensureType($reflection);
+
         return response()->json($reflection);
     }
 
     public function destroy(Request $request, Reflection $reflection)
     {
+        $this->ensureType($reflection);
+
         $reflection->deleteImageFromDisk();
         $reflection->delete();
 
+        $message = "{$this->label} berhasil dihapus";
+
         if ($request->ajax()) {
-            return response()->json(['message' => 'Renungan berhasil dihapus']);
+            return response()->json(['message' => $message]);
         }
 
-        return redirect()->route('admin.reflections.index')->with('success', 'Renungan berhasil dihapus');
+        return redirect()->route($this->routePrefix.'.index')->with('success', $message);
+    }
+
+    private function ensureType(Reflection $reflection): void
+    {
+        abort_unless($reflection->type === $this->type, 404);
+    }
+
+    private function viewMeta(): array
+    {
+        return [
+            'routePrefix' => $this->routePrefix,
+            'label' => $this->label,
+            'labelPlural' => $this->labelPlural,
+            'publicDetailRoute' => $this->publicDetailRoute,
+        ];
     }
 
     private function rules(): array

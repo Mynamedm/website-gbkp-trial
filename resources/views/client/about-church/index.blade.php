@@ -8,14 +8,14 @@
 
             {{-- Slide 1: Hero (Full Width) --}}
             <div class="carousel-slide min-w-full">
-                <section class="relative w-full min-h-[85vh] overflow-hidden">
+                <section class="relative flex items-center w-full min-h-[85vh] overflow-hidden">
                     <div class="absolute inset-0">
                         <img src="https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=1920&q=80"
                              alt="Gereja GBKP" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/60 to-transparent"></div>
                     </div>
-                    <div class="relative h-full flex items-center">
-                        <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="relative w-full">
+                        <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16">
                             <div class="max-w-2xl">
                                 <span class="inline-block text-blue-300 text-[11px] font-semibold uppercase tracking-[0.18em] mb-3">Tentang Kami</span>
                                 <h1 class="font-display text-white text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-5">
@@ -38,14 +38,14 @@
 
             {{-- Slide 2: Sejarah GBKP Mula-Mula di Indonesia --}}
             <div class="carousel-slide min-w-full">
-                <section class="relative w-full min-h-[85vh] overflow-hidden bg-slate-50">
+                <section class="relative flex items-center w-full min-h-[85vh] overflow-hidden bg-slate-50">
                     <div class="absolute inset-0">
                         <img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=1200&q=80"
                              alt="Sejarah GBKP Indonesia" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/30"></div>
                     </div>
-                    <div class="relative h-full flex items-center">
-                        <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="relative w-full">
+                        <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16">
                             <div class="max-w-2xl">
                                 <span class="inline-block text-blue-600 text-[11px] font-semibold uppercase tracking-[0.18em] mb-3">Sejarah</span>
                                 <h2 class="font-display text-slate-800 text-2xl sm:text-3xl font-bold mb-5">Awal Mula GBKP di Indonesia</h2>
@@ -66,14 +66,14 @@
 
             {{-- Slide 3: Sejarah GBKP Bandar Lampung --}}
             <div class="carousel-slide min-w-full">
-                <section class="relative w-full min-h-[85vh] overflow-hidden bg-white">
+                <section class="relative flex items-center w-full min-h-[85vh] overflow-hidden bg-white">
                     <div class="absolute inset-0">
                         <img src="https://images.unsplash.com/photo-1438032005730-c779502df39b?w=1200&q=80"
                              alt="Sejarah GBKP Bandar Lampung" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/30"></div>
                     </div>
-                    <div class="relative h-full flex items-center">
-                        <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="relative w-full">
+                        <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16">
                             <div class="max-w-2xl">
                                 <span class="inline-block text-blue-600 text-[11px] font-semibold uppercase tracking-[0.18em] mb-3">Sejarah Lokal</span>
                                 <h2 class="font-display text-slate-800 text-2xl sm:text-3xl font-bold mb-5">Sejarah Berdirinya GBKP Bandar Lampung</h2>
@@ -94,14 +94,14 @@
 
             {{-- Slide 4: Perkembangan GBKP Bandar Lampung --}}
             <div class="carousel-slide min-w-full">
-                <section class="relative w-full min-h-[85vh] overflow-hidden bg-slate-900">
+                <section class="relative flex items-center w-full min-h-[85vh] overflow-hidden bg-slate-900">
                     <div class="absolute inset-0">
                         <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80"
                              alt="Perkembangan GBKP" class="w-full h-full object-cover opacity-40">
                         <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/90 to-slate-900/40"></div>
                     </div>
-                    <div class="relative h-full flex items-center">
-                        <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="relative w-full">
+                        <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16">
                             <div class="grid lg:grid-cols-2 gap-12 items-center">
                                 <div class="max-w-2xl">
                                     <span class="inline-block text-blue-300 text-[11px] font-semibold uppercase tracking-[0.18em] mb-3">Perkembangan</span>
