@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('content'); ?>
 
     
@@ -25,74 +27,143 @@
         </div>
     </section>
 
-
-    <?php if($todayReflection): ?>
-    <section class="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800">
+    
+    <?php if(count($bahanRohaniSlides) > 0): ?>
+    <?php
+        $lightIndex = collect($bahanRohaniSlides)->search(fn ($slide) => ! empty($slide['light']));
+    ?>
+    <section class="bahan-rohani"
+             x-data="{
+                 slide: 0,
+                 total: <?php echo e(count($bahanRohaniSlides)); ?>,
+                 lightIndex: <?php echo e($lightIndex === false ? -1 : $lightIndex); ?>,
+                 paused: false,
+                 next() { this.slide = (this.slide + 1) % this.total },
+                 prev() { this.slide = (this.slide - 1 + this.total) % this.total }
+             }"
+             :class="slide === lightIndex ? 'is-light' : ''"
+             x-init="if (total > 1) setInterval(() => { if (!paused) next() }, 8000)"
+             @mouseenter="paused = true"
+             @mouseleave="paused = false"
+             @focusin="paused = true"
+             @focusout="paused = false">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-            <div class="grid lg:grid-cols-[280px_1fr] gap-6">
 
-                
-                <div class="bg-white/[0.08] backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                    <div class="flex items-center gap-2 mb-4">
-                        <svg class="w-4 h-4 text-blue-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.966 8.966 0 00-6 2.292m0-14.25v14.25"/>
+            <div class="flex items-center justify-between gap-4 mb-5">
+                <h2 class="br-title text-lg sm:text-xl font-display font-bold">
+                    <?php $__currentLoopData = $bahanRohaniSlides; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $slide): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <span x-show="slide === <?php echo e($index); ?>" <?php if($index > 0): ?> x-cloak <?php endif; ?>><?php echo e($slide['label']); ?></span>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </h2>
+
+                <div class="flex items-center gap-2">
+                    <button type="button" @click="prev()" aria-label="Slide sebelumnya"
+                            class="w-9 h-9 flex items-center justify-center rounded-full border br-divider br-title br-soft-hover transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
                         </svg>
-                        <span class="text-blue-200 text-[11.5px] font-semibold uppercase tracking-wider">Renungan Hari Ini</span>
-                    </div>
-                    <p class="text-white/60 text-[11.5px] uppercase tracking-wide font-medium"><?php echo e($todayReflection->date->translatedFormat('l')); ?></p>
-                    <p class="text-white text-xl font-bold mt-1"><?php echo e($todayReflection->date->format('d F Y')); ?></p>
-                    <?php if(filled($todayReflection->church_day)): ?>
-                        <div class="mt-5 pt-5 border-t border-white/10">
-                            <p class="text-white/50 text-[11px] uppercase tracking-wide font-medium mb-1">Hari Gereja</p>
-                            <p class="text-white text-sm font-semibold"><?php echo e($todayReflection->church_day); ?></p>
-                        </div>
-                    <?php endif; ?>
-                    <?php if(filled($todayReflection->bible_verse)): ?>
-                        <div class="mt-4">
-                            <p class="text-white/50 text-[11px] uppercase tracking-wide font-medium mb-1">Bacaan</p>
-                            <p class="text-white text-sm font-semibold flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-yellow-400 shrink-0"></span>
-                                <?php echo e($todayReflection->bible_verse); ?>
-
-                            </p>
-                        </div>
-                    <?php endif; ?>
+                    </button>
+                    <button type="button" @click="next()" aria-label="Slide berikutnya"
+                            class="w-9 h-9 flex items-center justify-center rounded-full border br-divider br-title br-soft-hover transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+                        </svg>
+                    </button>
                 </div>
+            </div>
 
-                
-                <div class="bg-white/[0.06] backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/10 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center gap-2 mb-5">
-                            <svg class="w-4 h-4 text-blue-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/>
-                            </svg>
-                            <span class="text-white font-bold text-sm uppercase tracking-wide"><?php echo e($todayReflection->title); ?></span>
+            <div class="grid">
+                <?php $__currentLoopData = $bahanRohaniSlides; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $slide): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php $item = $slide['reflection']; ?>
+                    <div x-show="slide === <?php echo e($index); ?>" <?php if($index > 0): ?> x-cloak <?php endif; ?>
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 translate-x-3"
+                         x-transition:enter-end="opacity-100 translate-x-0"
+                         x-transition:leave="transition ease-in duration-150"
+                         x-transition:leave-start="opacity-100 translate-x-0"
+                         x-transition:leave-end="opacity-0 -translate-x-3"
+                         class="col-start-1 row-start-1 grid lg:grid-cols-[280px_1fr] gap-6">
+
+                        
+                        <div class="br-panel backdrop-blur-sm rounded-2xl p-6 border flex flex-col">
+                            <div class="flex items-center gap-2 mb-4">
+                                <svg class="w-4 h-4 br-accent" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.966 8.966 0 00-6 2.292m0-14.25v14.25"/>
+                                </svg>
+                            </div>
+                            <p class="br-label text-[11.5px] uppercase tracking-wide font-medium"><?php echo e($item->date->locale('id')->translatedFormat('l')); ?></p>
+                            <p class="br-title text-xl font-bold mt-1"><?php echo e($item->date->format('d F Y')); ?></p>
+                            <?php if(filled($item->church_day)): ?>
+                                <div class="mt-5 pt-5 border-t br-divider">
+                                    <p class="br-label text-[11px] uppercase tracking-wide font-medium mb-1">Hari Gereja</p>
+                                    <p class="br-title text-sm font-semibold"><?php echo e($item->church_day); ?></p>
+                                </div>
+                            <?php endif; ?>
+                            <?php if(filled($item->theme)): ?>
+                                <div class="mt-4">
+                                    <p class="br-label text-[11px] uppercase tracking-wide font-medium mb-1">Tema</p>
+                                    <p class="br-title text-sm font-semibold"><?php echo e($item->theme); ?></p>
+                                </div>
+                            <?php endif; ?>
+                            <?php if(filled($item->bible_verse)): ?>
+                                <div class="mt-4">
+                                    <p class="br-label text-[11px] uppercase tracking-wide font-medium mb-1">Bacaan</p>
+                                    <p class="br-title text-sm font-semibold flex items-center gap-2">
+                                        <span class="br-dot w-2 h-2 rounded-full shrink-0"></span>
+                                        <?php echo e($item->bible_verse); ?>
+
+                                    </p>
+                                </div>
+                            <?php endif; ?>
+                            <a href="<?php echo e($slide['listUrl']); ?>" class="mt-auto pt-5 inline-flex items-center gap-1.5 br-accent text-[12px] font-semibold hover:opacity-80 transition-opacity">
+                                <?php echo e($slide['listLabel']); ?>
+
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                                </svg>
+                            </a>
                         </div>
-                        <blockquote class="text-white/80 text-[14.5px] leading-[1.75] italic space-y-3 line-clamp-4">
-                            <?php echo e($todayReflection->summary); ?>
 
-                        </blockquote>
-                        <?php if(filled($todayReflection->bible_verse)): ?>
-                            <div class="mt-6 flex items-center gap-3">
-                                <span class="text-blue-300 text-[12.5px] font-bold uppercase tracking-wide"><?php echo e($todayReflection->bible_verse); ?></span>
-                                <?php if(filled($todayReflection->bible_translation)): ?>
-                                    <span class="text-white/30 text-[12px]"><?php echo e($todayReflection->bible_translation); ?></span>
+                        
+                        <div class="br-panel-2 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border flex flex-col justify-between">
+                            <div>
+                                <h3 class="br-title font-bold text-base sm:text-lg leading-snug mb-4"><?php echo e($item->title); ?></h3>
+                                <?php if(filled($item->summary)): ?>
+                                    <p class="br-body text-[14.5px] leading-[1.75] line-clamp-4"><?php echo e($item->summary); ?></p>
+                                <?php endif; ?>
+                                <?php if(filled($item->bible_translation)): ?>
+                                    <p class="br-footer text-[12px] mt-3"><?php echo e($item->bible_translation); ?></p>
                                 <?php endif; ?>
                             </div>
-                        <?php endif; ?>
-                    </div>
-                    <div class="mt-6 pt-5 border-t border-white/10 flex items-center justify-between">
-                        <p class="text-white/30 text-[12px] italic">Renungan Harian GBKP BANDAR LAMPUNG</p>
-                        <a href="<?php echo e(route('client.reflections.detail', $todayReflection)); ?>" class="inline-flex items-center gap-1.5 px-4 py-2 bg-white text-blue-700 text-[12.5px] font-semibold rounded-lg hover:bg-blue-50 transition-colors">
-                            Baca Selengkapnya
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
+                            <div class="mt-6 pt-5 border-t br-divider flex items-center justify-between gap-4">
+                                <p class="br-footer text-[12px] italic"><?php echo e($slide['footer']); ?></p>
+                                <a href="<?php echo e($slide['url']); ?>" class="br-cta inline-flex items-center gap-1.5 px-4 py-2 text-[12.5px] font-semibold rounded-lg transition-opacity shrink-0">
+                                    Baca Selengkapnya
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
 
+                    </div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
+
+            <div class="mt-6 flex items-center justify-center gap-3">
+                <?php $__currentLoopData = $bahanRohaniSlides; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $slide): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <button type="button" @click="slide = <?php echo e($index); ?>"
+                            aria-label="Tampilkan <?php echo e($slide['label']); ?>"
+                            :aria-current="slide === <?php echo e($index); ?>"
+                            class="br-tab group flex items-center gap-2 rounded-full px-3 py-1.5 border transition-all duration-300"
+                            :class="slide === <?php echo e($index); ?> ? 'br-tab-active' : ''">
+                        <span class="br-dot h-1.5 rounded-full transition-all duration-300"
+                              :class="slide === <?php echo e($index); ?> ? 'w-5' : 'w-1.5 opacity-40 group-hover:opacity-70'"></span>
+                        <span class="text-[11.5px] font-semibold"><?php echo e($slide['label']); ?></span>
+                    </button>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </div>
+
         </div>
     </section>
     <?php endif; ?>
