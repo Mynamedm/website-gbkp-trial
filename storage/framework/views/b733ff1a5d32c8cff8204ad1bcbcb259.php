@@ -47,10 +47,10 @@
 
             $navItems = [
                 ['label' => 'Beranda', 'route' => route('client.home'), 'active' => $currentUrl === route('client.home')],
-                ['label' => 'Tentang', 'route' => 'about-dropdown'],
-                ['label' => 'Jadwal Ibadah', 'route' => 'schedule-dropdown'],
                 ['label' => 'Bahan Rohani', 'route' => 'bahan-rohani-dropdown'],
+                ['label' => 'Jadwal Ibadah', 'route' => 'schedule-dropdown'],
                 ['label' => 'Informasi', 'route' => 'informasi-dropdown'],
+                ['label' => 'Tentang', 'route' => 'about-dropdown'],
             ];
         ?>
 

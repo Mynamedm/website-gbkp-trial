@@ -303,8 +303,10 @@
                 <div class="grid grid-cols-1 md:grid-cols-[1fr_380px]">
                     <div class="h-64 md:h-auto bg-slate-200 relative">
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.3!2d105.2!3d-5.4!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNcKwMjQnMDAuMCJTIDEwNcKwMTInMDAuMCJF!5e0!3m2!1sid!2sid!4v1"
-                            width="100%" height="100%" style="border:0; min-height: 280px; aspect-ratio: 16/9;" allowfullscreen loading="lazy">
+                            src="<?php echo e($mapEmbedUrl); ?>"
+                            title="Lokasi GBKP Bandar Lampung di Google Maps"
+                            width="100%" height="100%" style="border:0; min-height: 280px; aspect-ratio: 16/9;"
+                            allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                         </iframe>
                     </div>
                     <div class="p-7 sm:p-8 flex flex-col justify-center">
@@ -322,6 +324,13 @@
                                     Tanjung Senang,<br>
                                     Bandar Lampung, Lampung 35141
                                 </p>
+                                <a href="<?php echo e($mapDirectionsUrl); ?>" target="_blank" rel="noopener noreferrer"
+                                   class="mt-3 inline-flex items-center gap-1.5 text-blue-700 text-[12.5px] font-semibold hover:underline">
+                                    Buka di Google Maps
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+                                    </svg>
+                                </a>
                             </div>
                         </div>
                     </div>
