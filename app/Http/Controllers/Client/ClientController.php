@@ -49,12 +49,13 @@ class ClientController extends Controller
 
         if ($todayReflection) {
             $bahanRohaniSlides[] = [
-                'label' => 'Renungan Hari Ini',
+                'label' => 'Renungan Harian',
                 'footer' => 'Renungan Harian GBKP Bandar Lampung',
                 'reflection' => $todayReflection,
                 'url' => route('client.reflections.detail', $todayReflection),
                 'listUrl' => route('client.reflections'),
                 'listLabel' => 'Lihat Semua Renungan',
+                'light' => false,
             ];
         }
 
@@ -66,6 +67,7 @@ class ClientController extends Controller
                 'url' => route('client.bahan-ibadah.detail', $latestBahanIbadah),
                 'listUrl' => route('client.bahan-ibadah'),
                 'listLabel' => 'Lihat Semua Bahan Ibadah',
+                'light' => true,
             ];
         }
 

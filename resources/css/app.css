@@ -18,6 +18,76 @@
     }
 }
 
+@layer components {
+    /* Carousel Bahan Rohani — tema per slide (biru tua / biru muda) */
+    .bahan-rohani {
+        --br-band: linear-gradient(135deg, #2563eb, #1d4ed8, #1e40af);
+        --br-title: #ffffff;
+        --br-body: rgba(255, 255, 255, 0.8);
+        --br-label: rgba(255, 255, 255, 0.5);
+        --br-footer: rgba(255, 255, 255, 0.3);
+        --br-accent: #bfdbfe;
+        --br-border: rgba(255, 255, 255, 0.12);
+        --br-panel: rgba(255, 255, 255, 0.08);
+        --br-panel-2: rgba(255, 255, 255, 0.06);
+        --br-dot: #facc15;
+        --br-cta-bg: #ffffff;
+        --br-cta-fg: #1d4ed8;
+        --br-tab-bg: rgba(255, 255, 255, 0.15);
+        --br-tab-border: rgba(255, 255, 255, 0.3);
+        --br-hover: rgba(255, 255, 255, 0.1);
+
+        background-image: var(--br-band);
+    }
+
+    .bahan-rohani.is-light {
+        --br-band: linear-gradient(135deg, #eff6ff, #eff6ff, #dbeafe);
+        --br-title: #1e293b;
+        --br-body: #475569;
+        --br-label: #64748b;
+        --br-footer: #94a3b8;
+        --br-accent: #1d4ed8;
+        --br-border: #dbeafe;
+        --br-panel: rgba(255, 255, 255, 0.75);
+        --br-panel-2: rgba(255, 255, 255, 0.6);
+        --br-dot: #2563eb;
+        --br-cta-bg: #1d4ed8;
+        --br-cta-fg: #ffffff;
+        --br-tab-bg: rgba(255, 255, 255, 0.85);
+        --br-tab-border: #bfdbfe;
+        --br-hover: rgba(15, 23, 42, 0.06);
+    }
+
+    .br-title { color: var(--br-title); }
+    .br-body { color: var(--br-body); }
+    .br-label { color: var(--br-label); }
+    .br-footer { color: var(--br-footer); }
+    .br-accent { color: var(--br-accent); }
+    .br-divider { border-color: var(--br-border); }
+    .br-dot { background-color: var(--br-dot); }
+    .br-panel { background-color: var(--br-panel); border-color: var(--br-border); }
+    .br-panel-2 { background-color: var(--br-panel-2); border-color: var(--br-border); }
+    .br-cta { background-color: var(--br-cta-bg); color: var(--br-cta-fg); }
+    .br-cta:hover { opacity: 0.9; }
+    .br-soft-hover:hover { background-color: var(--br-hover); }
+
+    .br-tab {
+        border-color: transparent;
+        color: var(--br-label);
+    }
+
+    .br-tab:hover {
+        background-color: var(--br-hover);
+        color: var(--br-title);
+    }
+
+    .br-tab-active {
+        background-color: var(--br-tab-bg);
+        border-color: var(--br-tab-border);
+        color: var(--br-title);
+    }
+}
+
 @layer utilities {
     .text-balance {
         text-wrap: balance;

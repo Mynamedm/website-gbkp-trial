@@ -144,7 +144,7 @@ class ReflectionCrudTest extends TestCase
 
         $this->get(route('client.home'))
             ->assertOk()
-            ->assertSee('Renungan Hari Ini')
+            ->assertSee('Lihat Semua Renungan')
             ->assertSee('Renungan Terbaru')
             ->assertSee(route('client.reflections.detail', 'renungan-terbaru'));
     }

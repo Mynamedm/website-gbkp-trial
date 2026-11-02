@@ -225,7 +225,7 @@ class BahanIbadahCrudTest extends TestCase
 
         $this->get(route('client.home'))
             ->assertOk()
-            ->assertSee('Renungan Hari Ini')
+            ->assertSee('Renungan Harian')
             ->assertSee('Renungan Carousel')
             ->assertSee('Bahan Carousel')
             ->assertSee('Lihat Semua Renungan')
@@ -236,7 +236,7 @@ class BahanIbadahCrudTest extends TestCase
     {
         $this->get(route('client.home'))
             ->assertOk()
-            ->assertDontSee('Renungan Hari Ini');
+            ->assertDontSee('Lihat Semua Renungan');
     }
 
     public function test_renungan_page_does_not_show_bahan_ibadah(): void
