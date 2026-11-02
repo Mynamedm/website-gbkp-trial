@@ -87,6 +87,11 @@
                         <input type="file" name="image" accept="image/*" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-[12px] file:font-medium file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100">
                     </div>
                     <div class="sm:col-span-2">
+                        <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Laporan Keuangan (PDF)</label>
+                        <input type="file" name="pdf" accept="application/pdf,.pdf" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-[12px] file:font-medium file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100">
+                        <p class="mt-1 text-[11.5px] text-slate-400">Khusus kategori keuangan. Jemaat harus memasukkan PIN sebelum PDF dapat dibuka atau diunduh.</p>
+                    </div>
+                    <div class="sm:col-span-2">
                         <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Deskripsi</label>
                         <textarea name="description" rows="2" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"></textarea>
                     </div>

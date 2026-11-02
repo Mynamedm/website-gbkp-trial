@@ -56,9 +56,142 @@
                 $catText = $catParts[1] ?? 'text-slate-700';
             ?>
 
+            <?php if(session('keuangan_unlocked_message')): ?>
+                <div class="mb-6 flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-emerald-800">
+                    <svg class="w-5 h-5 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <p class="text-[13.5px] font-medium"><?php echo e(session('keuangan_unlocked_message')); ?></p>
+                </div>
+            <?php endif; ?>
+
+            <?php if($locked): ?>
+                <div class="max-w-2xl mx-auto">
+                    <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-10 shadow-sm">
+                        <div class="text-center">
+                            <div class="w-16 h-16 rounded-2xl bg-amber-100 flex items-center justify-center mx-auto mb-5">
+                                <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+                                </svg>
+                            </div>
+                            <h2 class="font-display text-slate-800 text-xl sm:text-2xl font-extrabold">Berita Terkunci</h2>
+                            <p class="text-slate-500 text-[14px] leading-relaxed mt-2 max-w-md mx-auto">
+                                Berita kategori keuangan hanya dapat dibaca setelah memasukkan PIN.
+                                Masukkan PIN yang telah dibagikan oleh admin gereja.
+                            </p>
+                        </div>
+
+                        <form method="POST" action="<?php echo e(route('client.events.unlock', $event->slug)); ?>" class="mt-7 max-w-sm mx-auto text-left">
+                            <?php echo csrf_field(); ?>
+                            <label for="pin" class="block text-slate-700 text-[13px] font-semibold mb-1.5">PIN Berita</label>
+                            <input
+                                id="pin"
+                                name="pin"
+                                type="password"
+                                inputmode="numeric"
+                                autocomplete="off"
+                                required
+                                maxlength="32"
+                                placeholder="Masukkan PIN"
+                                aria-describedby="pin-help"
+                                <?php $__errorArgs = ['pin'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> aria-invalid="true" <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                class="w-full rounded-xl border bg-white px-4 py-3 text-slate-800 text-[14px] tracking-[0.2em] placeholder:tracking-normal placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 <?php $__errorArgs = ['pin'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> border-red-400 <?php else: ?> border-slate-300 <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>">
+                            <?php $__errorArgs = ['pin'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <p class="mt-2 flex items-center gap-1.5 text-red-600 text-[12.5px] font-medium" role="alert">
+                                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0 3.75h.008v.008H12v-.008zM21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <?php echo e($message); ?>
+
+                                </p>
+                            <?php else: ?>
+                                <p id="pin-help" class="mt-2 text-slate-400 text-[12px]">PIN terdiri dari angka dan bersifat rahasia.</p>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                            <button type="submit"
+                                    class="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-xl bg-blue-700 px-4 py-3 text-white text-[14px] font-semibold hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+                                </svg>
+                                Buka Berita
+                            </button>
+                        </form>
+
+                        <div class="mt-7 pt-5 border-t border-slate-100 text-center">
+                            <p class="text-slate-500 text-[12.5px]">Tidak tahu atau lupa PIN?</p>
+                            <?php if($whatsappUrl): ?>
+                                <a href="<?php echo e($whatsappUrl); ?>" target="_blank" rel="noopener noreferrer"
+                                   class="mt-2 inline-flex items-center justify-center gap-2 text-emerald-700 text-[13px] font-semibold hover:underline">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                    </svg>
+                                    Lupa PIN? Hubungi Admin via WhatsApp
+                                </a>
+                            <?php else: ?>
+                                <p class="mt-2 text-slate-400 text-[12.5px]">Hubungi admin gereja untuk meminta PIN.</p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php else: ?>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
                 <div class="lg:col-span-2 space-y-6">
+                    <?php if($hasPdf): ?>
+                        <div class="bg-gradient-to-br from-blue-700 via-blue-800 to-slate-900 rounded-2xl p-6 sm:p-8 shadow-sm text-white">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+                                    </svg>
+                                </div>
+                                <div class="min-w-0">
+                                    <p class="text-blue-200 text-[11.5px] uppercase tracking-wider font-semibold">Laporan Keuangan</p>
+                                    <h2 class="font-display text-white text-xl sm:text-2xl font-extrabold mt-1">Laporan Lengkap (PDF)</h2>
+                                    <p class="text-blue-100 text-[13.5px] leading-relaxed mt-2 max-w-lg">
+                                        Laporan keuangan lengkap tersedia dalam format PDF. Anda dapat membukanya di tab baru atau mengunduhnya untuk disimpan.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="mt-6 flex flex-col sm:flex-row gap-3">
+                                <a href="<?php echo e(route('client.events.pdf', $event->slug)); ?>" target="_blank" rel="noopener noreferrer"
+                                   class="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-4 py-2.5 text-blue-800 text-[13.5px] font-semibold hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-white/70 transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+                                    </svg>
+                                    Buka PDF
+                                </a>
+                                <a href="<?php echo e(route('client.events.pdf.download', $event->slug)); ?>"
+                                   class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/40 px-4 py-2.5 text-white text-[13.5px] font-semibold hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/70 transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
+                                    </svg>
+                                    Unduh PDF
+                                </a>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
                     
                     <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
                         <h2 class="font-display text-slate-800 text-xl font-extrabold mb-4">Tentang Kegiatan</h2>
@@ -85,6 +218,7 @@
                         <?php endif; ?>
                     </div>
 
+                    <?php if(! $hasPdf): ?>
                     
                     <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
                         <h2 class="font-display text-slate-800 text-xl font-extrabold mb-5">Detail Kegiatan</h2>
@@ -129,6 +263,7 @@
                             <?php endif; ?>
                         </div>
                     </div>
+                    <?php endif; ?>
                 </div>
 
                 
@@ -221,6 +356,7 @@
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
 
             
             <div class="mt-10 bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
