@@ -71,7 +71,29 @@ class ClientController extends Controller
             ];
         }
 
-        return view('client.index', compact('schedules', 'announcements', 'events', 'bahanRohaniSlides'));
+        $churchMapQuery = 'GBKP Bandar Lampung, Jalan Turi Raya, Tanjung Senang, Bandar Lampung, Lampung';
+        $mapKey = config('services.google_maps.key');
+
+        $mapEmbedUrl = filled($mapKey)
+            ? 'https://www.google.com/maps/embed/v1/place?'.http_build_query([
+                'key' => $mapKey,
+                'q' => $churchMapQuery,
+                'zoom' => 16,
+                'language' => 'id',
+                'region' => 'id',
+            ], '', '&', PHP_QUERY_RFC3986)
+            : 'https://maps.google.com/maps?'.http_build_query([
+                'q' => $churchMapQuery,
+                'z' => 16,
+                'hl' => 'id',
+                'output' => 'embed',
+            ], '', '&', PHP_QUERY_RFC3986);
+
+        $mapDirectionsUrl = 'https://www.google.com/maps/search/?api=1&'.http_build_query([
+            'query' => $churchMapQuery,
+        ], '', '&', PHP_QUERY_RFC3986);
+
+        return view('client.index', compact('schedules', 'announcements', 'events', 'bahanRohaniSlides', 'mapEmbedUrl', 'mapDirectionsUrl'));
     }
 
     public function reflections()
