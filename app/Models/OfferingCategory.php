@@ -33,6 +33,6 @@ class OfferingCategory extends Model
             $this->bank_name ?? '',
         ]);
 
-        return 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' . urlencode($payload);
+        return 'https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=' . urlencode($payload);
     }
 }

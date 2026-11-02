@@ -318,11 +318,14 @@ class ClientController extends Controller
 
     public function persembahan()
     {
-        $categories = \App\Models\OfferingCategory::where('is_active', true)
-            ->orderBy('sort_order')
-            ->get();
+        $category = \App\Models\OfferingCategory::where('is_active', true)
+            ->where('slug', 'persembahan-umum')
+            ->first()
+            ?? \App\Models\OfferingCategory::where('is_active', true)
+                ->orderBy('sort_order')
+                ->first();
 
-        return view('client.persembahan.index', compact('categories'));
+        return view('client.persembahan.index', compact('category'));
     }
 
     public function organization()
