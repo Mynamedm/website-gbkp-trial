@@ -180,6 +180,65 @@ class BahanIbadahCrudTest extends TestCase
         $this->get(route('client.bahan-ibadah.detail', $renungan))->assertNotFound();
     }
 
+    public function test_homepage_shows_latest_active_bahan_ibadah(): void
+    {
+        Reflection::create([
+            'title' => 'Bahan Ibadah Lama',
+            'date' => '2026-07-01',
+            'status' => 'active',
+            'type' => Reflection::TYPE_BAHAN_IBADAH,
+        ]);
+        Reflection::create([
+            'title' => 'Bahan Ibadah Terbaru',
+            'date' => '2026-08-09',
+            'status' => 'active',
+            'type' => Reflection::TYPE_BAHAN_IBADAH,
+        ]);
+        Reflection::create([
+            'title' => 'Bahan Ibadah Nonaktif',
+            'date' => '2026-08-16',
+            'status' => 'inactive',
+            'type' => Reflection::TYPE_BAHAN_IBADAH,
+        ]);
+
+        $this->get(route('client.home'))
+            ->assertOk()
+            ->assertSee('Bahan Ibadah')
+            ->assertSee('Bahan Ibadah Terbaru')
+            ->assertDontSee('Bahan Ibadah Nonaktif');
+    }
+
+    public function test_homepage_carousel_contains_renungan_and_bahan_ibadah(): void
+    {
+        Reflection::create([
+            'title' => 'Renungan Carousel',
+            'date' => '2026-08-01',
+            'status' => 'active',
+            'type' => Reflection::TYPE_RENUNGAN,
+        ]);
+        Reflection::create([
+            'title' => 'Bahan Carousel',
+            'date' => '2026-08-02',
+            'status' => 'active',
+            'type' => Reflection::TYPE_BAHAN_IBADAH,
+        ]);
+
+        $this->get(route('client.home'))
+            ->assertOk()
+            ->assertSee('Renungan Hari Ini')
+            ->assertSee('Renungan Carousel')
+            ->assertSee('Bahan Carousel')
+            ->assertSee('Lihat Semua Renungan')
+            ->assertSee('Lihat Semua Bahan Ibadah');
+    }
+
+    public function test_homepage_hides_bahan_rohani_carousel_when_empty(): void
+    {
+        $this->get(route('client.home'))
+            ->assertOk()
+            ->assertDontSee('Renungan Hari Ini');
+    }
+
     public function test_renungan_page_does_not_show_bahan_ibadah(): void
     {
         Reflection::create([

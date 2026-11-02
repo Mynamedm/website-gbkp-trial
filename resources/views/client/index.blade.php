@@ -27,72 +27,133 @@
         </div>
     </section>
 
-{{-- RENUNGAN HARI INI --}}
-    @if($todayReflection)
-    <section class="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800">
+    {{-- BAHAN ROHANI: RENUNGAN & BAHAN IBADAH (CAROUSEL) --}}
+    @if(count($bahanRohaniSlides) > 0)
+    <section class="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800"
+             x-data="{
+                 slide: 0,
+                 total: {{ count($bahanRohaniSlides) }},
+                 paused: false,
+                 next() { this.slide = (this.slide + 1) % this.total },
+                 prev() { this.slide = (this.slide - 1 + this.total) % this.total }
+             }"
+             x-init="if (total > 1) setInterval(() => { if (!paused) next() }, 8000)"
+             @mouseenter="paused = true"
+             @mouseleave="paused = false"
+             @focusin="paused = true"
+             @focusout="paused = false">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-            <div class="grid lg:grid-cols-[280px_1fr] gap-6">
 
-                {{-- Kiri: Info --}}
-                <div class="bg-white/[0.08] backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                    <div class="flex items-center gap-2 mb-4">
-                        <svg class="w-4 h-4 text-blue-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.966 8.966 0 00-6 2.292m0-14.25v14.25"/>
-                        </svg>
-                        <span class="text-blue-200 text-[11.5px] font-semibold uppercase tracking-wider">Renungan Hari Ini</span>
-                    </div>
-                    <p class="text-white/60 text-[11.5px] uppercase tracking-wide font-medium">{{ $todayReflection->date->translatedFormat('l') }}</p>
-                    <p class="text-white text-xl font-bold mt-1">{{ $todayReflection->date->format('d F Y') }}</p>
-                    @if(filled($todayReflection->church_day))
-                        <div class="mt-5 pt-5 border-t border-white/10">
-                            <p class="text-white/50 text-[11px] uppercase tracking-wide font-medium mb-1">Hari Gereja</p>
-                            <p class="text-white text-sm font-semibold">{{ $todayReflection->church_day }}</p>
-                        </div>
-                    @endif
-                    @if(filled($todayReflection->bible_verse))
-                        <div class="mt-4">
-                            <p class="text-white/50 text-[11px] uppercase tracking-wide font-medium mb-1">Bacaan</p>
-                            <p class="text-white text-sm font-semibold flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-yellow-400 shrink-0"></span>
-                                {{ $todayReflection->bible_verse }}
-                            </p>
-                        </div>
-                    @endif
-                </div>
+            <div class="flex items-center justify-between gap-4 mb-5">
+                <span class="text-blue-200 text-[11.5px] font-semibold uppercase tracking-wider">Bahan Rohani</span>
 
-                {{-- Kanan: Isi Renungan --}}
-                <div class="bg-white/[0.06] backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/10 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center gap-2 mb-5">
-                            <svg class="w-4 h-4 text-blue-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/>
+                @if(count($bahanRohaniSlides) > 1)
+                    <div class="flex items-center gap-2">
+                        <button type="button" @click="prev()" aria-label="Slide sebelumnya"
+                                class="w-9 h-9 flex items-center justify-center rounded-full border border-white/20 text-white/80 hover:bg-white/10 hover:text-white transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
                             </svg>
-                            <span class="text-white font-bold text-sm uppercase tracking-wide">{{ $todayReflection->title }}</span>
-                        </div>
-                        <blockquote class="text-white/80 text-[14.5px] leading-[1.75] italic space-y-3 line-clamp-4">
-                            {{ $todayReflection->summary }}
-                        </blockquote>
-                        @if(filled($todayReflection->bible_verse))
-                            <div class="mt-6 flex items-center gap-3">
-                                <span class="text-blue-300 text-[12.5px] font-bold uppercase tracking-wide">{{ $todayReflection->bible_verse }}</span>
-                                @if(filled($todayReflection->bible_translation))
-                                    <span class="text-white/30 text-[12px]">{{ $todayReflection->bible_translation }}</span>
-                                @endif
-                            </div>
-                        @endif
-                    </div>
-                    <div class="mt-6 pt-5 border-t border-white/10 flex items-center justify-between">
-                        <p class="text-white/30 text-[12px] italic">Renungan Harian GBKP BANDAR LAMPUNG</p>
-                        <a href="{{ route('client.reflections.detail', $todayReflection) }}" class="inline-flex items-center gap-1.5 px-4 py-2 bg-white text-blue-700 text-[12.5px] font-semibold rounded-lg hover:bg-blue-50 transition-colors">
-                            Baca Selengkapnya
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        </button>
+                        <button type="button" @click="next()" aria-label="Slide berikutnya"
+                                class="w-9 h-9 flex items-center justify-center rounded-full border border-white/20 text-white/80 hover:bg-white/10 hover:text-white transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
                             </svg>
-                        </a>
+                        </button>
                     </div>
-                </div>
-
+                @endif
             </div>
+
+            <div class="grid">
+                @foreach($bahanRohaniSlides as $index => $slide)
+                    @php $item = $slide['reflection']; @endphp
+                    <div x-show="slide === {{ $index }}" x-cloak
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 translate-x-3"
+                         x-transition:enter-end="opacity-100 translate-x-0"
+                         x-transition:leave="transition ease-in duration-150"
+                         x-transition:leave-start="opacity-100 translate-x-0"
+                         x-transition:leave-end="opacity-0 -translate-x-3"
+                         class="col-start-1 row-start-1 grid lg:grid-cols-[280px_1fr] gap-6">
+
+                        {{-- Kiri: Info --}}
+                        <div class="bg-white/[0.08] backdrop-blur-sm rounded-2xl p-6 border border-white/10 flex flex-col">
+                            <div class="flex items-center gap-2 mb-4">
+                                <svg class="w-4 h-4 text-blue-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.966 8.966 0 00-6 2.292m0-14.25v14.25"/>
+                                </svg>
+                                <span class="text-blue-200 text-[11.5px] font-semibold uppercase tracking-wider">{{ $slide['label'] }}</span>
+                            </div>
+                            <p class="text-white/60 text-[11.5px] uppercase tracking-wide font-medium">{{ $item->date->locale('id')->translatedFormat('l') }}</p>
+                            <p class="text-white text-xl font-bold mt-1">{{ $item->date->format('d F Y') }}</p>
+                            @if(filled($item->church_day))
+                                <div class="mt-5 pt-5 border-t border-white/10">
+                                    <p class="text-white/50 text-[11px] uppercase tracking-wide font-medium mb-1">Hari Gereja</p>
+                                    <p class="text-white text-sm font-semibold">{{ $item->church_day }}</p>
+                                </div>
+                            @endif
+                            @if(filled($item->theme))
+                                <div class="mt-4">
+                                    <p class="text-white/50 text-[11px] uppercase tracking-wide font-medium mb-1">Tema</p>
+                                    <p class="text-white text-sm font-semibold">{{ $item->theme }}</p>
+                                </div>
+                            @endif
+                            @if(filled($item->bible_verse))
+                                <div class="mt-4">
+                                    <p class="text-white/50 text-[11px] uppercase tracking-wide font-medium mb-1">Bacaan</p>
+                                    <p class="text-white text-sm font-semibold flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full bg-yellow-400 shrink-0"></span>
+                                        {{ $item->bible_verse }}
+                                    </p>
+                                </div>
+                            @endif
+                            <a href="{{ $slide['listUrl'] }}" class="mt-auto pt-5 inline-flex items-center gap-1.5 text-blue-200 text-[12px] font-semibold hover:text-white transition-colors">
+                                {{ $slide['listLabel'] }}
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                                </svg>
+                            </a>
+                        </div>
+
+                        {{-- Kanan: Isi --}}
+                        <div class="bg-white/[0.06] backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/10 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-white font-bold text-base sm:text-lg leading-snug mb-4">{{ $item->title }}</h3>
+                                @if(filled($item->summary))
+                                    <p class="text-white/80 text-[14.5px] leading-[1.75] line-clamp-4">{{ $item->summary }}</p>
+                                @endif
+                                @if(filled($item->bible_translation))
+                                    <p class="text-white/30 text-[12px] mt-3">{{ $item->bible_translation }}</p>
+                                @endif
+                            </div>
+                            <div class="mt-6 pt-5 border-t border-white/10 flex items-center justify-between gap-4">
+                                <p class="text-white/30 text-[12px] italic">{{ $slide['footer'] }}</p>
+                                <a href="{{ $slide['url'] }}" class="inline-flex items-center gap-1.5 px-4 py-2 bg-white text-blue-700 text-[12.5px] font-semibold rounded-lg hover:bg-blue-50 transition-colors shrink-0">
+                                    Baca Selengkapnya
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                @endforeach
+            </div>
+
+            @if(count($bahanRohaniSlides) > 1)
+                <div class="mt-6 flex items-center justify-center gap-2">
+                    @foreach($bahanRohaniSlides as $index => $slide)
+                        <button type="button" @click="slide = {{ $index }}"
+                                aria-label="Tampilkan {{ $slide['label'] }}"
+                                :aria-current="slide === {{ $index }}"
+                                class="h-2 rounded-full transition-all duration-300"
+                                :class="slide === {{ $index }} ? 'w-6 bg-white' : 'w-2 bg-white/40 hover:bg-white/70'"></button>
+                    @endforeach
+                </div>
+            @endif
+
         </div>
     </section>
     @endif

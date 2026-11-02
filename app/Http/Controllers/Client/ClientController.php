@@ -39,7 +39,37 @@ class ClientController extends Controller
             ->latestFirst()
             ->first();
 
-        return view('client.index', compact('schedules', 'announcements', 'events', 'todayReflection'));
+        $latestBahanIbadah = Reflection::query()
+            ->ofType(Reflection::TYPE_BAHAN_IBADAH)
+            ->active()
+            ->latestFirst()
+            ->first();
+
+        $bahanRohaniSlides = [];
+
+        if ($todayReflection) {
+            $bahanRohaniSlides[] = [
+                'label' => 'Renungan Hari Ini',
+                'footer' => 'Renungan Harian GBKP Bandar Lampung',
+                'reflection' => $todayReflection,
+                'url' => route('client.reflections.detail', $todayReflection),
+                'listUrl' => route('client.reflections'),
+                'listLabel' => 'Lihat Semua Renungan',
+            ];
+        }
+
+        if ($latestBahanIbadah) {
+            $bahanRohaniSlides[] = [
+                'label' => 'Bahan Ibadah',
+                'footer' => 'Bahan Ibadah GBKP Bandar Lampung',
+                'reflection' => $latestBahanIbadah,
+                'url' => route('client.bahan-ibadah.detail', $latestBahanIbadah),
+                'listUrl' => route('client.bahan-ibadah'),
+                'listLabel' => 'Lihat Semua Bahan Ibadah',
+            ];
+        }
+
+        return view('client.index', compact('schedules', 'announcements', 'events', 'bahanRohaniSlides'));
     }
 
     public function reflections()
