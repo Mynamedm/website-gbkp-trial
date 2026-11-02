@@ -37,16 +37,10 @@
                  slide: 0,
                  total: <?php echo e(count($bahanRohaniSlides)); ?>,
                  lightIndex: <?php echo e($lightIndex === false ? -1 : $lightIndex); ?>,
-                 paused: false,
                  next() { this.slide = (this.slide + 1) % this.total },
                  prev() { this.slide = (this.slide - 1 + this.total) % this.total }
              }"
-             :class="slide === lightIndex ? 'is-light' : ''"
-             x-init="if (total > 1) setInterval(() => { if (!paused) next() }, 8000)"
-             @mouseenter="paused = true"
-             @mouseleave="paused = false"
-             @focusin="paused = true"
-             @focusout="paused = false">
+             :class="slide === lightIndex ? 'is-light' : ''">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
 
             <div class="flex items-center justify-between gap-4 mb-5">
