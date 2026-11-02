@@ -135,6 +135,25 @@
                         <input type="file" name="image" accept="image/*" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-[12px] file:font-medium file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100">
                     </div>
                     <div class="sm:col-span-2">
+                        <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Laporan Keuangan (PDF) <span class="text-slate-400 font-normal">(kosongkan jika tidak diubah)</span></label>
+                        @if($event->pdf_path)
+                            <div class="mb-2 flex flex-wrap items-center gap-3 rounded-lg border border-blue-100 bg-blue-50 px-3 py-2">
+                                <span class="inline-flex items-center gap-1.5 text-blue-700 text-[12px] font-medium">
+                                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+                                    </svg>
+                                    {{ basename($event->pdf_path) }}
+                                </span>
+                                <label class="inline-flex items-center gap-1.5 text-[12px] text-red-600 font-medium">
+                                    <input type="checkbox" name="remove_pdf" value="1" class="rounded border-red-300 text-red-600 focus:ring-red-500">
+                                    Hapus PDF saat ini
+                                </label>
+                            </div>
+                        @endif
+                        <input type="file" name="pdf" accept="application/pdf,.pdf" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-[12px] file:font-medium file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100">
+                        <p class="mt-1 text-[11.5px] text-slate-400">Khusus kategori keuangan. Jemaat harus memasukkan PIN sebelum PDF dapat dibuka atau diunduh.</p>
+                    </div>
+                    <div class="sm:col-span-2">
                         <label class="block text-[12.5px] font-medium text-slate-600 mb-1">Deskripsi</label>
                         <textarea name="description" rows="2" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none">{{ $event->description }}</textarea>
                     </div>

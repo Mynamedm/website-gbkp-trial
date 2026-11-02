@@ -25,6 +25,7 @@ class Event extends Model
         'quote',
         'quote_source',
         'image',
+        'pdf_path',
         'status',
     ];
 
@@ -40,6 +41,11 @@ class Event extends Model
     public function categoryRel(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function isKeuangan(): bool
+    {
+        return strtolower((string) $this->category) === 'keuangan';
     }
 
     public function organizer(): BelongsTo

@@ -28,6 +28,9 @@ Route::get('/jadwal-ibadah/{kategoriId}/sektor/{sektorIndex}/riwayat', [ClientCo
 Route::get('/kegiatan-gereja', [ClientController::class, 'events'])->name('client.events');
 Route::get('/kegiatan-gereja/cari', [ClientController::class, 'eventSearch'])->name('client.events.search');
 Route::get('/kegiatan-gereja/{slug}', [ClientController::class, 'eventDetail'])->name('client.events.detail');
+Route::get('/kegiatan-gereja/{slug}/laporan-keuangan', [ClientController::class, 'eventPdf'])->name('client.events.pdf');
+Route::get('/kegiatan-gereja/{slug}/laporan-keuangan/unduh', [ClientController::class, 'eventPdfDownload'])->name('client.events.pdf.download');
+Route::post('/kegiatan-gereja/{slug}/buka', [ClientController::class, 'unlockEvent'])->middleware('throttle:6,1')->name('client.events.unlock');
 Route::get('/kegiatan-gereja/tahun/{year}', [ClientController::class, 'eventArchive'])->name('client.events.archive');
 Route::get('/tentang-gereja', [ClientController::class, 'aboutChurch'])->name('client.about-church');
 Route::get('/tentang-kategorial', [ClientController::class, 'aboutKategorial'])->name('client.about-kategorial');

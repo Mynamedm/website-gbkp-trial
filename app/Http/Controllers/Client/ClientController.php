@@ -11,6 +11,7 @@ use App\Models\OrganizationSetting;
 use App\Models\Reflection;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ClientController extends Controller
@@ -413,14 +414,17 @@ class ClientController extends Controller
             ->get(['id', 'title', 'slug', 'description', 'date', 'category', 'location']);
 
         $results = $events->map(function ($event) {
+            $locked = $event->isKeuangan() && ! $this->keuanganUnlocked();
+
             return [
                 'id' => $event->id,
                 'title' => $event->title,
                 'slug' => $event->slug,
-                'description' => Str::limit($event->description, 80),
+                'description' => $locked ? 'Berita terkunci. Masukkan PIN untuk membaca.' : Str::limit($event->description, 80),
                 'date' => $event->date->translatedFormat('d M Y'),
                 'category' => $event->category,
                 'location' => $event->location,
+                'locked' => $locked,
                 'url' => route('client.events.detail', $event->slug),
             ];
         });
@@ -440,7 +444,100 @@ class ClientController extends Controller
 
         $categoryColors = Category::where('type', 'event')->pluck('color', 'name')->toArray();
 
-        return view('client.event.detail', compact('event', 'relatedEvents', 'categoryColors'));
+        $locked = $event->isKeuangan() && ! $this->keuanganUnlocked();
+
+        $hasPdf = $this->keuanganPdfExists($event);
+
+        $whatsappNumber = preg_replace('/\D+/', '', (string) config('keuangan.whatsapp'));
+        $whatsappUrl = filled($whatsappNumber)
+            ? 'https://wa.me/'.$whatsappNumber.'?text='.rawurlencode((string) config('keuangan.whatsapp_message'))
+            : null;
+
+        return view('client.event.detail', compact('event', 'relatedEvents', 'categoryColors', 'locked', 'hasPdf', 'whatsappUrl'));
+    }
+
+    public function unlockEvent(Request $request, $slug)
+    {
+        $event = Event::where('slug', $slug)->where('status', 'published')->firstOrFail();
+
+        if (! $event->isKeuangan()) {
+            return redirect()->route('client.events.detail', $event->slug);
+        }
+
+        $request->validate([
+            'pin' => ['required', 'string', 'max:32'],
+        ], [
+            'pin.required' => 'PIN wajib diisi.',
+        ]);
+
+        $expectedPin = (string) config('keuangan.pin');
+        $submittedPin = (string) $request->input('pin');
+
+        if ($expectedPin === '' || ! hash_equals($expectedPin, $submittedPin)) {
+            return back()
+                ->withErrors(['pin' => 'PIN yang Anda masukkan salah. Silakan coba lagi.'])
+                ->withInput();
+        }
+
+        session(['keuangan_unlocked' => true]);
+
+        if ($this->keuanganPdfExists($event)) {
+            return redirect()->route('client.events.pdf', $event->slug);
+        }
+
+        return redirect()
+            ->route('client.events.detail', $event->slug)
+            ->with('keuangan_unlocked_message', 'Berita berhasil dibuka. Selamat membaca.');
+    }
+
+    public function eventPdf($slug)
+    {
+        return $this->serveKeuanganPdf($slug, false);
+    }
+
+    public function eventPdfDownload($slug)
+    {
+        return $this->serveKeuanganPdf($slug, true);
+    }
+
+    private function serveKeuanganPdf($slug, bool $download)
+    {
+        $event = Event::where('slug', $slug)->where('status', 'published')->firstOrFail();
+
+        if (! $event->isKeuangan()) {
+            abort(404);
+        }
+
+        if (! $this->keuanganUnlocked()) {
+            return redirect()
+                ->route('client.events.detail', $event->slug)
+                ->withErrors(['pin' => 'Masukkan PIN terlebih dahulu untuk membuka laporan keuangan.']);
+        }
+
+        if (! $this->keuanganPdfExists($event)) {
+            abort(404);
+        }
+
+        $filename = (Str::slug($event->title) ?: 'laporan-keuangan').'.pdf';
+        $disk = Storage::disk('local');
+
+        if ($download) {
+            return $disk->download($event->pdf_path, $filename, ['Content-Type' => 'application/pdf']);
+        }
+
+        return $disk->response($event->pdf_path, $filename, ['Content-Type' => 'application/pdf'], 'inline');
+    }
+
+    private function keuanganPdfExists(Event $event): bool
+    {
+        return $event->isKeuangan()
+            && filled($event->pdf_path)
+            && Storage::disk('local')->exists($event->pdf_path);
+    }
+
+    private function keuanganUnlocked(): bool
+    {
+        return (bool) session('keuangan_unlocked', false);
     }
 
     public function eventArchive($year)

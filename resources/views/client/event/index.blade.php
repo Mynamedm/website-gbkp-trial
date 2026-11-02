@@ -177,8 +177,20 @@
                                 <span class="inline-block {{ $catColor }} text-[11px] font-semibold px-2.5 py-1 rounded-md mb-3 self-start uppercase tracking-wide">
                                     {{ ucfirst($event->category) }}
                                 </span>
+                                @if($event->isKeuangan() && ! session('keuangan_unlocked', false))
+                                    <span class="inline-flex items-center gap-1 bg-amber-50 border border-amber-200 text-amber-700 text-[11px] font-semibold px-2 py-1 rounded-md mb-3 ml-1">
+                                        <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+                                        </svg>
+                                        Terkunci
+                                    </span>
+                                @endif
                                 <h3 class="font-display text-slate-800 text-[15px] font-bold leading-snug mb-2">{{ $event->title }}</h3>
-                                <p class="text-slate-500 text-[13px] leading-relaxed mb-4 line-clamp-2">{{ $event->description }}</p>
+                                @if($event->isKeuangan() && ! session('keuangan_unlocked', false))
+                                    <p class="text-slate-500 text-[13px] leading-relaxed mb-4">Berita terkunci. Masukkan PIN untuk membaca.</p>
+                                @else
+                                    <p class="text-slate-500 text-[13px] leading-relaxed mb-4 line-clamp-2">{{ $event->description }}</p>
+                                @endif
                                 <div class="mt-auto">
                                     <div class="flex items-center gap-1.5 text-slate-400 text-[12px] mb-4">
                                         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

@@ -276,7 +276,16 @@
                         </div>
                         <div class="p-4">
                             <h3 class="font-bold text-slate-800 text-[14.5px]">{{ $item->title }}</h3>
-                            <p class="text-slate-500 text-[12.5px] mt-1 leading-relaxed line-clamp-2">{{ \Illuminate\Support\Str::limit(strip_tags($item->description), 80) }}</p>
+                            @if($item->isKeuangan() && ! session('keuangan_unlocked', false))
+                                <p class="mt-1 inline-flex items-center gap-1.5 text-amber-700 text-[12.5px] font-medium">
+                                    <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+                                    </svg>
+                                    Berita terkunci. Masukkan PIN untuk membaca.
+                                </p>
+                            @else
+                                <p class="text-slate-500 text-[12.5px] mt-1 leading-relaxed line-clamp-2">{{ \Illuminate\Support\Str::limit(strip_tags($item->description), 80) }}</p>
+                            @endif
                         </div>
                     </a>
                 @empty

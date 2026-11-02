@@ -49,6 +49,7 @@ class AdminEventController extends Controller
             'quote' => 'nullable|string',
             'quote_source' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'pdf' => 'nullable|file|mimes:pdf|max:20480',
             'status' => 'required|in:draft,published,archived',
         ]);
 
@@ -61,7 +62,11 @@ class AdminEventController extends Controller
             $validated['image'] = $request->file('image')->store('events', 'public');
         }
 
-        unset($validated['image']);
+        if ($request->hasFile('pdf')) {
+            $validated['pdf_path'] = $request->file('pdf')->store('events/pdf', 'local');
+        }
+
+        unset($validated['image'], $validated['pdf']);
         Event::create($validated);
 
         if ($request->ajax()) {
@@ -86,6 +91,8 @@ class AdminEventController extends Controller
             'quote' => 'nullable|string',
             'quote_source' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'pdf' => 'nullable|file|mimes:pdf|max:20480',
+            'remove_pdf' => 'sometimes|boolean',
             'status' => 'required|in:draft,published,archived',
         ]);
 
@@ -101,7 +108,19 @@ class AdminEventController extends Controller
             $validated['image'] = $request->file('image')->store('events', 'public');
         }
 
-        unset($validated['image']);
+        if ($request->hasFile('pdf')) {
+            if ($event->pdf_path) {
+                Storage::disk('local')->delete($event->pdf_path);
+            }
+            $validated['pdf_path'] = $request->file('pdf')->store('events/pdf', 'local');
+        } elseif ($request->boolean('remove_pdf')) {
+            if ($event->pdf_path) {
+                Storage::disk('local')->delete($event->pdf_path);
+            }
+            $validated['pdf_path'] = null;
+        }
+
+        unset($validated['image'], $validated['pdf'], $validated['remove_pdf']);
         $event->update($validated);
 
         if ($request->ajax()) {
@@ -120,6 +139,9 @@ class AdminEventController extends Controller
     {
         if ($event->image) {
             Storage::disk('public')->delete($event->image);
+        }
+        if ($event->pdf_path) {
+            Storage::disk('local')->delete($event->pdf_path);
         }
         $event->delete();
 
